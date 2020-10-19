@@ -1,0 +1,1828 @@
+---
+citation_package: natbib
+bibliography:
+- references.bib
+- packages.bib
+biblio-style: apalike
+link-citations: yes
+editor_options:
+  chunk_output_type: console
+output:
+  bookdown::pdf_document2: default
+output_dir: "docs"
+---
+
+```{r setup, include=FALSE}
+require(knitr)
+require(shorts)
+require(tidyverse)
+require(bookdown)
+
+my_random_seed <- 1667
+set.seed(my_random_seed)
+
+options("width" = 80)
+
+knitr::opts_chunk$set(
+  comment = "#>",
+  collapse = TRUE,
+  cache = FALSE,
+  fig.retina = 0.8, # figures are either vectors or 300 dpi diagrams
+  dpi = 600,
+  out.width = "90%",
+  fig.align = "center",
+  fig.width = 6,
+  fig.height = 6 * 0.618, # 1 / phi
+  fig.show = "hold",
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  width = 80
+)
+
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), "bookdown", "knitr", "rmarkdown", "shorts", "nlme", "LambertW"
+), "packages.bib")
+```
+
+# Introduction
+
+Short sprint speed is one of the most distinguishable and admired physical traits in sports, and one that have puzzled coaches and sports scientists from the time when two humanoids raced against each other (if they were available back then). Short sprints are defined as maximal running from a stand still position over a distance that doesn't result in deceleration at the end. This is approximately less than 6 seconds in duration (why? ATP/CP? --- REF), but the distance can vary based on the level of the athlete (i.e. lower level athletes can reach this point earlier, around 30-40m, while elite sprinters much later, around 50-60m --- REF).
+
+Short sprints have been modeled using the mono-exponential equation \@ref(eq:velocity-time) originally proposed by @doi:10.1098/rspb.1927.0035, and more recently popularized by @greenePredictingSprintDynamics1986, @clarkNFLCombine40Yard2017, @chellyLegPowerHopping2001, @morinSimpleMethodComputing2019, @morinInterpretingPowerForceVelocityProfiles2016, @haugenPowerForceVelocityProfilingSprinting2020, @haugenSprintMechanicalVariables2019, @haugenSprintMechanicalProperties2020, @doi:10.1098/rspb.1927.0035, @haugenDifferenceStartImpact2012, and @samozinoSimpleMethodMeasuring2016:
+
+\begin{equation}
+  v(t) = MSS \times (1 - e^{-\frac{t}{TAU}}) (\#eq:velocity-time)
+\end{equation}
+
+The parameters of the equation \@ref(eq:velocity-time) are \textit{maximum sprinting speed} (MSS; expressed in $ms^-1$) and \textit{relative acceleration} (TAU). Mathematically, TAU represents the ratio of MSS to initial acceleration (MAC; \textit{maximal acceleration}, expressed in $ms^-2$) \@ref(eq:maximal-acceleration).
+
+\begin{equation}
+  MAC = \frac{MSS}{TAU}(\#eq:maximal-acceleration)
+\end{equation}
+
+Although TAU is used in the equations, and later estimated, it is preferred to use MAC instead since it is easier to grasp, particularly for less math inclined coaches.  
+
+By derivating equation \@ref(eq:velocity-time), we can get equation for acceleration \@ref(eq:acceleration-time).
+
+\begin{equation}
+  a(t) = \frac{MSS}{TAU} \times e^{-\frac{t}{TAU}}  (\#eq:acceleration-time)
+\end{equation}
+
+By integrating equation \@ref(eq:velocity-time), we can get equation for distance \@ref(eq:distance-time).
+
+\begin{equation}
+  d(t) = MSS \times (t + TAU \times e^{-\frac{t}{TAU}}) - MSS \times TAU  (\#eq:distance-time)
+\end{equation}
+
+Let's consider four athletes with different levels of MSS (high versus low maximal sprinting speed) and MAC (high versus low maximal acceleration; as mentioned previously, using MAC is preferred over using TAU) (Table \@ref(tab:four-athletes-table)).
+
+```{r four-athletes-table, echo=FALSE}
+athletes <- tribble(
+  ~Athlete, ~MSS, ~MAC,
+  "Athlete A", 12, 10,
+  "Athlete B", 12, 6,
+  "Athlete C", 8, 10,
+  "Athlete D", 8, 6
+)
+
+athletes <- athletes %>%
+  mutate(TAU = MSS / MAC)
+
+knitr::kable(
+  athletes,
+  caption = "Four athletes with different MSS and MAC parameters.",
+  digits = 2
+)
+```
+
+The Figure \@ref(fig:four-athletes-kinematics) depicts distance, velocity, and acceleration over time (from 0 to 6s). 
+
+```{r four-athletes-kinematics, echo=FALSE, fig.cap="Kinematic characteristic of four athletes with different MSS and MAC parameters over a period of 0 to 6seconds."}
+kinematics <- expand_grid(
+  athletes,
+  time = seq(0, 6, length.out = 1000)
+) %>%
+  mutate(
+    distance = predict_distance_at_time(time, MSS, TAU),
+    velocity = predict_velocity_at_time(time, MSS, TAU),
+    acceleration = predict_acceleration_at_time(time, MSS, TAU)
+  )
+
+kinematics_long <- kinematics %>%
+  pivot_longer(
+    cols = c("distance", "velocity", "acceleration"),
+    names_to = "variable"
+  ) %>%
+  mutate(
+    variable = factor(
+      variable,
+      levels = c("distance", "velocity", "acceleration"),
+      labels = c("Distance (m)", "Velocity (m/s)", "Acceleration (m/s/s)")
+    )
+  )
+
+gg <- ggplot(
+  kinematics_long,
+  aes(x = time, y = value, color = Athlete)
+) +
+  theme_bw() +
+  geom_line(alpha = 0.7) +
+  facet_wrap(~variable, scales = "free_y") +
+  ylab(NULL) +
+  xlab("Time (s)") +
+  theme(legend.position = "top")
+
+plot(gg)
+```
+
+If we plot acceleration against velocity (Figure \@ref(fig:four-athletes-profile)), we will get Acceleration-Velocity profile, which is, according to the mathematical model, linear.  
+
+```{r four-athletes-profile, echo=FALSE, fig.cap="Acceleration-Velocity profile of four athletes with different MSS and MAC parameters."}
+gg <- ggplot(
+  kinematics,
+  aes(x = velocity, y = acceleration, color = Athlete)
+) +
+  theme_bw(10) +
+  geom_line(alpha = 0.7) +
+  ylab("Acceleration (m/s/s)") +
+  xlab("Velocity (m/s)") +
+  theme(legend.position = "top")
+
+plot(gg)
+```
+
+# Estimation using `shorts` package
+
+Short sprints profiling is usually performed by: (1) measuring split times using timing gates (i.e., positioned at 0m, 10m, 20m, 30m, 40m), and (2) getting a velocity trace using radar gun (usually at around 100Hz). Estimation of the MSS and TAU parameters from the equation \@ref(eq:velocity-time) is performed in `shorts` package using non-linear least squares regression implemented in the `nls` function in the base R [@R-base] and `nlme` function in the `nlme` package [@R-nlme] for the mixed-effect models.
+
+## Estimating short sprint parameters using split times
+
+Let's consider an example of an athlete with MSS equal to 9$ms^-1$, TAU equal to 1.3, and MAC equal to 6.92$m/s^2$ performing 40m sprint with timing gates positioned at each 10m split. When it comes to split times, distance is a predictor, and time is outcome variable, thus the equation \@ref(eq:velocity-time) takes another form:
+
+\begin{equation}
+  t(d) = TAU \times W(-e^{\frac{-d}{MSS \times TAU}} - 1) + \frac{d}{MSS} + TAU (\#eq:time-distance)
+\end{equation}
+
+$W$ in the equation \@ref(eq:velocity-time) represents Lambert's W function [@R-LambertW]. MSS and TAU parameters are estimated using `shorts::model_using_splits` function:
+
+```{r}
+require(shorts)
+
+split_distance <- c(10, 20, 30, 40)
+
+# Generate times by using:
+# round(predict_time_at_distance(distance = split_distance, MSS = 9, TAU = 1.3), 2)
+
+split_time <- c(2.17, 3.43, 4.60, 5.73)
+
+m1 <- shorts::model_using_splits(
+  distance = split_distance,
+  time = split_time
+)
+
+m1
+```
+
+Maximal relative power (PMAX) from the output is estimated using $\frac{MSS \times MAC}{4}$, which disregards the air resistance (which we will deal with soon). `time_correction` and `distance_corection` parameters will be covered later in the article. 
+
+Besides providing *residual standard error* (RSE), `shorts` functions provide additional model fit estimators. Additional information can be gained by exploring the returned object, particularly object returned from the `nls` functions:
+
+```{r}
+summary(m1$model)
+```
+
+Once we have estimated MSS and TAU, we can use `shorts::predict_` family of functions to predict various relationships (i.e. time at distance, acceleration at distance, velocity at time):
+
+```{r}
+# Predict time at distance
+shorts::predict_time_at_distance(
+  distance = split_distance,
+  MSS = m1$parameters$MSS,
+  TAU = m1$parameters$TAU
+)
+
+# Predict acceleration at time
+shorts::predict_acceleration_at_time(
+  time = c(0, 1, 2, 3, 4, 5, 6),
+  MSS = m1$parameters$MSS,
+  TAU = m1$parameters$TAU
+)
+```
+
+Here is a plot of observed and model predicted split times, with the help of the `ggplot2` package [@R-ggplot2]:
+
+```{r}
+require(ggplot2)
+
+df <- data.frame(
+  distance = split_distance,
+  time = split_time,
+  pred_time = shorts::predict_time_at_distance(
+    distance = split_distance,
+    MSS = m1$parameters$MSS,
+    TAU = m1$parameters$TAU
+  )
+)
+
+ggplot(df, aes(x = distance)) +
+  theme_bw(10) +
+  geom_line(aes(y = time)) +
+  geom_point(aes(y = pred_time), color = "red") +
+  xlab("Distance (m)") +
+  ylab("Time (sec)")
+```
+
+### Air resistance and the calculation of force and mechanical power
+
+To estimate force production at distance or time (using `shorts::predict_force_at_distance` and `shorts::predict_force_at_time` functions), and later power production (using `shorts::predict_power_at_distance` and `shorts::predict_power_at_time` functions), one needs to take into account the air resistance. Air resistance (in Newtons) is estimated using `shorts::get_air_resistance` function, which takes velocity, body mass (in kg), body height (in meters), barometric pressure (in Torrs), air temperature (in Celzius), and wind velocity (in $ms^-1$) as parameters (please refer to @arsacModelingEnergetics100m2002, @samozinoSimpleMethodMeasuring2016, and @vaningenschenauCanCyclePower1991 for more information):
+
+```{r}
+shorts::get_air_resistance(
+  velocity = 5,
+  bodymass = 80,
+  bodyheight = 1.85,
+  barometric_pressure = 780,
+  air_temperature = 20,
+  wind_velocity = 0.5
+)
+```
+
+When estimating force and power, one can set the air resistance parameters using `...`:
+
+```{r}
+# To calculate horizontal force produced
+shorts::predict_force_at_distance(
+  distance = split_distance,
+  MSS = m1$parameters$MSS,
+  TAU = m1$parameters$TAU,
+  # Additional parameters forwarded to shorts::get_air_resistance
+  # Otherwise, defaults are used
+  bodymass = 80,
+  bodyheight = 1.85,
+  barometric_pressure = 780,
+  air_temperature = 20,
+  wind_velocity = 0.5
+)
+
+# To calculate power produced
+shorts::predict_power_at_distance(
+  distance = split_distance,
+  MSS = m1$parameters$MSS,
+  TAU = m1$parameters$TAU,
+  # Additional parameters forwarded to shorts::get_air_resistance
+  # Otherwise, defaults are used
+  bodymass = 80,
+  bodyheight = 1.85,
+  barometric_pressure = 780,
+  air_temperature = 20,
+  wind_velocity = 0.5
+)
+```
+
+The easiest way to get all kinematics for 0-6sec short sprints is to use `shorts::predict_kinematics` functions:
+
+```{r}
+df <- shorts::predict_kinematics(
+  m1,
+  max_time = 6,
+  frequency = 100,
+  # Additional parameters forwarded to shorts::get_air_resistance
+  # Otherwise, defaults are used
+  bodymass = 80,
+  bodyheight = 1.85,
+  barometric_pressure = 780,
+  air_temperature = 20,
+  wind_velocity = 0.5
+)
+
+head(df)
+```
+
+Plotting the model predictions can be done once we convert data from wide to long with the help of `dplyr`[@R-dplyr], `tidyr` [@R-tidyr], and `tidyverse` [@R-tidyverse] packages:
+
+```{r}
+require(tidyverse)
+
+df <- pivot_longer(data = df, cols = -2)
+
+ggplot(df, aes(x = distance, y = value)) +
+  theme_bw(10) +
+  facet_wrap(~name, scales = "free_y") +
+  geom_line(alpha = 0.7) +
+  ylab(NULL) +
+  xlab("Distance (m)")
+```
+
+### Utility functions 
+
+Sports scientists and coaches might be interested in finding distances and times where 90% of maximum sprinting speed is reached, or where peak power is within 90% range. To help finding these threshold, `shorts` package comes with `shorts::find_` family of functions:
+
+```{r}
+# Finds distance where 90% of maximum sprinting speed is reached
+shorts::find_velocity_critical_distance(
+  MSS = m1$parameters$MSS,
+  TAU = m1$parameters$TAU,
+  percent = 0.9
+)
+
+# Finds maximal power and distance (this time using air resistance)
+shorts::find_max_power_distance(
+  MSS = m1$parameters$MSS,
+  TAU = m1$parameters$TAU,
+  # Additional parameters forwarded to shorts::get_air_resistance
+  # Otherwise, defaults are used
+  bodymass = 80,
+  bodyheight = 1.85,
+  barometric_pressure = 780,
+  air_temperature = 20,
+  wind_velocity = 0.5
+)
+
+
+# Finds distance over 90% power range
+shorts::find_power_critical_distance(
+  MSS = m1$parameters$MSS,
+  TAU = m1$parameters$TAU,
+  # Additional parameters forwarded to shorts::get_air_resistance
+  # Otherwise, defaults are used
+  bodymass = 80,
+  bodyheight = 1.85,
+  barometric_pressure = 780,
+  air_temperature = 20,
+  wind_velocity = 0.5
+)
+```
+
+### Mixed-effects model
+
+Short sprints are often times performed with a group of athlete (e.g., soccer club) representing a single strata of interest. Sports scientists can estimate individual profiles (i.e., for each individual), or utilize mixed-effects models. To perform mixed-effects models in `shorts` for split times, one can use `shorts::mixed_model_using_splits` function. To demonstrate this functionality, we will load the `split_times` dataset provided in the `shorts` package:
+
+```{r}
+data(split_times)
+
+head(split_times)
+
+# Mixed model
+m2 <- shorts::mixed_model_using_splits(
+  data = split_times,
+  distance = "distance",
+  time = "time",
+  athlete = "athlete",
+
+  # Select random effects
+  # Default is MSS and TAU
+  random = MSS + TAU ~ 1
+)
+
+m2
+```
+
+Additional information about mixed-effects model performed using the `nlme` package [@R-nlme] can be obtained using `summary`:
+
+```{r}
+summary(m2)
+```
+
+To following plot contains kinematics for all athletes in `split_times` dataset. Please note that power calculation takes default parameters for each individual:
+
+```{r}
+df <- predict_kinematics(m2, max_time = 10)
+
+df <- pivot_longer(df, cols = c(-1, -3))
+
+ggplot(
+  filter(df, distance < 40),
+  aes(x = distance, y = value, group = athlete, color = athlete)
+) +
+  theme_bw(10) +
+  facet_wrap(~name, scales = "free_y") +
+  geom_line(alpha = 0.7) +
+  ylab(NULL) +
+  xlab("Distance (m)") +
+  theme(legend.position = "top")
+```
+
+## Estimating short sprint parameters using radar gun
+
+Estimation of the short sprint profile using radar gun data takes time as predictor and velocity as an target or outcome variable. Thus the equation \@ref(eq:velocity-time) is used to estimate MSS and TAU. 
+
+Let's consider the same example of an athlete with MSS equal to 9$ms^-1$, TAU equal to 1.3, and MAC equal to 6.92$m/s^2$ performing 40m sprint with velocity estimated using radar run (in this case with 1Hz sampling rate).
+
+```{r}
+sprint_time <- seq(0, 6, 1)
+
+# Generate velocity by using:
+# round(predict_velocity_at_time(time = sprint_time, MSS = 9, TAU = 1.3), 2)
+
+sprint_velocity <- c(0.00, 4.83, 7.07, 8.10, 8.59, 8.81, 8.91)
+
+m3 <- shorts::model_using_radar(
+  velocity = sprint_velocity,
+  time = sprint_time
+)
+
+m3
+```
+
+Both split and radar gun models allow the use of *weighted* non-linear regression. For example, we can give more weight to shorter distance or faster velocities. Weighted non-linear regression is performed by setting `weights` parameter: 
+
+```{r}
+m3_weighted <- shorts::model_using_radar(
+  velocity = sprint_velocity,
+  time = sprint_time,
+  weights = 1 / (sprint_velocity + 1)
+)
+
+m3_weighted
+```
+
+### Mixed-effects model
+
+Mixed-effects model using radar data is done using `shorts::mixed_model_using_radar` function. To perform mixed model, let's load data that comes with `shorts` package. 
+
+```{r}
+data("radar_gun_data")
+
+head(radar_gun_data)
+
+m4 <- shorts::mixed_model_using_radar(
+  radar_gun_data,
+  time = "time",
+  velocity = "velocity",
+  athlete = "athlete"
+)
+
+m4
+```
+
+# Problems with estimation
+
+With the previous examples, estimation can look simple. Unfortunately, in real life things are a bit more *messy*, and this messiness can bias the estimated MSS and TAU parameters. In the next section, we will demonstrate how real life issues can introduce biases, but we will also present potential solutions within the `shorts` package. 
+
+## Problems with time sync with radar gun
+
+One source of messiness in the estimation using radar gun, beside measurement error, is the time synchronization, where zero velocity happens at $t=0$. Let's use our athlete and add and deduct 0.5second to simulate bad synchronization and its effect on estimated MSS and TAU.
+
+```{r}
+df <- tibble(
+  `true time` = sprint_time,
+  velocity = sprint_velocity,
+  `0.5s added` = `true time` + 0.5,
+  `0.5s deducted` = `true time` - 0.5
+)
+
+head(df)
+```
+
+```{r}
+plot_df <- pivot_longer(df, cols = -2, names_to = "Sync issue")
+
+ggplot(plot_df, aes(x = value, y = velocity, color = `Sync issue`)) +
+  theme_bw(10) +
+  geom_line(alpha = 0.7) +
+  xlab("Time (s)") +
+  ylab("Velocity (m/s)")
+```
+
+The following three models estimate MSS and TAU from the three datasets:
+
+```{r}
+# Without synchronization issues
+m5 <- shorts::model_using_radar(
+  velocity = df$velocity,
+  time = df$`true time`
+)
+
+# With time added
+m6 <- shorts::model_using_radar(
+  velocity = df$velocity,
+  time = df$`0.5s added`
+)
+
+# With time deducted
+m7 <- shorts::model_using_radar(
+  velocity = df$velocity,
+  time = df$`0.5s deducted`
+)
+
+rbind(
+  data.frame(
+    model = "True time",
+    t(coef(m5))
+  ),
+  data.frame(
+    model = "Added 0.5s time",
+    t(coef(m6))
+  ),
+  data.frame(
+    model = "Deducted 0.5s time",
+    t(coef(m7))
+  )
+)
+```
+
+As can be seen from the example, it's the TAU estimate that is mostly affected by a bad synchronization of time with velocity. Solution implemented in `shorts` package involves estimation of the *time correction* parameters using the following equation: 
+
+\begin{equation}
+  v(t) = MSS \times (1 - e^{-\frac{t + time \; correction}{TAU}}) (\#eq:velocity-time-correction)
+\end{equation}
+
+This model is utilizes using the `shorts::model_using_radar_with_time_correction` function:
+
+```{r}
+# With time added
+m8 <- shorts::model_using_radar_with_time_correction(
+  velocity = df$velocity,
+  time = df$`0.5s added`
+)
+coef(m8)
+
+# With time deducted
+m9 <- shorts::model_using_radar_with_time_correction(
+  velocity = df$velocity,
+  time = df$`0.5s deducted`
+)
+coef(m9)
+```
+
+When using `shorts::predict_` family of functions, one can provide estimated time correction to get predictions at original time scale. 
+
+```{r}
+# Using the true time
+round(
+  predict_velocity_at_time(
+    time = df$`true time`,
+    MSS = m5$parameters$MSS,
+    TAU = m5$parameters$TAU
+  ),
+  2
+)
+
+# Using time with sync issues
+round(
+  predict_velocity_at_time(
+    time = df$`0.5s added`,
+    MSS = m8$parameters$MSS,
+    TAU = m8$parameters$TAU,
+    time_correction = m8$parameters$time_correction
+  ),
+  2
+)
+```
+
+### Mixed-model approach
+
+When it comes to mixed-model approach, time correction can be modeled as fixed effect or random effect using the `shorts::mixed_model_using_radar_with_time_correction` function. 
+
+```{r}
+# Adding 0.5s to radar_gun_data
+radar_gun_data$time <- radar_gun_data$time + 0.5
+
+# Mixed model with time correction being fixed effect
+m10 <- shorts::mixed_model_using_radar_with_time_correction(
+  radar_gun_data,
+  time = "time",
+  velocity = "velocity",
+  athlete = "athlete",
+  random = MSS + TAU ~ 1
+)
+
+m10
+
+
+# Mixed model with time correction being random effect
+m11 <- shorts::mixed_model_using_radar_with_time_correction(
+  radar_gun_data,
+  time = "time",
+  velocity = "velocity",
+  athlete = "athlete",
+  random = MSS + TAU + time_correction ~ 1
+)
+
+m11
+```
+
+## Problems at the start when using split times
+
+Let's imagine we have two twin brothers with same short sprint characteristics: MSS equal to 9$ms^-1$, TAU equal to 1.3, and MAC equal to 6.92$m/s^2$. Let's call them John and Jack. The are both performing 40m sprint using timing gates set at 5, 10, 20, 30, and 40m. The initial timing gate at the start serves the purpose of activating the timing system (i.e., when they cross the beam).
+
+John is our *theoretical model*, while Jack is *street smart guy*, most likely playing soccer, and decides to move slightly back (i.e. 0.5m) and use body rocking to initiate the start. Let's see how their sprints differ.
+
+```{r}
+MSS <- 9
+TAU <- 1.3
+MAC <- MSS / TAU
+
+split_times <- tibble(
+  distance = c(5, 10, 20, 30, 40),
+  john_time = shorts::predict_time_at_distance(distance, MSS, TAU),
+
+  # Jack's performance
+  jack_distance = distance + 0.5,
+  jack_true_time = shorts::predict_time_at_distance(jack_distance, MSS, TAU),
+  time_05m = shorts::predict_time_at_distance(0.5, MSS, TAU),
+  jack_time = jack_true_time - time_05m
+)
+
+split_times
+```
+
+As expected, Jack performs better than John, even if they have same short sprint capabilities. Let's see how this affects the MSS and TAU estimates:
+
+```{r}
+# Since this is a perfect simulation and stats::nls will complain
+# we need to add very small noise, or measurement error to the times
+set.seed(1667)
+rand_noise <- rnorm(nrow(split_times), 0, 10^-5)
+split_times$john_time <- split_times$john_time + rand_noise
+split_times$jack_time <- split_times$jack_time + rand_noise
+
+john_profile <- shorts::model_using_splits(
+  distance = split_times$distance,
+  time = split_times$john_time
+)
+
+jack_profile <- shorts::model_using_splits(
+  distance = split_times$distance,
+  time = split_times$jack_time
+)
+
+sprint_parameters <- rbind(
+  unlist(john_profile$parameters),
+  unlist(jack_profile$parameters)
+)
+
+rownames(sprint_parameters) <- c("John", "Jack")
+
+round(sprint_parameters, 2)
+```
+
+As can be seen from the results, *cheating* (or not having consistent start) at the begin of the sprint yields biased estimates, particularly for the TAU, MAC and PMAX. Let's create a small simulation to estimate effects of cheating distance over combinations of MSS and MAC on their estimates as well as residuals.
+
+Simulated splits are 5, 10, 20, 30, 40, and 50m, with MSS and MAC varying from 6 to 9, and cheating distance varying from 0 to 1m. 
+
+```{r}
+sim_df <- expand.grid(
+  MSS = c(6, 7, 8, 9),
+  MAC = c(6, 7, 8, 9),
+  cheat_distance = c(
+    seq(0, 0.001, length.out = 20),
+    seq(0.001, 0.01, length.out = 20),
+    seq(0.01, 0.1, length.out = 20),
+    seq(0.1, 1, length.out = 20)
+  ),
+  distance = c(5, 10, 20, 30, 40, 50)
+)
+
+sim_df <- sim_df %>%
+  mutate(
+    TAU = MSS / MAC,
+    PMAX = MSS * MAC / 4,
+    true_distance = distance + cheat_distance,
+    true_time = shorts::predict_time_at_distance(true_distance, MSS, TAU),
+    stolen_time = shorts::predict_time_at_distance(cheat_distance, MSS, TAU),
+    time = true_time - stolen_time
+  )
+
+# Add small noise to allow model fit
+set.seed(1667)
+rand_noise <- rnorm(nrow(sim_df), 0, 10^-4)
+sim_df$time <- sim_df$time + rand_noise
+
+head(round(sim_df, 2))
+```
+
+Now when we have a simulation dataset, we can check the model estimates and predictions, given the cheating distance:
+
+```{r}
+# Prediction wrapper
+pred_wrapper <- function(data) {
+  model <- shorts::model_using_splits(
+    distance = data$distance,
+    time = data$time
+  )
+
+  params <- data.frame(t(unlist(model$parameters)))
+
+  predicted_time <- shorts::predict_time_at_distance(
+    distance = data$distance,
+    MSS = model$parameters$MSS,
+    TAU = model$parameters$TAU
+  )
+
+  colnames(params) <- c(
+    "est_MSS", "est_TAU", "est_MAC", "est_PMAX",
+    "est_time_correction", "est_distance_correction"
+  )
+
+  cbind(data, params, data.frame(predicted_time = as.numeric(predicted_time)))
+}
+
+# estimated parameters and predited time
+model_df <- sim_df %>%
+  group_by(MSS, TAU, cheat_distance) %>%
+  do(pred_wrapper(.)) %>%
+  ungroup()
+
+# Prediction residuals
+model_df$residuals <- model_df$predicted_time - model_df$time
+```
+
+The following image demonstrates the effect of cheating distance on estimated MSS:
+
+```{r}
+# Estimates plot
+df <- model_df %>%
+  group_by(MSS, TAU, cheat_distance) %>%
+  slice(1) %>%
+  mutate(
+    MSS_string = paste("MSS =", MSS),
+    TAU_string = paste("TAU =", TAU),
+    MAC_string = paste("MAC = ", round(MAC, 2)),
+    PMAX_string = paste("PMAX = ", round(PMAX, 2))
+  )
+
+# MSS
+ggplot(df, aes(x = cheat_distance, y = est_MSS, color = MAC_string)) +
+  theme_bw() +
+  geom_line(alpha = 0.7) +
+  facet_wrap(~MSS_string, scales = "free_y") +
+  xlab("Cheat distance (m)") +
+  ylab("estimated MSS (m/s)") +
+  theme(legend.title = element_blank())
+```
+
+As can be seen from the image, MSS is underestimated as cheating distance increases. The following image demonstrates the effect of cheating distance on estimated MAC:
+
+```{r}
+# MAC
+ggplot(df, aes(x = cheat_distance, y = est_MAC, color = MSS_string)) +
+  theme_bw() +
+  geom_line(alpha = 0.7) +
+  facet_wrap(~MAC_string, scales = "free_y") +
+  xlab("Cheat distance (m)") +
+  ylab("estimated MAC (m/s/s)") +
+  theme(legend.title = element_blank())
+```
+
+MAC (and also TAU) are highly affected by the cheating distance, and from the figure we can notice that MAC is overestimated as cheat distance increases.
+
+And finally, the following image demonstrates the effect of cheating distance on estimated PMAX:
+
+```{r}
+# PMAX
+ggplot(df, aes(x = cheat_distance, y = est_PMAX, color = MSS_string)) +
+  theme_bw() +
+  geom_line(alpha = 0.7) +
+  facet_wrap(~MAC_string, scales = "free_y") +
+  xlab("Cheat distance (m)") +
+  ylab("estimated PMAX (W/kg)") +
+  theme(legend.title = element_blank())
+```
+
+Estimated PMAX is also overestimated as cheat distance increases.
+
+Model residuals are also affected by cheating distance. The shape of residuals depends on splits utilized, but here we can see the effect of the cheating distance on the model residuals per split distance:
+
+```{r}
+# Residuals
+model_df <- model_df %>%
+  mutate(
+    MSS_string = paste("MSS =", MSS),
+    TAU_string = paste("TAU =", TAU),
+    MAC_string = paste("MAC = ", round(MAC, 2)),
+    PMAX_string = paste("PMAX = ", round(PMAX, 2)),
+    group = paste(MSS, MAC, cheat_distance)
+  )
+
+ggplot(model_df, aes(y = residuals, x = distance, color = cheat_distance, group = group)) +
+  theme_bw() +
+  geom_line(alpha = 0.3) +
+  facet_grid(MSS_string ~ MAC_string) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
+  xlab("Distance (m)") +
+  ylab("Predicted time - observed time (sec)")
+```
+
+If we merge individual facets (i.e., combinations of MSS and MAC), we can get simpler images conveying issues with residuals when there is cheating at the start:
+
+```{r}
+ggplot(model_df, aes(y = residuals, x = distance, color = cheat_distance, group = group)) +
+  theme_bw() +
+  geom_line(alpha = 0.3) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
+  xlab("Distance (m)") +
+  ylab("Predicted time - observed time (sec)")
+```
+
+Clearly, cheating and sprint start timing issues and inconsistencies can result in biased parameters and predictions. This is particularly important in testing and comparing test results implementing different starting techniques and timing initiations (**REFERENCE**). Since speed trait is one of the hardest to improve, the effects of start inconsistencies can mask effects of the training intervention. It is thus of crucial importance to take these into account, either by standardizing the start (which is always a must), or by implementing the following techniques. 
+
+### How to deal with the cheating or sprint start timing issues?
+
+Besides standardizing sprint starts, particularly for longitudinal monitoring of the training effects, one can implement additional strategies to make model estimates more robust. 
+
+The simplest strategy is to used validity study results (i.e. comparing timing technique of interest to a gold standard measurement) and to use correction factors (**REFERENCE**). One way to implement correction is to use *time correction* in a same manner used with the radar gun synchronization issues. Thus, equation \@ref(time-distance) gets another form:
+
+\begin{equation}
+  t(d) = TAU \times W(-e^{\frac{-d}{MSS \times TAU}} - 1) + \frac{d}{MSS} + TAU - time \; correction (\#eq:time-correction)
+\end{equation}
+
+If using validity studies, this time correction can be provided (i.e., 0.3-0.5seconds; *REFERENCE*), which is oftentimes the case, or it can me estimated as MSS and TAU is estimated. To estimate time correction, we use `shorts::model_using_splits_with_time_correction` function. Here is how we can estimate Jack parameters using these two methods:
+
+```{r}
+jack_profile_fixed_time <- shorts::model_using_splits(
+  distance = split_times$distance,
+  time = split_times$jack_time,
+  time_correction = 0.3
+)
+
+jack_profile_time_estimated <- shorts::model_using_splits_with_time_correction(
+  distance = split_times$distance,
+  time = split_times$jack_time
+)
+
+jack_parameters <- rbind(
+  unlist(john_profile$parameters),
+  unlist(jack_profile$parameters),
+  unlist(jack_profile_fixed_time$parameters),
+  unlist(jack_profile_time_estimated$parameters)
+)
+
+rownames(jack_parameters) <- c(
+  "John",
+  "Jack - No corrections",
+  "Jack - Fixed time correction",
+  "Jack - Estimated time correction"
+)
+
+jack_parameters
+```
+
+In Jack's case, both fixed time correction and time correction estimation yield parameters closer to John's (i.e. true parameters). 
+
+Another model definition, which is novel approach implemented in the `shorts` packages, is to ulitize *distance correction*, besides time correction. Thus, equation \@ref(time-distance) gets another form:
+
+\begin{equation}
+  t(d) = TAU \times W(-e^{\frac{-d + distance \; correction}{MSS \times TAU}} - 1) + \frac{d + distance \; correction}{MSS} + TAU - time \; correction (\#eq:distance-correction)
+\end{equation}
+
+This model is implemented in `shorts::model_using_splits_with_corrections` function. Let's check this model estimates:
+
+```{r}
+jack_profile_distance_correction <- shorts::model_using_splits_with_corrections(
+  distance = split_times$distance,
+  time = split_times$jack_time
+)
+
+jack_parameters <- rbind(
+  unlist(john_profile$parameters),
+  unlist(jack_profile$parameters),
+  unlist(jack_profile_fixed_time$parameters),
+  unlist(jack_profile_time_estimated$parameters),
+  unlist(jack_profile_distance_correction$parameters)
+)
+
+rownames(jack_parameters) <- c(
+  "John",
+  "Jack - No corrections",
+  "Jack - Fixed time correction",
+  "Jack - Estimated time correction",
+  "Jack - Estimated distance correction"
+)
+
+jack_parameters
+```
+
+As can be seen from the results, adding distance correction results in correctly estimating Jack's sprint parameters. There are few issues with this model definition. Besides being novel and still not validated with practical data, distance correction model has four parameters to estimated, which implies that one needs at least five sprint splits. This imposes practical limitations, since acquiring six timing gate (one for the start and five to splits) might be practically troublesome. 
+
+We will get back to these issues later, but let's see how these models perform using simulated data with varying cheating distance. The following code contains the wrapper that performs all four models (no correction, fixed time correction, estimated time correction, and estimated time and distance correction):
+
+```{r}
+pred_wrapper <- function(data) {
+  no_correction <- shorts::model_using_splits(
+    distance = data$distance,
+    time = data$time
+  )
+
+  fixed_correction <- shorts::model_using_splits(
+    distance = data$distance,
+    time = data$time,
+    time_correction = 0.3
+  )
+
+  time_correction <- shorts::model_using_splits_with_time_correction(
+    distance = data$distance,
+    time = data$time,
+    control = nls.control(tol = 1)
+  )
+
+  time_dist_correction <- shorts::model_using_splits_with_corrections(
+    distance = data$distance,
+    time = data$time,
+    control = nls.control(tol = 1)
+  )
+
+
+  params <- rbind(
+    data.frame(
+      model = "No correction",
+      t(unlist(no_correction$parameters))
+    ),
+    data.frame(
+      model = "Fixed correction",
+      t(unlist(fixed_correction$parameters))
+    ),
+    data.frame(
+      model = "Time correction",
+      t(unlist(time_correction$parameters))
+    ),
+    data.frame(
+      model = "Time and distance correction",
+      t(unlist(time_dist_correction$parameters))
+    )
+  )
+
+  colnames(params) <- c(
+    "model", "est_MSS", "est_TAU", "est_MAC", "est_PMAX",
+    "est_time_correction", "est_distance_correction"
+  )
+
+  df <- expand_grid(
+    data,
+    params
+  )
+
+  df$predicted_time <- shorts::predict_time_at_distance(
+    distance = df$distance,
+    MSS = df$est_MSS,
+    TAU = df$est_TAU,
+    time_correction = df$est_time_correction,
+    distance_correction = df$est_distance_correction
+  )
+
+  df$residuals <- df$predicted_time - df$time
+  return(df)
+}
+
+# estimated parameters and predited time
+model_df <- sim_df %>%
+  group_by(MSS, TAU, cheat_distance) %>%
+  do(pred_wrapper(.)) %>%
+  ungroup()
+```
+
+As can be seen from the next figure, estimated time correction model estimates MSS almost perfectly, while estimated time and distance correction model estimates MSS perfectly. 
+
+```{r}
+model_df$model <- factor(
+  model_df$model,
+  levels = c(
+    "No correction",
+    "Fixed correction",
+    "Time correction",
+    "Time and distance correction"
+  )
+)
+# Estimates plot
+df <- model_df %>%
+  group_by(MSS, TAU, cheat_distance, model) %>%
+  slice(1) %>%
+  mutate(
+    MSS_string = paste("MSS =", MSS),
+    TAU_string = paste("TAU =", TAU),
+    MAC_string = paste("MAC = ", round(MAC, 2)),
+    PMAX_string = paste("PMAX = ", round(PMAX, 2))
+  )
+
+# MSS
+ggplot(df, aes(x = cheat_distance, y = est_MSS, color = model)) +
+  theme_bw(8) +
+  geom_line(alpha = 0.7) +
+  facet_grid(MSS_string ~ MAC_string, scales = "free_y") +
+  xlab("Cheat distance (m)") +
+  ylab("estimated MSS (m/s)") +
+  theme(legend.title = element_blank())
+```
+
+Same conclusions can be said for the MAC parameter. Time and distance corrections model performs perfectly, while time correction model performs almost as good (although worse than for MSS parameter).
+
+```{r}
+# MAC
+ggplot(df, aes(x = cheat_distance, y = est_MAC, color = model)) +
+  theme_bw(8) +
+  geom_line(alpha = 0.7) +
+  facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
+  xlab("Cheat distance (m)") +
+  ylab("estimated MAC (m/s/s)") +
+  theme(legend.title = element_blank())
+```
+
+When it comes to PMAX, same conclusion can be reached as for MAC. 
+
+```{r}
+# PMAX
+ggplot(df, aes(x = cheat_distance, y = est_PMAX, color = model)) +
+  theme_bw(8) +
+  geom_line(alpha = 0.7) +
+  facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
+  xlab("Cheat distance (m)") +
+  ylab("estimated PMAX (W/kg)") +
+  theme(legend.title = element_blank())
+```
+
+The following figure depicts estimated time correction, and as can be seen, only the time and distance correction model estimated the time correction correctly (i.e., the stolen time; indicated by the dashed line on the figure).
+
+```{r}
+# time_correction
+ggplot(df, aes(x = cheat_distance, y = est_time_correction, color = model)) +
+  theme_bw(8) +
+  geom_line(alpha = 0.7) +
+  geom_line(aes(y = stolen_time), color = "black", linetype = "dashed") +
+  facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
+  xlab("Cheat distance (m)") +
+  ylab("estimated time correction (sec)") +
+  theme(legend.title = element_blank())
+```
+
+The following figure depicts estimated distance correction, and same as with the time correction, only the time and distance correction model estimated the distance correction correctly (i.e., cheat distance; indicated by the dashed line on the figure, which represents *identity line* since cheat distance is already on the x-axis).
+
+```{r}
+# distance_correction
+ggplot(df, aes(x = cheat_distance, y = est_distance_correction, color = model)) +
+  theme_bw(8) +
+  geom_line(alpha = 0.7) +
+  geom_abline(slope = 1, color = "black", linetype = "dashed") +
+  facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
+  xlab("Cheat distance (m)") +
+  ylab("estimated distance correction (m)") +
+  theme(legend.title = element_blank())
+```
+
+The following figure depicts model residuals against the distance, and as can be seen, time correction and time and distance correction models performs much better than no correction and fixed correction models, particularly without issues at specific distance zones. 
+
+```{r}
+# Residuals
+model_df <- model_df %>%
+  mutate(
+    MSS_string = paste("MSS =", MSS),
+    TAU_string = paste("TAU =", TAU),
+    MAC_string = paste("MAC = ", round(MAC, 2)),
+    PMAX_string = paste("PMAX = ", round(PMAX, 2)),
+    group = paste(MSS, MAC, cheat_distance)
+  )
+
+ggplot(model_df, aes(y = residuals, x = distance, color = cheat_distance, group = group)) +
+  theme_bw() +
+  geom_line(alpha = 0.3) +
+  facet_wrap(~model) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
+  xlab("Distance (m)") +
+  ylab("Predicted time - observed time (sec)")
+```
+
+Given the simulation data, time correction and time and distance correction models represent sound improvements in parameter estimation and model fit compared to no corrections model and fixed correction model in the face of start cheating. Since time correction model is simpler and demand three parameters to be estimated, it might be practically more useful than time and distance correction model, which demand four parameters estimation and thus more than five timing gates and sprint splits. 
+
+Time correction and time and distance corrections are also implemented in the mixed-models using `shorts::mixed_model_using_splits_with_time_correction` and `shorts::mixed_model_using_splits_with_corrections`. We will showcase their use at the end of this article.
+
+### Simulation of additional starting issues
+
+Starting behind the initial timing gate represent only one issue (i.e. cheating). In this section, we will simulate few other issues to check how sensitive are the presented models to perturbations that can happen in the practice. 
+
+#### Triggering the gate before the start
+
+One issue that might happen in certain timing gates setups is an individual triggering timing system before the sprint is initiated. This is very similar to the situation when timing starts on a signal (i.e., gun during 100m sprint race) and there is *reaction time* (RT) involved. Both of these scenarios represent *time lag* that is added to the split times. Let's simulate the effect of this time lag on model estimates and predictions. 
+
+```{r}
+sim_df <- expand.grid(
+  MSS = c(6, 7, 8, 9),
+  MAC = c(6, 7, 8, 9),
+  time_lag = seq(0, 1, length.out = 50),
+  distance = c(5, 10, 20, 30, 40, 50)
+)
+
+sim_df <- sim_df %>%
+  mutate(
+    TAU = MSS / MAC,
+    PMAX = MSS * MAC / 4,
+    true_time = shorts::predict_time_at_distance(distance, MSS, TAU),
+    time = true_time + time_lag
+  )
+
+# Add small noise to allow model fit
+set.seed(1667)
+rand_noise <- rnorm(nrow(sim_df), 0, 10^-5)
+sim_df$time <- sim_df$time + rand_noise
+
+head(round(sim_df, 2))
+```
+
+```{r}
+# estimated parameters and predicted time
+model_df <- sim_df %>%
+  group_by(MSS, TAU, time_lag) %>%
+  do(pred_wrapper(.)) %>%
+  ungroup()
+```
+
+From the figure below it can be seen that time lag affects estimated MSS for the the model without correction and fixed correction model. Time correction and time and distance corrections model correctly estimated MSS.  
+
+```{r}
+model_df$model <- factor(
+  model_df$model,
+  levels = c(
+    "No correction",
+    "Fixed correction",
+    "Time correction",
+    "Time and distance correction"
+  )
+)
+# Estimates plot
+df <- model_df %>%
+  group_by(MSS, TAU, time_lag, model) %>%
+  slice(1) %>%
+  mutate(
+    MSS_string = paste("MSS =", MSS),
+    TAU_string = paste("TAU =", TAU),
+    MAC_string = paste("MAC = ", round(MAC, 2)),
+    PMAX_string = paste("PMAX = ", round(PMAX, 2))
+  )
+
+# MSS
+ggplot(df, aes(x = time_lag, y = est_MSS, color = model)) +
+  theme_bw(8) +
+  geom_line(alpha = 0.7) +
+  facet_grid(MSS_string ~ MAC_string, scales = "free_y") +
+  xlab("Time lag (sec)") +
+  ylab("estimated MSS (m/s)") +
+  theme(legend.title = element_blank())
+```
+
+From the figure below it can be seen that time lag affects estimated MAC for the the model without correction and fixed correction model. Time correction and time and distance corrections model correctly estimated MAC.  
+
+```{r}
+# MAC
+ggplot(df, aes(x = time_lag, y = est_MAC, color = model)) +
+  theme_bw(8) +
+  geom_line(alpha = 0.7) +
+  facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
+  xlab("Time lag (sec)") +
+  ylab("estimated MAC (m/s/s)") +
+  theme(legend.title = element_blank())
+```
+
+Two figure below depicts correctly identified time lag (i.e. using time correction parameter) using time correction and time and distance corrections models.
+
+```{r}
+# time_correction
+ggplot(df, aes(x = time_lag, y = est_time_correction, color = model)) +
+  theme_bw(8) +
+  geom_line(alpha = 0.7) +
+  geom_abline(slope = -1, color = "black", linetype = "dashed") +
+  facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
+  xlab("Time lag (sec)") +
+  ylab("estimated time correction (sec)") +
+  theme(legend.title = element_blank())
+```
+
+The next figure depicts estimated distance correction for the time and distance correction model. The estimated distance correction parameters looks jumpy due random noise that we have to inject to allow model fit. 
+
+```{r}
+# distance_correction
+ggplot(df, aes(x = time_lag, y = est_distance_correction, color = model)) +
+  theme_bw(8) +
+  geom_line(alpha = 0.7) +
+  facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
+  xlab("Cheat distance (m)") +
+  ylab("estimated distance correction (m)") +
+  theme(legend.title = element_blank())
+```
+
+The following figure depicts residuals (i.e., predicted time minus observed time). 
+
+```{r}
+# Residuals
+model_df <- model_df %>%
+  mutate(
+    MSS_string = paste("MSS =", MSS),
+    TAU_string = paste("TAU =", TAU),
+    MAC_string = paste("MAC = ", round(MAC, 2)),
+    PMAX_string = paste("PMAX = ", round(PMAX, 2)),
+    group = paste(MSS, MAC, time_lag)
+  )
+
+ggplot(model_df, aes(y = residuals, x = distance, color = time_lag, group = group)) +
+  theme_bw() +
+  geom_line(alpha = 0.3) +
+  facet_wrap(~model) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
+  xlab("Distance (m)") +
+  ylab("Predicted time - observed time (sec)")
+```
+
+#### Bad position of the timing gates
+
+Another common issue with timing gates in the practical field settings is the bad measurement of the distance and thus bad positions of the timing gates. In this example, we will simulate the scenario where the initial timing gate is not positioned at $d=0$, but rather with some error (i.e., -0.5 to 0.5m). 
+
+```{r}
+sim_df <- expand.grid(
+  MSS = c(6, 7, 8, 9),
+  MAC = c(6, 7, 8, 9),
+  displacement = seq(-0.5, 0.5, length.out = 51),
+  distance = c(5, 10, 20, 30, 40, 50)
+)
+
+sim_df <- sim_df %>%
+  mutate(
+    TAU = MSS / MAC,
+    PMAX = MSS * MAC / 4,
+    true_distance = distance + displacement,
+    time = shorts::predict_time_at_distance(true_distance, MSS, TAU)
+  )
+
+# Add small noise to allow model fit
+set.seed(1667)
+rand_noise <- rnorm(nrow(sim_df), 0, 10^-5)
+sim_df$time <- sim_df$time + rand_noise
+
+head(round(sim_df, 2))
+```
+
+```{r}
+# estimated parameters and predicted time
+model_df <- sim_df %>%
+  group_by(MSS, TAU, displacement) %>%
+  do(pred_wrapper(.)) %>%
+  ungroup()
+```
+
+Figure below depicts effect of timing gate displacement on the MSS parameter. Time correction and time and distance correction models are almost identical in their correct estimation of the MSS. 
+
+```{r}
+model_df$model <- factor(
+  model_df$model,
+  levels = c(
+    "No correction",
+    "Fixed correction",
+    "Time correction",
+    "Time and distance correction"
+  )
+)
+
+# Estimates plot
+df <- model_df %>%
+  group_by(MSS, TAU, displacement, model) %>%
+  slice(1) %>%
+  mutate(
+    MSS_string = paste("MSS =", MSS),
+    TAU_string = paste("TAU =", TAU),
+    MAC_string = paste("MAC = ", round(MAC, 2)),
+    PMAX_string = paste("PMAX = ", round(PMAX, 2))
+  )
+
+# MSS
+ggplot(df, aes(x = displacement, y = est_MSS, color = model)) +
+  theme_bw(8) +
+  geom_line(alpha = 0.7) +
+  facet_grid(MSS_string ~ MAC_string, scales = "free_y") +
+  xlab("Displacement (m)") +
+  ylab("estimated MSS (m/s)") +
+  theme(legend.title = element_blank())
+```
+
+Figure below depicts effect of timing gate displacement on the MSS parameter. Time and distance correction model is the only model that estimated MAC correctly.
+
+```{r}
+# MAC
+ggplot(df, aes(x = displacement, y = est_MAC, color = model)) +
+  theme_bw(8) +
+  geom_line(alpha = 0.7) +
+  facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
+  xlab("Displacement (m)") +
+  ylab("estimated MAC (m/s/s)") +
+  theme(legend.title = element_blank())
+```
+
+Figures below depicts estimated time and distance corrections parameters. 
+
+```{r}
+# time_correction
+ggplot(df, aes(x = displacement, y = est_time_correction, color = model)) +
+  theme_bw(8) +
+  geom_line(alpha = 0.7) +
+  facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
+  xlab("Displacement (m)") +
+  ylab("estimated time correction (sec)") +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+# distance_correction
+ggplot(df, aes(x = displacement, y = est_distance_correction, color = model)) +
+  theme_bw(8) +
+  geom_line(alpha = 0.7) +
+  geom_abline(slope = 1, color = "black", linetype = "dashed") +
+  facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
+  xlab("Displacement (m)") +
+  ylab("estimated distance correction (m)") +
+  theme(legend.title = element_blank())
+```
+
+The following figure depicts residuals (i.e., predicted time minus observed time). 
+
+```{r}
+# Residuals
+model_df <- model_df %>%
+  mutate(
+    MSS_string = paste("MSS =", MSS),
+    TAU_string = paste("TAU =", TAU),
+    MAC_string = paste("MAC = ", round(MAC, 2)),
+    PMAX_string = paste("PMAX = ", round(PMAX, 2)),
+    group = paste(MSS, MAC, displacement)
+  )
+
+ggplot(model_df, aes(y = residuals, x = distance, color = displacement, group = group)) +
+  theme_bw() +
+  geom_line(alpha = 0.3) +
+  facet_wrap(~model) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
+  xlab("Distance (m)") +
+  ylab("Predicted time - observed time (sec)")
+```
+
+
+Additional sources of issues with the timing gate involve combination of the previous three. For example, one might have a bad position of the initial gate, athlete might be moved back but also manage to trigger the gate before the start commence. More elaborate simulation is beyond the scope of the current paper.
+
+# Leave-one-out Cross-Validation
+
+To estimate parameter stability, model over-fitting, and performance on the unseen data, `shorts` model function comes with implemented *leave-one-out cross validation* (LOOCV) [@jamesIntroductionStatisticalLearning2017; @jovanovicBmbstatsBootstrapMagnitudebased2020; @kuhnAppliedPredictiveModeling2018]. LOOCV involves a simple, yet powerful procedure, of removing each observation, rebuilding the model, and making predictions for that removed observation. This process is repeated for each observations in the model dataset. LOOCV allows one to check estimated parameters stability, and model performance on the unseen data. 
+
+Let's perform LOOCV using Jack's data and time correction model:
+
+```{r}
+jack_LOOCV <- shorts::model_using_splits_with_time_correction(
+  distance = split_times$distance,
+  time = split_times$jack_time,
+  LOOCV = TRUE
+)
+
+jack_LOOCV
+```
+
+The model print output provides training dataset estimates and model performance, as well as LOOCV estimates and model performance. 
+
+Let's plot estimated parameters across LOOCV folds:
+
+```{r}
+df <- jack_LOOCV$LOOCV$parameters
+
+df <- pivot_longer(df, cols = 1:6, names_to = "parameter")
+
+df$parameter <- factor(
+  df$parameter,
+  levels = c(
+    "MSS",
+    "TAU",
+    "MAC",
+    "PMAX",
+    "time_correction",
+    "distance_correction"
+  )
+)
+
+ggplot(df, aes(x = value)) +
+  theme_bw() +
+  geom_boxplot() +
+  facet_wrap(~parameter, scales = "free_x") +
+  xlab(NULL) +
+  ylab(NULL) +
+  theme(
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank()
+  )
+```
+
+Here is the plot of the training and LOOCV residuals:
+
+```{r}
+df <- data.frame(
+  distance = jack_LOOCV$data$distance,
+  time = jack_LOOCV$data$time,
+  pred_time = jack_LOOCV$data$pred_time,
+  LOOCV_time = jack_LOOCV$LOOCV$data$pred_time
+)
+
+df <- df %>%
+  pivot_longer(cols = c("pred_time", "LOOCV_time"))
+
+df$resid <- df$value - df$time
+
+ggplot(df, aes(x = distance, y = resid, color = name)) +
+  theme_bw() +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_point() +
+  theme(legend.title = element_blank()) +
+  xlab("Distance (m)") +
+  ylab("Predicted - observed time (sec)")
+```
+
+As expected, model has more issues predicting unseen short or long sprints. Please note, that since LOOCV removes one observation, if model estimates three parameters, one needs to have at least five observations, since we need to make sure that model can be estimated once a single observation is removed. LOOCV can also be implemented with the mixed-effects models in the `shorts` package. 
+
+# Example analysis
+
+Let's utilize demonstrated functionalities of the `shorts` package using real-world data. The first dataset comes from Usain Bolt run from IAAF World Championship held in London, 2017, and the second dataset involve Jason Vescovi's sample data set for 52 female soccer athletes which comes with the `shorts` package. 
+
+## Usain Bolt's run from London 2017
+
+The following dataset represents Usain Bolt's race in the finals at the IAAF World Championship held in London, 2017. Since reaction time enters the splits, we want to see how will that affect the model estimates, and particularly, will estimated time correction model pick reaction time up. 
+
+For the sake of this analysis, only 10m splits over 60m are used. 
+
+```{r}
+# Taken from London 2017
+# https://barrunning.com/resources/SiteUploads/20180715/London%202017%20REPORT%20FOR%20THE%20100%20m%20Men.pdf
+bolt_reaction_time <- 0.183
+
+bolt_distance <- c(10, 20, 30, 40, 50, 60)
+bolt_time <- c(1.963, 2.983, 3.883, 4.763, 5.643, 6.493)
+
+# No corrections model
+bolt_m1 <- shorts::model_using_splits(
+  distance = bolt_distance,
+  time = bolt_time
+)
+
+# Model with reaction time as fixed time correction
+bolt_m2 <- shorts::model_using_splits(
+  distance = bolt_distance,
+  time = bolt_time,
+  time_correction = -bolt_reaction_time
+)
+
+# Model with estimated time correction
+bolt_m3 <- shorts::model_using_splits_with_time_correction(
+  distance = bolt_distance,
+  time = bolt_time
+)
+
+# Model with estimated time correction, but deducted reaction time
+bolt_m4 <- shorts::model_using_splits_with_time_correction(
+  distance = bolt_distance,
+  time = bolt_time - bolt_reaction_time
+)
+
+# Model with estimated time and distance corrections
+bolt_m5 <- shorts::model_using_splits_with_corrections(
+  distance = bolt_distance,
+  time = bolt_time
+)
+
+# Model with estimated time and distance corrections and deducted reaction time
+bolt_m6 <- shorts::model_using_splits_with_corrections(
+  distance = bolt_distance,
+  time = bolt_time - bolt_reaction_time
+)
+
+bolt_model <- rbind(
+  data.frame(
+    model = "No correction",
+    t(coef(bolt_m1))
+  ),
+  data.frame(
+    model = "No correction - RT",
+    t(coef(bolt_m2))
+  ),
+  data.frame(
+    model = "Time correction",
+    t(coef(bolt_m3))
+  ),
+  data.frame(
+    model = "Time correction - RT",
+    t(coef(bolt_m4))
+  ),
+  data.frame(
+    model = "Distance correction",
+    t(coef(bolt_m5))
+  ),
+  data.frame(
+    model = "Distance correction - RT",
+    t(coef(bolt_m6))
+  )
+)
+
+rownames(bolt_model) <- bolt_model$model
+
+round(bolt_model[-1], 3)
+```
+
+## Vescovi data
+
+Vescovi's data set represents a  sub-set of data from a total of 220 high-level female athletes (151 soccer players and 69 field hockey players). Using a random number generator, a total of 52 players (35 soccer and 17 field hockey) were selected for the sample dataset.  Soccer players were older (24.6±3.6 vs. 18.9±2.7 yr, p < 0.000), however there were no differences for height (167.3±5.9 vs. 167.0±5.7 cm, p = 0.886), body mass (62.5±5.9 vs. 64.0±9.4 kg, p = 0.500) or any sprint interval time (p > 0.650).
+
+The protocol for assessing linear sprint speed has been described previously [@vescoviImpactMaximumSpeed2014; @vescoviLocomotorHeartRateMetabolic2016; @vescoviSprintSpeedCharacteristics2012] and was identical for each cohort.  Briefly, all athletes performed a standardized warm-up that included general exercises such as jogging, shuffling, multi-directional movements, and dynamic stretching exercises. Infrared timing gates (Brower Timing, Utah) were positioned at the start line and at 5, 10, 20, and 35 meters at a height of approximately 1.0 meter. Participants stood with their lead foot positioned approximately 5 cm behind the initial infrared beam (i.e., start line). Only forward movement was permitted (no leaning or rocking backwards) and timing started when the laser of the starting gate was triggered. The best 35 m time, and all associated split times were kept for analysis.  The assessment of linear sprints using infrared timing gates does not require familiarization [@moirInfluenceFamiliarizationReliability2004].
+
+To analyze this dataset, we will utilize mixed-effects models, although individual models can be utilized as well. 
+
+```{r}
+data("vescovi")
+
+# Convert data to long
+df <- vescovi %>%
+  select(1:13) %>%
+  # slice(1:10) %>%
+  pivot_longer(cols = 9:13, names_to = "distance", values_to = "time") %>%
+  mutate(
+    distance = as.numeric(str_extract(distance, "^[0-9]+"))
+  )
+
+head(df)
+```
+
+Here we will utilize the following models: no corrections model, fixed time correction model (using 0.3s heuristic rule of thumb), estimated time correction as a fixed effect model, estimated time correction as a random effect model, estimated distance correction as fixed effect model (and time correction as random effect), and estimated distance correction as random effect model. 
+
+```{r}
+no_corrections <- shorts::mixed_model_using_splits(
+  df,
+  distance = "distance",
+  time = "time",
+  athlete = "Athlete"
+)
+
+fixed_correction <- shorts::mixed_model_using_splits(
+  df,
+  distance = "distance",
+  time = "time",
+  athlete = "Athlete",
+  time_correction = 0.3
+)
+
+time_correction_fixed <- shorts::mixed_model_using_splits_with_time_correction(
+  df,
+  distance = "distance",
+  time = "time",
+  athlete = "Athlete",
+  random = MSS + TAU ~ 1
+)
+
+time_correction_random <- shorts::mixed_model_using_splits_with_time_correction(
+  df,
+  distance = "distance",
+  time = "time",
+  athlete = "Athlete",
+  random = MSS + TAU + time_correction ~ 1
+)
+
+time_distance_correction_fixed <- shorts::mixed_model_using_splits_with_corrections(
+  df,
+  distance = "distance",
+  time = "time",
+  athlete = "Athlete",
+  random = MSS + TAU + time_correction ~ 1
+)
+
+time_distance_correction_random <- shorts::mixed_model_using_splits_with_corrections(
+  df,
+  distance = "distance",
+  time = "time",
+  athlete = "Athlete",
+  random = MSS + TAU + time_correction + distance_correction ~ 1
+)
+```
+
+The following image represents model fit estimator RSE for each model. As can be seen, RSE drops the more flexible the model. 
+
+```{r}
+model_fit <- rbind(
+  data.frame(
+    model = "No corrections",
+    t(unlist(no_corrections$model_fit))
+  ),
+  data.frame(
+    model = "Fixed correction",
+    t(unlist(fixed_correction$model_fit))
+  ),
+  data.frame(
+    model = "Time correction fixed",
+    t(unlist(time_correction_fixed$model_fit))
+  ),
+  data.frame(
+    model = "Time correction random",
+    t(unlist(time_correction_random$model_fit))
+  ),
+  data.frame(
+    model = "Time and distance correction fixed",
+    t(unlist(time_distance_correction_fixed$model_fit))
+  ),
+  data.frame(
+    model = "Time and distance correction random",
+    t(unlist(time_distance_correction_random$model_fit))
+  )
+)
+
+model_fit$model <- factor(
+  model_fit$model,
+  levels = rev(c(
+    "No corrections",
+    "Fixed correction",
+    "Time correction fixed",
+    "Time correction random",
+    "Time and distance correction fixed",
+    "Time and distance correction random"
+  ))
+)
+
+ggplot(model_fit, aes(x = RSE, y = model)) +
+  theme_bw() +
+  geom_point() +
+  xlab("RSE (s)") +
+  ylab(NULL)
+```
+
+The following image depicts estimated parameters for each model:
+
+```{r}
+est_params <- rbind(
+  data.frame(
+    model = "No corrections",
+    no_corrections$parameters$random
+  ),
+  data.frame(
+    model = "Fixed correction",
+    fixed_correction$parameters$random
+  ),
+  data.frame(
+    model = "Time correction fixed",
+    time_correction_fixed$parameters$random
+  ),
+  data.frame(
+    model = "Time correction random",
+    time_correction_random$parameters$random
+  ),
+  data.frame(
+    model = "Time and distance correction fixed",
+    time_distance_correction_fixed$parameters$random
+  ),
+  data.frame(
+    model = "Time and distance correction random",
+    time_distance_correction_random$parameters$random
+  )
+)
+
+est_params$model <- factor(
+  est_params$model,
+  levels = rev(c(
+    "No corrections",
+    "Fixed correction",
+    "Time correction fixed",
+    "Time correction random",
+    "Time and distance correction fixed",
+    "Time and distance correction random"
+  ))
+)
+
+est_params <- est_params %>%
+  pivot_longer(cols = -(1:2), names_to = "parameter")
+
+est_params$parameter <- factor(
+  est_params$parameter,
+  levels = c(
+    "MSS",
+    "TAU",
+    "MAC",
+    "PMAX",
+    "time_correction",
+    "distance_correction"
+  )
+)
+
+ggplot(est_params, aes(y = model, x = value)) +
+  theme_bw(8) +
+  geom_boxplot() +
+  facet_wrap(~parameter, scales = "free_x") +
+  xlab(NULL) +
+  ylab(NULL)
+```
+
+The following image depicts model residuals across distance splits. To provide practical magnitude of the residuals, we have used between subject observed time SD multiplied with 0.2 and -0.2. This provides practical anchor for the residual magnitude, often referred to as *smallest worthwhile change* (SWC) or *smallest effect size of interest* (SESOI) [@jovanovicBmbstatsBootstrapMagnitudebased2020]. If the residuals are within this magnitude band, they have no practical significance, andthus the model is useful in making practically useful predictions.  
+
+Error bars represent residual bias and $\pm$ 1SD. 
+
+```{r}
+model_resid <- rbind(
+  data.frame(
+    model = "No corrections",
+    no_corrections$data
+  ),
+  data.frame(
+    model = "Fixed correction",
+    fixed_correction$data
+  ),
+  data.frame(
+    model = "Time correction fixed",
+    time_correction_fixed$data
+  ),
+  data.frame(
+    model = "Time correction random",
+    time_correction_random$data
+  ),
+  data.frame(
+    model = "Time and distance correction fixed",
+    time_distance_correction_fixed$data
+  ),
+  data.frame(
+    model = "Time and distance correction random",
+    time_distance_correction_random$data
+  )
+)
+
+
+model_resid$model <- factor(
+  model_resid$model,
+  levels = rev(c(
+    "No corrections",
+    "Fixed correction",
+    "Time correction fixed",
+    "Time correction random",
+    "Time and distance correction fixed",
+    "Time and distance correction random"
+  ))
+)
+
+model_resid$resid <- model_resid$pred_time - model_resid$time
+
+# Create SWC / SESOI band
+model_SESOI <- model_resid %>%
+  group_by(model, distance) %>%
+  summarise(
+    bias = mean(resid),
+    variance = sd(resid),
+    upper = bias + variance,
+    lower = bias - variance,
+    MAD = mean(abs(resid)),
+    SESOI_upper = sd(time) * 0.2,
+    SESOI_lower = -sd(time) * 0.2
+  )
+
+# Plot
+ggplot(model_resid, aes(y = model)) +
+  theme_bw(8) +
+  geom_vline(
+    data = model_SESOI,
+    aes(xintercept = SESOI_lower), color = "blue", alpha = 0.5, linetype = "dashed"
+  ) +
+  geom_vline(
+    data = model_SESOI,
+    aes(xintercept = SESOI_upper), color = "blue", alpha = 0.5, linetype = "dashed"
+  ) +
+  geom_vline(xintercept = 0, color = "blue", alpha = 0.5) +
+  geom_jitter(aes(x = resid), alpha = 0.2, height = 0.25) +
+  geom_errorbarh(data = model_SESOI, aes(xmin = lower, xmax = upper), height = 0.1) +
+  geom_point(data = model_SESOI, aes(x = bias)) +
+  facet_wrap(~distance, scales = "free_x") +
+  xlab("Predicted time - observed time (sec)") +
+  ylab(NULL)
+```
+
+The following figure depicts model residuals estimators (bias, or mean residual; variance, or SD of the residuals, and MAD, or mean absolute difference). 
+
+```{r}
+df <- model_SESOI %>%
+  pivot_longer(cols = -(1:2), names_to = "estimator") %>%
+  filter(estimator %in% c("bias", "variance", "MAD"))
+
+df$model <- factor(
+  df$model,
+  levels = rev(c(
+    "No corrections",
+    "Fixed correction",
+    "Time correction fixed",
+    "Time correction random",
+    "Time and distance correction fixed",
+    "Time and distance correction random"
+  ))
+)
+
+df$estimator <- factor(
+  df$estimator,
+  levels = c("bias", "variance", "MAD")
+)
+
+ggplot(df, aes(x = value, y = model)) +
+  theme_bw() +
+  geom_point() +
+  facet_grid(distance ~ estimator, scales = "free_x") +
+  xlab(NULL) +
+  ylab(NULL)
+```
+
+Which model should should be used? Although providing a better fit (using RSE as an estimator of model fit), time and distance correction models often estimate these parameters that are hard to interpret. Although providing novel theoretical models in this paper, we acknowledge the need for validating them in practice, against gold-standard methods, assessing their agreement, as well as their power in detecting and adjusting for inconsistencies and/or cheating at the sprint starts. 
+
+We are hoping that the `shorts` package will help fellow sports scientists and coaches in exploring short sprint profiles and help in driving research, particularly in devising a measuring protocols that are sensitive enough to capture training intervention changes, but also robust enough to take into account potential sprint initiation inconsistencies.  
+
+# References

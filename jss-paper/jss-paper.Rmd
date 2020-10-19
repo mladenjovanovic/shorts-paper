@@ -1,0 +1,177 @@
+---
+documentclass: jss
+author:
+  - name: Mladen Jovanović
+    affiliation: |
+      | University of Belgrade
+    address: |
+      | Faculty of Sport and Physical Education
+      | Belgrade, Serbia
+    email: \email{coach.mladen.jovanovic@gmail.com}
+  - name: Jason D. Vescovi
+    affiliation: |
+      | University of Toronto
+    address: |
+      | Faculty of Kinesiology and Physical Education
+      | Graduate School of Exercise Science
+      | Toronto, ON Canada
+    email: \email{vescovij@gmail.com}
+title:
+  formatted: "\\pkg{shorts}: An R Package for Modeling Short Sprints"
+abstract: >
+  The abstract of the article.
+keywords:
+  formatted: [sprints, sports, modeling]
+preamble: >
+  \usepackage{amsmath}
+output:
+  bookdown::pdf_book:
+    base_format: rticles::jss_article
+citation_package: natbib
+bibliography: [references.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+require(knitr)
+require(shorts)
+require(tidyverse)
+
+my_random_seed <- 1667
+set.seed(my_random_seed)
+
+options("width"=96)
+
+knitr::opts_chunk$set(
+  comment = "#>",
+  collapse = TRUE,
+  cache = TRUE,
+  fig.retina = 0.8, # figures are either vectors or 300 dpi diagrams
+  dpi = 600,
+  out.width = "90%",
+  fig.align = 'center',
+  fig.width = 6,
+  fig.height = 6 * 0.618,  # 1 / phi
+  fig.show = "hold",
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  width = 96
+)
+
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown', 'shorts'
+), 'packages.bib')
+```
+
+# Introduction
+
+Short sprint speed is one of the most distinguishable and admired physical traits in sports, and one that have puzzled coaches and sports scientists (if they were available back then) from the time when two humanoids raced against each other (and other beasts). Short sprints are defined as maximal running from a stand still position over a distance that doesn't result in deceleration at the end. This is approximately less than 6 seconds in duration (why? ATP/CP? --- REF), but the distance can vary based on the level of the athlete (i.e. lower level athletes can reach this point earlier, around 30-40m, while elite sprinters much later, around 50-60m --- REF).
+
+Short sprints have been modeled using the mono-exponential equation \@ref(eq:velocity-time) originally proposed by @doi:10.1098/rspb.1927.0035, and more recently popularized by @greenePredictingSprintDynamics1986, @clarkNFLCombine40Yard2017, @chellyLegPowerHopping2001, @morinSimpleMethodComputing2019, @morinInterpretingPowerForceVelocityProfiles2016, @haugenPowerForceVelocityProfilingSprinting2020, @haugenSprintMechanicalVariables2019, @haugenSprintMechanicalProperties2020, @doi:10.1098/rspb.1927.0035, @haugenDifferenceStartImpact2012, and @samozinoSimpleMethodMeasuring2016:
+
+\begin{equation}
+  v(t) = MSS \times (1 - e^{-\frac{t}{TAU}}) (\#eq:velocity-time)
+\end{equation}
+
+The parameters of the equation \@ref(eq:velocity-time) are \textit{maximum sprinting speed} (MSS; expressed in $ms^-1$) and \textit{relative acceleration} (TAU). Mathematically, TAU represents the ratio of MSS to initial acceleration (MAC; \textit{maximal acceleration}, expressed in $ms^-2$) \@ref(eq:maximal-acceleration).
+
+\begin{equation}
+  MAC = \frac{MSS}{TAU}(\#eq:maximal-acceleration)
+\end{equation}
+
+Although TAU is used in the equations, and later estimated, it is preferred to use MAC instead since it is easier to grasp, particularly for less math inclined coaches.  
+
+By derivating equation \@ref(eq:velocity-time), we can get equation for acceleration \@ref(eq:acceleration-time).
+
+\begin{equation}
+  a(t) = \frac{MSS}{TAU} \times e^{-\frac{t}{TAU}}  (\#eq:acceleration-time)
+\end{equation}
+
+By integrating equation \@ref(eq:velocity-time), we can get equation for distance \@ref(eq:distance-time).
+
+\begin{equation}
+  d(t) = MSS \times (t + TAU \times e^{-\frac{t}{TAU}}) - MSS \times TAU  (\#eq:distance-time)
+\end{equation}
+
+## Four athletes
+
+Let's consider four athletes with different levels of MSS (high versus low maximal sprinting speed) and MAC (high versus low maximal acceleration; as mentioned previously, using MAC is preferred over using TAU) (Table \@ref(tab:four-athletes-table)).
+
+```{r four-athletes-table, echo=FALSE}
+athletes <- tribble(
+  ~Athlete, ~MSS, ~MAC,
+  "Athlete A", 12, 10,
+  "Athlete B", 12, 6,
+  "Athlete C", 8, 10,
+  "Athlete D", 8, 6
+)
+
+athletes <- athletes %>%
+  mutate(TAU = MSS / MAC)
+
+knitr::kable(
+  athletes,
+  caption = "Four athletes with different MSS and MAC parameters.",
+  digits = 2)
+```
+
+The Figure \@ref(fig:four-athletes-kinematics) depicts distance, velocity, and acceleration over time (from 0 to 6s). 
+
+```{r four-athletes-kinematics, echo=FALSE, fig.cap="Kinematic characteristic of four athletes with different MSS and MAC parameters over a period of 0 to 6seconds."}
+kinematics <- expand_grid(
+  athletes,
+  time = seq(0, 6, length.out = 1000)
+) %>%
+  mutate(
+    distance = predict_distance_at_time(time, MSS, TAU),
+    velocity = predict_velocity_at_time(time, MSS, TAU),
+    acceleration = predict_acceleration_at_time(time, MSS, TAU)
+  )
+
+kinematics_long <- kinematics %>%
+  pivot_longer(
+    cols = c("distance", "velocity", "acceleration"),
+    names_to = "variable" ) %>%
+  mutate(
+    variable = factor(
+      variable,
+      levels = c("distance", "velocity", "acceleration"),
+      labels = c("Distance (m)", "Velocity (m/s)", "Acceleration (m/s/s)"))
+  )
+
+gg <- ggplot(
+  kinematics_long,
+  aes(x = time, y = value, color = Athlete)
+) +
+  theme_bw() +
+  geom_line() +
+  facet_wrap(~variable, scales = "free_y") +
+  ylab(NULL) +
+  xlab("Time (s)")
+
+plot(gg)
+```
+
+If we plot acceleration against velocity (Figure \@ref(fig:four-athletes-profile)), we will get Acceleration-Velocity profile, which is, according to the mathematical model, linear.  
+
+```{r four-athletes-profile, echo=FALSE, fig.cap="Acceleration-Velocity profile of four athletes with different MSS and MAC parameters."}
+gg <- ggplot(
+  kinematics,
+  aes(x = velocity, y = acceleration, color = Athlete)
+) +
+  theme_bw() +
+  geom_line() +
+  ylab("Acceleration (m/s/s)") +
+  xlab("Velocity (m/s)")
+
+plot(gg)
+```
+
+# Estimation using \pkg{shorts} package
+
+Short sprints profiling usually comes in two types: (1) split times using timing gates, and (2) velocity using radar gun.  
