@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.10.13)  21 OCT 2020 19:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.10.13)  21 OCT 2020 23:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -420,6 +420,9 @@ Overfull \hbox (17.56917pt too wide) in paragraph at lines 58--59
 [][]\T1/aer/m/n/10.95 Marcote-Pequeño, García-Ramos, Cuadrado-Peñafiel, Gonzále
 z-Hernández, Gómez, and Jiménez-
  []
+
+
+Underfull \vbox (badness 3746) has occurred while \output is active []
 
 [1
 
@@ -1095,11 +1098,11 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  7649 strings out of 481861
  128017 string characters out of 5929302
- 413877 words of memory out of 5000000
+ 413790 words of memory out of 5000000
  23584 multiletter control sequences out of 15000+600000
  578838 words of font info for 102 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 72i,9n,77p,1575b,507s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 72i,9n,77p,1574b,507s stack positions out of 5000i,500n,10000p,200000b,80000s
  </Users/mladenjovanovic/Library/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/e
 c/tcst1095.600pk> </Users/mladenjovanovic/Library/TinyTeX/texmf-var/fonts/pk/lj
 four/jknappen/ec/tctt1095.600pk>{/Users/mladenjovanovic/Library/TinyTeX/texmf-d
@@ -1124,7 +1127,7 @@ ovanovic/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><
 /Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmtt10.pfb></Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/type1/urw
 /zapfchan/uzcmi8a.pfb>
-Output written on paper.pdf (63 pages, 1203801 bytes).
+Output written on paper.pdf (63 pages, 1203712 bytes).
 PDF statistics:
  940 PDF objects out of 1000 (max. 8388607)
  788 compressed objects within 8 object streams
