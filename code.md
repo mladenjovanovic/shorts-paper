@@ -595,7 +595,7 @@ ggplot(
   xlab("Distance (m)") +
   ylab("Time (s)") +
   theme(
-    legend.title = element_blank(),
+    legend.title = element_blank(), 
     legend.position = "top")
 
 ```
@@ -725,7 +725,7 @@ ggplot(
   xlab("Flying start distance (m)") +
   ylab("estimated MSS (m/s)") +
   theme(
-    legend.title = element_blank(),
+    legend.title = element_blank(), 
     legend.position = "top")
 
 ```
@@ -744,7 +744,7 @@ ggplot(
   xlab("Flying start distance (m)") +
   ylab("estimated MAC (m/s/s)") +
   theme(
-    legend.title = element_blank(),
+    legend.title = element_blank(), 
     legend.position = "top")
 
 ```
@@ -763,7 +763,7 @@ ggplot(
   xlab("Flying start distance (m)") +
   ylab("estimated PMAX (W/kg)") +
   theme(
-    legend.title = element_blank(),
+    legend.title = element_blank(), 
     legend.position = "top")
 
 ```
@@ -792,7 +792,7 @@ ggplot(
   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
   xlab("Distance (m)") +
   ylab("Predicted time - observed time (s)") +
-  theme(legend.position = "top") +
+  theme(legend.position = "top") + 
   labs(color = "Flying start distance")
 
 ```
@@ -810,7 +810,7 @@ ggplot(
   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
   xlab("Distance (m)") +
   ylab("Predicted time - observed time (s)") +
-  theme(legend.position = "top") +
+  theme(legend.position = "top") + 
   labs(color = "Flying start distance")
 
 ```
@@ -1145,7 +1145,7 @@ ggplot(
   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
   xlab("Distance (m)") +
   ylab("Predicted time - observed time (s)") +
-  theme(legend.position = "top") +
+  theme(legend.position = "top") + 
   labs(color = "Flying start distance")
 
 ```
@@ -1298,7 +1298,7 @@ ggplot(
   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
   xlab("Distance (m)") +
   ylab("Predicted time - observed time (s)")  +
-  theme(legend.position = "top") +
+  theme(legend.position = "top") + 
   labs(color = "Time lag")
 
 ```
