@@ -152,7 +152,7 @@ Let's consider an example of an athlete with MSS equal to 9 \(ms^-1\), TAU equal
   t(d) = TAU \times W(-e^{\frac{-d}{MSS \times TAU}} - 1) + \frac{d}{MSS} + TAU \label{eq:time-distance}
 \end{equation}
 
-\(W\) in equation \eqref{eq:velocity-time} represents Lambert's W function \citep{R-LambertW}. MSS and TAU parameters are estimated using \texttt{shorts::model\_using\_splits} function:
+\(W\) in equation \eqref{eq:velocity-time} represents Lambert's W function \citep{R-LambertW}. MSS and TAU parameters are estimated using \texttt{model\_using\_splits} function:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -162,7 +162,7 @@ R> split_distance <- c(10, 20, 30, 40)
 R> 
 R> split_time <- c(2.17, 3.43, 4.60, 5.73)
 R> 
-R> m1 <- shorts::model_using_splits(
+R> m1 <- model_using_splits(
 +   distance = split_distance,
 +   time = split_time
 + )
@@ -213,12 +213,12 @@ R> summary(m1$model)
 \end{CodeOutput}
 \end{CodeChunk}
 
-Once we have estimated MSS and TAU, we can use \texttt{shorts::predict\_} family of functions to predict various relationships (i.e.~time at distance, acceleration at distance, velocity at time):
+Once we have estimated MSS and TAU, we can use \texttt{predict\_} family of functions to predict various relationships (i.e.~time at distance, acceleration at distance, velocity at time):
 
 \begin{CodeChunk}
 \begin{CodeInput}
 R> # Predict time at distance
-R> shorts::predict_time_at_distance(
+R> predict_time_at_distance(
 +   distance = split_distance,
 +   MSS = m1$parameters$MSS,
 +   TAU = m1$parameters$TAU
@@ -230,7 +230,7 @@ R> shorts::predict_time_at_distance(
 \begin{CodeInput}
 R> 
 R> # Predict acceleration at time
-R> shorts::predict_acceleration_at_time(
+R> predict_acceleration_at_time(
 +   time = c(0, 1, 2, 3, 4, 5, 6),
 +   MSS = m1$parameters$MSS,
 +   TAU = m1$parameters$TAU
@@ -241,43 +241,14 @@ R> shorts::predict_acceleration_at_time(
 \end{CodeOutput}
 \end{CodeChunk}
 
-Here is a plot of observed and model predicted split times, with the help of the \pkg{ggplot2} package \citep{R-ggplot2}:
-
-\begin{CodeChunk}
-\begin{CodeInput}
-R> require(ggplot2)
-R> 
-R> df <- data.frame(
-+   distance = split_distance,
-+   time = split_time,
-+   pred_time = shorts::predict_time_at_distance(
-+     distance = split_distance,
-+     MSS = m1$parameters$MSS,
-+     TAU = m1$parameters$TAU
-+   )
-+ )
-R> 
-R> ggplot(df, aes(x = distance)) +
-+   theme_bw(8) +
-+   geom_line(aes(y = time)) +
-+   geom_point(aes(y = pred_time), color = "red") +
-+   xlab("Distance (m)") +
-+   ylab("Time (s)")
-\end{CodeInput}
-
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-4-1} \end{center}
-
-\end{CodeChunk}
-
 \hypertarget{air-resistance-and-the-calculation-of-force-and-mechanical-power}{%
 \subsubsection{Air resistance and the calculation of force and mechanical power}\label{air-resistance-and-the-calculation-of-force-and-mechanical-power}}
 
-To estimate force production at distance or time (using \texttt{shorts::predict\_force\_at\_distance} and \texttt{shorts::predict\_force\_at\_time} functions), as well as power production (using \texttt{shorts::predict\_power\_at\_distance} and \texttt{shorts::predict\_power\_at\_time} functions), one needs to take into account the air resistance. Air resistance (N) is estimated using \texttt{shorts::get\_air\_resistance} function, which takes velocity, body mass (kg), body height (m), barometric pressure (Torr), air temperature (\(C^\circ\)), and wind velocity (\(ms^-1\)) as parameters (please refer to \citet{arsacModelingEnergetics100m2002}, \citet{samozinoSimpleMethodMeasuring2016}, and \citet{vaningenschenauCanCyclePower1991} for more information):
+To estimate force production at distance or time (using \texttt{predict\_force\_at\_distance} and \texttt{predict\_force\_at\_time} functions), as well as power production (using \texttt{predict\_power\_at\_distance} and \texttt{predict\_power\_at\_time} functions), one needs to take into account the air resistance. Air resistance (N) is estimated using \texttt{get\_air\_resistance} function, which takes velocity, body mass (kg), body height (m), barometric pressure (Torr), air temperature (\(C^\circ\)), and wind velocity (\(ms^-1\)) as parameters (please refer to \citet{arsacModelingEnergetics100m2002}, \citet{samozinoSimpleMethodMeasuring2016}, and \citet{vaningenschenauCanCyclePower1991} for more information):
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> shorts::get_air_resistance(
+R> get_air_resistance(
 +   velocity = 5,
 +   bodymass = 80,
 +   bodyheight = 1.85,
@@ -291,16 +262,16 @@ R> shorts::get_air_resistance(
 \end{CodeOutput}
 \end{CodeChunk}
 
-When estimating force and power, the air resistance parameters can be set using \texttt{"..."}, which are forwarded to the \texttt{shorts::get\_air\_resistance}:
+When estimating force and power, the air resistance parameters can be set using \texttt{"..."}, which are forwarded to the \texttt{get\_air\_resistance}:
 
 \begin{CodeChunk}
 \begin{CodeInput}
 R> # To calculate horizontal force produced
-R> shorts::predict_force_at_distance(
+R> predict_force_at_distance(
 +   distance = split_distance,
 +   MSS = m1$parameters$MSS,
 +   TAU = m1$parameters$TAU,
-+   # Additional parameters forwarded to shorts::get_air_resistance
++   # Additional parameters forwarded to get_air_resistance
 +   # Otherwise, defaults are used
 +   bodymass = 80,
 +   bodyheight = 1.85,
@@ -315,11 +286,11 @@ R> shorts::predict_force_at_distance(
 \begin{CodeInput}
 R> 
 R> # To calculate power produced
-R> shorts::predict_power_at_distance(
+R> predict_power_at_distance(
 +   distance = split_distance,
 +   MSS = m1$parameters$MSS,
 +   TAU = m1$parameters$TAU,
-+   # Additional parameters forwarded to shorts::get_air_resistance
++   # Additional parameters forwarded to get_air_resistance
 +   # Otherwise, defaults are used
 +   bodymass = 80,
 +   bodyheight = 1.85,
@@ -333,15 +304,15 @@ R> shorts::predict_power_at_distance(
 \end{CodeOutput}
 \end{CodeChunk}
 
-The easiest way to get all kinematics for short sprints is to use \texttt{shorts::predict\_kinematics} functions:
+The easiest way to get all kinematics for short sprints is to use \texttt{predict\_kinematics} functions:
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> df <- shorts::predict_kinematics(
+R> df <- predict_kinematics(
 +   m1,
 +   max_time = 6,
 +   frequency = 100,
-+   # Additional parameters forwarded to shorts::get_air_resistance
++   # Additional parameters forwarded to get_air_resistance
 +   # Otherwise, defaults are used
 +   bodymass = 80,
 +   bodyheight = 1.85,
@@ -370,7 +341,7 @@ R> head(df)
 \end{CodeOutput}
 \end{CodeChunk}
 
-Plotting the model predictions can be done once we convert data from wide to long with the help of \pkg{dplyr} \citep{R-dplyr}, \pkg{tidyr} \citep{R-tidyr}, and \pkg{tidyverse} \citep{R-tidyverse} packages:
+Plotting the model predictions can be done once we convert data from wide to long with the help of \pkg{ggplot2} \citep{R-ggplot2}, \pkg{dplyr} \citep{R-dplyr}, \pkg{tidyr} \citep{R-tidyr}, and \pkg{tidyverse} \citep{R-tidyverse} packages:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -387,19 +358,19 @@ R> ggplot(df, aes(x = distance, y = value)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-8-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 \end{CodeChunk}
 
 \hypertarget{utility-functions}{%
 \subsubsection{Utility functions}\label{utility-functions}}
 
-Another valuable addition for sport scientists and coaches is the ability to determine the distances and times where 90\% of maximum sprinting speed is reached, or where peak power is within 90\% range. To identify these values, \pkg{shorts} package comes with \texttt{shorts::find\_} family of functions:
+Another valuable addition for sport scientists and coaches is the ability to determine the distances and times where 90\% of maximum sprinting speed is reached, or where peak power is within 90\% range. To identify these values, \pkg{shorts} package comes with \texttt{find\_} family of functions:
 
 \begin{CodeChunk}
 \begin{CodeInput}
 R> # Finds distance where 90% of maximum sprinting speed is reached
-R> shorts::find_velocity_critical_distance(
+R> find_velocity_critical_distance(
 +   MSS = m1$parameters$MSS,
 +   TAU = m1$parameters$TAU,
 +   percent = 0.9
@@ -411,10 +382,10 @@ R> shorts::find_velocity_critical_distance(
 \begin{CodeInput}
 R> 
 R> # Finds maximal power and distance (this time using air resistance)
-R> shorts::find_max_power_distance(
+R> find_max_power_distance(
 +   MSS = m1$parameters$MSS,
 +   TAU = m1$parameters$TAU,
-+   # Additional parameters forwarded to shorts::get_air_resistance
++   # Additional parameters forwarded to get_air_resistance
 +   # Otherwise, defaults are used
 +   bodymass = 80,
 +   bodyheight = 1.85,
@@ -432,12 +403,11 @@ R> shorts::find_max_power_distance(
 \end{CodeOutput}
 \begin{CodeInput}
 R> 
-R> 
 R> # Finds distance over 90% power range
-R> shorts::find_power_critical_distance(
+R> find_power_critical_distance(
 +   MSS = m1$parameters$MSS,
 +   TAU = m1$parameters$TAU,
-+   # Additional parameters forwarded to shorts::get_air_resistance
++   # Additional parameters forwarded to get_air_resistance
 +   # Otherwise, defaults are used
 +   bodymass = 80,
 +   bodyheight = 1.85,
@@ -458,29 +428,14 @@ R> shorts::find_power_critical_distance(
 \hypertarget{mixed-effects-model}{%
 \subsubsection{Mixed-effects model}\label{mixed-effects-model}}
 
-Sprint performance is often evaluated with a group of athletes (e.g., soccer club) representing a single strata of interest. Sports scientists can estimate individual profiles, or utilize mixed-effects models. To perform mixed-effects models in \pkg{shorts} for split times, one can use \texttt{shorts::mixed\_model\_using\_splits} function. To demonstrate this functionality, we load the \texttt{split\_times} dataset provided in the \pkg{shorts} package:
+Sprint performance is often evaluated with a group of athletes (e.g., soccer club) representing a single strata of interest. Sports scientists can estimate individual profiles, or utilize mixed-effects models. To perform mixed-effects models in \pkg{shorts} for split times, one can use \texttt{mixed\_model\_using\_splits} function. To demonstrate this functionality, we load the \texttt{split\_times} dataset provided in the \pkg{shorts} package:
 
 \begin{CodeChunk}
 \begin{CodeInput}
 R> data(split_times)
 R> 
-R> head(split_times)
-\end{CodeInput}
-\begin{CodeOutput}
-#> # A tibble: 6 x 4
-#>   athlete bodyweight distance     time
-#>   <chr>        <dbl>    <dbl> <I<dbl>>
-#> 1 John            75        5     1.20
-#> 2 John            75       10     1.97
-#> 3 John            75       15     2.66
-#> 4 John            75       20     3.31
-#> 5 John            75       30     4.59
-#> 6 John            75       40     5.85
-\end{CodeOutput}
-\begin{CodeInput}
-R> 
 R> # Mixed model
-R> m2 <- shorts::mixed_model_using_splits(
+R> m2 <- mixed_model_using_splits(
 +   data = split_times,
 +   distance = "distance",
 +   time = "time",
@@ -558,7 +513,7 @@ R> summary(m2)
 \end{CodeOutput}
 \end{CodeChunk}
 
-The following plot contains kinematics for all athletes in \texttt{split\_times} dataset. Please note that power calculation takes default parameters for each individual:
+The following figure contains kinematics for all athletes in \texttt{split\_times} dataset. Please note that power calculation takes default parameters for each individual:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -575,11 +530,13 @@ R> ggplot(
 +   geom_line(alpha = 0.7) +
 +   ylab(NULL) +
 +   xlab("Distance (m)") +
-+   theme(legend.position = "top", legend.title = element_blank())
++   theme(
++     legend.position = "top",
++     legend.title = element_blank())
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-12-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 \end{CodeChunk}
 
@@ -596,7 +553,7 @@ R> sprint_time <- seq(0, 6, 1)
 R> 
 R> sprint_velocity <- c(0.00, 4.83, 7.07, 8.10, 8.59, 8.81, 8.91)
 R> 
-R> m3 <- shorts::model_using_radar(
+R> m3 <- model_using_radar(
 +   velocity = sprint_velocity,
 +   time = sprint_time
 + )
@@ -624,7 +581,7 @@ Both split and radar gun models allow the use of \emph{weighted} non-linear regr
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> m3_weighted <- shorts::model_using_radar(
+R> m3_weighted <- model_using_radar(
 +   velocity = sprint_velocity,
 +   time = sprint_time,
 +   weights = 1 / (sprint_velocity + 1)
@@ -652,28 +609,13 @@ R> m3_weighted
 \hypertarget{mixed-effects-model-1}{%
 \subsubsection{Mixed-effects model}\label{mixed-effects-model-1}}
 
-Mixed-effects model using radar data is done using \texttt{shorts::mixed\_model\_using\_radar} function. To perform mixed model, let's load data that comes with \pkg{shorts} package.
+Mixed-effects model using radar data is done using \texttt{mixed\_model\_using\_radar} function. To perform mixed model, let's load data that comes with \pkg{shorts} package.
 
 \begin{CodeChunk}
 \begin{CodeInput}
 R> data("radar_gun_data")
 R> 
-R> head(radar_gun_data)
-\end{CodeInput}
-\begin{CodeOutput}
-#> # A tibble: 6 x 4
-#>   athlete bodyweight  time velocity
-#>   <chr>        <dbl> <dbl>    <dbl>
-#> 1 John            75  0       0    
-#> 2 John            75  0.01    0.075
-#> 3 John            75  0.02    0.149
-#> 4 John            75  0.03    0.222
-#> 5 John            75  0.04    0.291
-#> 6 John            75  0.05    0.367
-\end{CodeOutput}
-\begin{CodeInput}
-R> 
-R> m4 <- shorts::mixed_model_using_radar(
+R> m4 <- mixed_model_using_radar(
 +   radar_gun_data,
 +   time = "time",
 +   velocity = "velocity",
@@ -716,66 +658,26 @@ There is a challenge when collecting sprint data that could have a substantial i
 \hypertarget{problems-with-time-sync-with-radar-gun}{%
 \subsection{Problems with time sync with radar gun}\label{problems-with-time-sync-with-radar-gun}}
 
-One source of error in the modeled estimation using a radar gun is the time synchronization. In theory, synchronization is ideal when a sprint is initiated at \(t=0\) (i.e., \(v(t=0) = 0\)). In practice, this is often not the case. Let's use our athlete and add and deduct 0.5s to simulate an error in synchronization and its effect on estimated MSS and TAU.
-
-\begin{CodeChunk}
-\begin{CodeInput}
-R> df <- tibble(
-+   `true time` = sprint_time,
-+   velocity = sprint_velocity,
-+   `0.5s added` = `true time` + 0.5,
-+   `0.5s deducted` = `true time` - 0.5
-+ )
-R> 
-R> head(df)
-\end{CodeInput}
-\begin{CodeOutput}
-#> # A tibble: 6 x 4
-#>   `true time` velocity `0.5s added` `0.5s deducted`
-#>         <dbl>    <dbl>        <dbl>           <dbl>
-#> 1           0     0             0.5            -0.5
-#> 2           1     4.83          1.5             0.5
-#> 3           2     7.07          2.5             1.5
-#> 4           3     8.1           3.5             2.5
-#> 5           4     8.59          4.5             3.5
-#> 6           5     8.81          5.5             4.5
-\end{CodeOutput}
-\end{CodeChunk}
-
-\begin{CodeChunk}
-\begin{CodeInput}
-R> plot_df <- pivot_longer(df, cols = -2, names_to = "Sync issue")
-R> 
-R> ggplot(plot_df, aes(x = value, y = velocity, color = `Sync issue`)) +
-+   theme_bw(8) +
-+   geom_line(alpha = 0.7) +
-+   xlab("Time (s)") +
-+   ylab(expression("Velocity (" * ms^-1 * ")"))
-\end{CodeInput}
-
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-17-1} \end{center}
-
-\end{CodeChunk}
+One source of error in the modeled estimation using a radar gun is the time synchronization. In theory, synchronization is ideal when a sprint is initiated at \(t=0\) (i.e., \(v(t=0) = 0\)). In practice, this is often not the case. Let's use our athlete and add and deduct 0.5s to simulate an error in synchronization and its effect on estimated MSS and TAU (Figure \ref{fig:radar-gun-sync}).
 
 The following three models estimate MSS and TAU from the three datasets:
 
 \begin{CodeChunk}
 \begin{CodeInput}
 R> # Without synchronization issues
-R> m5 <- shorts::model_using_radar(
+R> m5 <- model_using_radar(
 +   velocity = df$velocity,
 +   time = df$`true time`
 + )
 R> 
 R> # With time added
-R> m6 <- shorts::model_using_radar(
+R> m6 <- model_using_radar(
 +   velocity = df$velocity,
 +   time = df$`0.5s added`
 + )
 R> 
 R> # With time deducted
-R> m7 <- shorts::model_using_radar(
+R> m7 <- model_using_radar(
 +   velocity = df$velocity,
 +   time = df$`0.5s deducted`
 + )
@@ -813,12 +715,12 @@ As can be seen from the example, TAU is affected by an error in synchronization 
   v(t) = MSS \times (1 - e^{-\frac{t + time \; correction}{TAU}}) \label{eq:velocity-time-correction}
 \end{equation}
 
-This model is incorporated in the \texttt{shorts::model\_using\_radar\_with\_time\_correction} function:
+This model is incorporated in the \texttt{model\_using\_radar\_with\_time\_correction} function:
 
 \begin{CodeChunk}
 \begin{CodeInput}
 R> # With time added
-R> m8 <- shorts::model_using_radar_with_time_correction(
+R> m8 <- model_using_radar_with_time_correction(
 +   velocity = df$velocity,
 +   time = df$`0.5s added`
 + )
@@ -833,7 +735,7 @@ R> coef(m8)
 \begin{CodeInput}
 R> 
 R> # With time deducted
-R> m9 <- shorts::model_using_radar_with_time_correction(
+R> m9 <- model_using_radar_with_time_correction(
 +   velocity = df$velocity,
 +   time = df$`0.5s deducted`
 + )
@@ -847,7 +749,7 @@ R> coef(m9)
 \end{CodeOutput}
 \end{CodeChunk}
 
-When using \texttt{shorts::predict\_} family of functions, one can provide estimated time correction to get predictions at original time scale.
+When using \texttt{predict\_} family of functions, one can provide estimated time correction to get predictions at original time scale.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -879,7 +781,7 @@ R> predict_velocity_at_time(
 \hypertarget{mixed-model-approach}{%
 \subsubsection{Mixed-model approach}\label{mixed-model-approach}}
 
-When it comes to mixed-model approach, time correction can be modeled as a fixed effect or random effect using the \texttt{shorts::mixed\_model\_using\_radar\_with\_time\_correction} function.
+When it comes to mixed-model approach, time correction can be modeled as a fixed effect or random effect using the \texttt{mixed\_model\_using\_radar\_with\_time\_correction} function.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -887,7 +789,7 @@ R> # Adding 0.5s to radar_gun_data
 R> radar_gun_data$time <- radar_gun_data$time + 0.5
 R> 
 R> # Mixed model with time correction being fixed effect
-R> m10 <- shorts::mixed_model_using_radar_with_time_correction(
+R> m10 <- mixed_model_using_radar_with_time_correction(
 +   radar_gun_data,
 +   time = "time",
 +   velocity = "velocity",
@@ -923,9 +825,8 @@ R> m10
 \end{CodeOutput}
 \begin{CodeInput}
 R> 
-R> 
 R> # Mixed model with time correction being random effect
-R> m11 <- shorts::mixed_model_using_radar_with_time_correction(
+R> m11 <- mixed_model_using_radar_with_time_correction(
 +   radar_gun_data,
 +   time = "time",
 +   velocity = "velocity",
@@ -976,12 +877,12 @@ R> MAC <- MSS / TAU
 R> 
 R> split_times <- tibble(
 +   distance = c(5, 10, 20, 30, 40),
-+   john_time = shorts::predict_time_at_distance(distance, MSS, TAU),
++   john_time = predict_time_at_distance(distance, MSS, TAU),
 + 
 +   # Jack's performance
 +   jack_distance = distance + 0.5,
-+   jack_true_time = shorts::predict_time_at_distance(jack_distance, MSS, TAU),
-+   time_05m = shorts::predict_time_at_distance(0.5, MSS, TAU),
++   jack_true_time = predict_time_at_distance(jack_distance, MSS, TAU),
++   time_05m = predict_time_at_distance(0.5, MSS, TAU),
 +   jack_time = jack_true_time - time_05m
 + )
 R> 
@@ -1009,16 +910,22 @@ R> plot_df <- split_times %>%
 +   pivot_longer(cols = -1, names_to = "athlete", values_to = "time") %>%
 +   mutate(distance = factor(distance))
 R> 
-R> ggplot(plot_df, aes(x = distance, y = time, color = athlete, group = athlete)) +
+R> ggplot(
++   plot_df,
++   aes(x = distance, y = time, color = athlete, group = athlete)
++ ) +
 +   theme_bw(8) +
 +   geom_point() +
 +   geom_line() +
 +   xlab("Distance (m)") +
-+   ylab("Time (s)")
++   ylab("Time (s)") +
++   theme(
++     legend.title = element_blank(), 
++     legend.position = "top")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-23-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1033,12 +940,12 @@ R> rand_noise <- rnorm(nrow(split_times), 0, 10^-5)
 R> split_times$john_time <- split_times$john_time + rand_noise
 R> split_times$jack_time <- split_times$jack_time + rand_noise
 R> 
-R> john_profile <- shorts::model_using_splits(
+R> john_profile <- model_using_splits(
 +   distance = split_times$distance,
 +   time = split_times$john_time
 + )
 R> 
-R> jack_profile <- shorts::model_using_splits(
+R> jack_profile <- model_using_splits(
 +   distance = split_times$distance,
 +   time = split_times$jack_time
 + )
@@ -1082,8 +989,8 @@ R> sim_df <- sim_df %>%
 +     TAU = MSS / MAC,
 +     PMAX = MSS * MAC / 4,
 +     true_distance = distance + flying_start_distance,
-+     true_time = shorts::predict_time_at_distance(true_distance, MSS, TAU),
-+     stolen_time = shorts::predict_time_at_distance(flying_start_distance, MSS, TAU),
++     true_time = predict_time_at_distance(true_distance, MSS, TAU),
++     stolen_time = predict_time_at_distance(flying_start_distance, MSS, TAU),
 +     time = true_time - stolen_time
 +   )
 R> 
@@ -1091,25 +998,7 @@ R> # Add small noise to allow model fit
 R> set.seed(1667)
 R> rand_noise <- rnorm(nrow(sim_df), 0, 10^-4)
 R> sim_df$time <- sim_df$time + rand_noise
-R> 
-R> head(sim_df)
 \end{CodeInput}
-\begin{CodeOutput}
-#>   MSS MAC flying_start_distance distance   TAU PMAX true_distance
-#> 1   6   6                     0        5 1.000  9.0             5
-#> 2   7   6                     0        5 1.167 10.5             5
-#> 3   8   6                     0        5 1.333 12.0             5
-#> 4   9   6                     0        5 1.500 13.5             5
-#> 5   6   7                     0        5 0.857 10.5             5
-#> 6   7   7                     0        5 1.000 12.2             5
-#>      true_time stolen_time         time
-#> 1 1.639197....           0 1.639356....
-#> 2 1.579728....           0 1.579675....
-#> 3 1.537453....           0 1.537537....
-#> 4 1.505904....           0 1.505900....
-#> 5 1.549960....           0 1.549860....
-#> 6 1.488596....           0 1.488548....
-\end{CodeOutput}
 \end{CodeChunk}
 
 Now when we have a simulation dataset, we can check the model estimates and predictions, given the flying start distance:
@@ -1118,14 +1007,14 @@ Now when we have a simulation dataset, we can check the model estimates and pred
 \begin{CodeInput}
 R> # Prediction wrapper
 R> pred_wrapper <- function(data) {
-+   model <- shorts::model_using_splits(
++   model <- model_using_splits(
 +     distance = data$distance,
 +     time = data$time
 +   )
 + 
 +   params <- data.frame(t(unlist(model$parameters)))
 + 
-+   predicted_time <- shorts::predict_time_at_distance(
++   predicted_time <- predict_time_at_distance(
 +     distance = data$distance,
 +     MSS = model$parameters$MSS,
 +     TAU = model$parameters$TAU
@@ -1136,10 +1025,14 @@ R> pred_wrapper <- function(data) {
 +     "est_time_correction", "est_distance_correction"
 +   )
 + 
-+   cbind(data, params, data.frame(predicted_time = as.numeric(predicted_time)))
++   cbind(
++     data,
++     params,
++     data.frame(predicted_time = as.numeric(predicted_time))
++   )
 + }
 R> 
-R> # estimated parameters and predited time
+R> # estimated parameters and predicted time
 R> model_df <- sim_df %>%
 +   group_by(MSS, TAU, flying_start_distance) %>%
 +   do(pred_wrapper(.)) %>%
@@ -1166,17 +1059,22 @@ R> df <- model_df %>%
 +   )
 R> 
 R> # MSS
-R> ggplot(df, aes(x = flying_start_distance, y = est_MSS, color = MAC_string)) +
+R> ggplot(
++   df,
++   aes(x = flying_start_distance, y = est_MSS, color = MAC_string)
++ ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.7) +
 +   facet_wrap(~MSS_string, scales = "free_y") +
 +   xlab("Flying start distance (m)") +
 +   ylab("estimated MSS (m/s)") +
-+   theme(legend.title = element_blank())
++   theme(
++     legend.title = element_blank(), 
++     legend.position = "top")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-27-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1185,17 +1083,22 @@ As can be seen from the image, MSS is underestimated as flying start distance in
 \begin{CodeChunk}
 \begin{CodeInput}
 R> # MAC
-R> ggplot(df, aes(x = flying_start_distance, y = est_MAC, color = MSS_string)) +
+R> ggplot(
++   df,
++   aes(x = flying_start_distance, y = est_MAC, color = MSS_string)
++ ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.7) +
 +   facet_wrap(~MAC_string, scales = "free_y") +
 +   xlab("Flying start distance (m)") +
 +   ylab("estimated MAC (m/s/s)") +
-+   theme(legend.title = element_blank())
++   theme(
++     legend.title = element_blank(), 
++     legend.position = "top")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-28-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1206,17 +1109,22 @@ And finally, the following image demonstrates the effect of flying start distanc
 \begin{CodeChunk}
 \begin{CodeInput}
 R> # PMAX
-R> ggplot(df, aes(x = flying_start_distance, y = est_PMAX, color = MSS_string)) +
+R> ggplot(
++   df,
++   aes(x = flying_start_distance, y = est_PMAX, color = MSS_string)
++ ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.7) +
 +   facet_wrap(~MAC_string, scales = "free_y") +
 +   xlab("Flying start distance (m)") +
 +   ylab("estimated PMAX (W/kg)") +
-+   theme(legend.title = element_blank())
++   theme(
++     legend.title = element_blank(), 
++     legend.position = "top")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-29-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-26-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1236,18 +1144,23 @@ R> model_df <- model_df %>%
 +     group = paste(MSS, MAC, flying_start_distance)
 +   )
 R> 
-R> ggplot(model_df, aes(y = residuals, x = distance, color = flying_start_distance, group = group)) +
+R> ggplot(
++   model_df,
++   aes(y = residuals, x = distance, color = flying_start_distance, group = group)
++ ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.3) +
 +   facet_grid(MSS_string ~ MAC_string) +
 +   geom_hline(yintercept = 0, linetype = "dashed") +
 +   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
 +   xlab("Distance (m)") +
-+   ylab("Predicted time - observed time (s)")
++   ylab("Predicted time - observed time (s)") +
++   theme(legend.position = "top") + 
++   labs(color = "Flying start distance")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-30-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-27-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1255,17 +1168,22 @@ If we merge individual facets (i.e., combinations of MSS and MAC), we can get si
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> ggplot(model_df, aes(y = residuals, x = distance, color = flying_start_distance, group = group)) +
+R> ggplot(
++   model_df,
++   aes(y = residuals, x = distance, color = flying_start_distance, group = group)
++ ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.3) +
 +   geom_hline(yintercept = 0, linetype = "dashed") +
 +   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
 +   xlab("Distance (m)") +
-+   ylab("Predicted time - observed time (s)")
++   ylab("Predicted time - observed time (s)") +
++   theme(legend.position = "top") + 
++   labs(color = "Flying start distance")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-31-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-28-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1282,23 +1200,23 @@ When implementing \emph{time correction}, equation \eqref{eq:time-distance} beco
   t(d) = TAU \times W(-e^{\frac{-d}{MSS \times TAU}} - 1) + \frac{d}{MSS} + TAU - time \; correction \label{eq:time-correction}
 \end{equation}
 
-Rather than providing \emph{apriori} time correction from the literature, \pkg{shorts} package provides an estimation of this parameter from the data provided, together with MSS and TAU. To estimate time correction, we use \texttt{shorts::model\_using\_splits\_with\_time\_correction} function. Here is how we can estimate Jack parameters using either provided time correction (e.g., +0.3 and +0.5s) or estimated time correction:
+Rather than providing \emph{apriori} time correction from the literature, \pkg{shorts} package provides an estimation of this parameter from the data provided, together with MSS and TAU. To estimate time correction, we use \texttt{model\_using\_splits\_with\_time\_correction} function. Here is how we can estimate Jack parameters using either provided time correction (e.g., +0.3 and +0.5s) or estimated time correction:
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> jack_profile_fixed_time_short <- shorts::model_using_splits(
+R> jack_profile_fixed_time_short <- model_using_splits(
 +   distance = split_times$distance,
 +   time = split_times$jack_time,
 +   time_correction = 0.3
 + )
 R> 
-R> jack_profile_fixed_time_long <- shorts::model_using_splits(
+R> jack_profile_fixed_time_long <- model_using_splits(
 +   distance = split_times$distance,
 +   time = split_times$jack_time,
 +   time_correction = 0.5
 + )
 R> 
-R> jack_profile_time_estimated <- shorts::model_using_splits_with_time_correction(
+R> jack_profile_time_estimated <- model_using_splits_with_time_correction(
 +   distance = split_times$distance,
 +   time = split_times$jack_time
 + )
@@ -1351,11 +1269,11 @@ Another model definition, which is a novel approach implemented in the \pkg{shor
   t(d) = TAU \times W(-e^{\frac{-d + distance \; correction}{MSS \times TAU}} - 1) + \frac{d + distance \; correction}{MSS} + TAU - time \; correction \label{eq:distance-correction}
 \end{equation}
 
-This model is implemented in \texttt{shorts::model\_using\_splits\_with\_corrections} function. Below are the model estimates:
+This model is implemented in \texttt{model\_using\_splits\_with\_corrections} function. Below are the model estimates:
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> jack_profile_distance_correction <- shorts::model_using_splits_with_corrections(
+R> jack_profile_distance_correction <- model_using_splits_with_corrections(
 +   distance = split_times$distance,
 +   time = split_times$jack_time
 + )
@@ -1412,30 +1330,30 @@ We will get back to these issues later, but we can examine how these models perf
 \begin{CodeChunk}
 \begin{CodeInput}
 R> pred_wrapper <- function(data) {
-+   no_correction <- shorts::model_using_splits(
++   no_correction <- model_using_splits(
 +     distance = data$distance,
 +     time = data$time
 +   )
 + 
-+   fixed_correction_short <- shorts::model_using_splits(
++   fixed_correction_short <- model_using_splits(
 +     distance = data$distance,
 +     time = data$time,
 +     time_correction = 0.3
 +   )
 + 
-+   fixed_correction_long <- shorts::model_using_splits(
++   fixed_correction_long <- model_using_splits(
 +     distance = data$distance,
 +     time = data$time,
 +     time_correction = 0.5
 +   )
 + 
-+   time_correction <- shorts::model_using_splits_with_time_correction(
++   time_correction <- model_using_splits_with_time_correction(
 +     distance = data$distance,
 +     time = data$time,
 +     control = nls.control(tol = 1)
 +   )
 + 
-+   time_dist_correction <- shorts::model_using_splits_with_corrections(
++   time_dist_correction <- model_using_splits_with_corrections(
 +     distance = data$distance,
 +     time = data$time,
 +     control = nls.control(tol = 1)
@@ -1475,7 +1393,7 @@ R> pred_wrapper <- function(data) {
 +     params
 +   )
 + 
-+   df$predicted_time <- shorts::predict_time_at_distance(
++   df$predicted_time <- predict_time_at_distance(
 +     distance = df$distance,
 +     MSS = df$est_MSS,
 +     TAU = df$est_TAU,
@@ -1487,7 +1405,7 @@ R> pred_wrapper <- function(data) {
 +   return(df)
 + }
 R> 
-R> # estimated parameters and predited time
+R> # estimated parameters and predicted time
 R> model_df <- sim_df %>%
 +   group_by(MSS, TAU, flying_start_distance) %>%
 +   do(pred_wrapper(.)) %>%
@@ -1521,17 +1439,22 @@ R> df <- model_df %>%
 +   )
 R> 
 R> # MSS
-R> ggplot(df, aes(x = flying_start_distance, y = est_MSS, color = model)) +
+R> ggplot(
++   df,
++   aes(x = flying_start_distance, y = est_MSS, color = model)
++ ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.7) +
 +   facet_grid(MSS_string ~ MAC_string, scales = "free_y") +
 +   xlab("Flying start distance (m)") +
 +   ylab("estimated MSS (m/s)") +
-+   theme(legend.title = element_blank())
++   theme(
++     legend.title = element_blank(),
++     legend.position = "top")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-35-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-32-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1540,17 +1463,22 @@ Similar outcomes are observed for the MAC parameter. The time and distance corre
 \begin{CodeChunk}
 \begin{CodeInput}
 R> # MAC
-R> ggplot(df, aes(x = flying_start_distance, y = est_MAC, color = model)) +
+R> ggplot(
++   df,
++   aes(x = flying_start_distance, y = est_MAC, color = model)
++ ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.7) +
 +   facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
 +   xlab("Flying start distance (m)") +
 +   ylab("estimated MAC (m/s/s)") +
-+   theme(legend.title = element_blank())
++   theme(
++     legend.title = element_blank(),
++     legend.position = "top")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-36-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-33-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1559,17 +1487,22 @@ PMAX demonstrates the same properties as MSS and MAC.
 \begin{CodeChunk}
 \begin{CodeInput}
 R> # PMAX
-R> ggplot(df, aes(x = flying_start_distance, y = est_PMAX, color = model)) +
+R> ggplot(
++   df,
++   aes(x = flying_start_distance, y = est_PMAX, color = model)
++ ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.7) +
 +   facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
 +   xlab("Flying start distance (m)") +
 +   ylab("estimated PMAX (W/kg)") +
-+   theme(legend.title = element_blank())
++   theme(
++     legend.title = element_blank(),
++     legend.position = "top")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-37-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-34-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1578,18 +1511,23 @@ The following figure depicts estimated time correction, and as can be seen, only
 \begin{CodeChunk}
 \begin{CodeInput}
 R> # time_correction
-R> ggplot(df, aes(x = flying_start_distance, y = est_time_correction, color = model)) +
+R> ggplot(
++   df,
++   aes(x = flying_start_distance, y = est_time_correction, color = model)
++ ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.7) +
 +   geom_line(aes(y = stolen_time), color = "black", linetype = "dashed") +
 +   facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
 +   xlab("Flying start distance (m)") +
-+   ylab("estimated time correction (s)") +
-+   theme(legend.title = element_blank())
++   ylab("estimated time correction (s)")  +
++   theme(
++     legend.title = element_blank(),
++     legend.position = "top")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-38-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-35-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1598,18 +1536,23 @@ The following figure depicts estimated distance correction, and same as with the
 \begin{CodeChunk}
 \begin{CodeInput}
 R> # distance_correction
-R> ggplot(df, aes(x = flying_start_distance, y = est_distance_correction, color = model)) +
+R> ggplot(
++   df,
++   aes(x = flying_start_distance, y = est_distance_correction, color = model)
++ ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.7) +
 +   geom_abline(slope = 1, color = "black", linetype = "dashed") +
 +   facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
 +   xlab("Flying start distance (m)") +
 +   ylab("estimated distance correction (m)") +
-+   theme(legend.title = element_blank())
++   theme(
++     legend.title = element_blank(),
++     legend.position = "top")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-39-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1627,24 +1570,29 @@ R> model_df <- model_df %>%
 +     group = paste(MSS, MAC, flying_start_distance)
 +   )
 R> 
-R> ggplot(model_df, aes(y = residuals, x = distance, color = flying_start_distance, group = group)) +
+R> ggplot(
++   model_df,
++   aes(y = residuals, x = distance, color = flying_start_distance, group = group)
++ ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.3) +
 +   facet_wrap(~model) +
 +   geom_hline(yintercept = 0, linetype = "dashed") +
 +   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
 +   xlab("Distance (m)") +
-+   ylab("Predicted time - observed time (s)")
++   ylab("Predicted time - observed time (s)") +
++   theme(legend.position = "top") + 
++   labs(color = "Flying start distance")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-40-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-37-1} \end{center}
 
 \end{CodeChunk}
 
 The outcomes from the simulation data clearly demonstrates that the time correction and time and distance correction models represent sound improvements in parameter estimation and model fit compared to no corrections model and fixed correction model when attempting to overcome the flying start issues. Since the time correction model is simpler and requires three parameters to be estimated, it might be practically more useful than the time and distance correction model, which requires four parameters estimation and thus more than five timing gates and sprint splits.
 
-Time correction and time and distance corrections are also implemented in the mixed-models using \texttt{shorts::mixed\_model\_using\_splits\_with\_time\_correction} and \texttt{shorts::mixed\_model\_using\_splits\_with\_corrections}. We will showcase their use at the end of this article.
+Time correction and time and distance corrections are also implemented in the mixed-models using \texttt{mixed\_model\_using\_splits\_with\_time\_correction} and \texttt{mixed\_model\_using\_splits\_with\_corrections}. We will showcase their use at the end of this article.
 
 \hypertarget{simulation-of-additional-starting-issues}{%
 \subsubsection{Simulation of additional starting issues}\label{simulation-of-additional-starting-issues}}
@@ -1666,7 +1614,7 @@ R> sim_df <- sim_df %>%
 +   mutate(
 +     TAU = MSS / MAC,
 +     PMAX = MSS * MAC / 4,
-+     true_time = shorts::predict_time_at_distance(distance, MSS, TAU),
++     true_time = predict_time_at_distance(distance, MSS, TAU),
 +     time = true_time + time_lag
 +   )
 R> 
@@ -1674,18 +1622,7 @@ R> # Add small noise to allow model fit
 R> set.seed(1667)
 R> rand_noise <- rnorm(nrow(sim_df), 0, 10^-4)
 R> sim_df$time <- sim_df$time + rand_noise
-R> 
-R> head(sim_df)
 \end{CodeInput}
-\begin{CodeOutput}
-#>   MSS MAC time_lag distance   TAU PMAX    true_time         time
-#> 1   6   6        0        5 1.000  9.0 1.639197.... 1.639356....
-#> 2   7   6        0        5 1.167 10.5 1.579728.... 1.579675....
-#> 3   8   6        0        5 1.333 12.0 1.537453.... 1.537537....
-#> 4   9   6        0        5 1.500 13.5 1.505904.... 1.505900....
-#> 5   6   7        0        5 0.857 10.5 1.549960.... 1.549860....
-#> 6   7   7        0        5 1.000 12.2 1.488596.... 1.488548....
-\end{CodeOutput}
 \end{CodeChunk}
 
 \begin{CodeChunk}
@@ -1730,11 +1667,13 @@ R> ggplot(df, aes(x = time_lag, y = est_MSS, color = model)) +
 +   facet_grid(MSS_string ~ MAC_string, scales = "free_y") +
 +   xlab("Time lag (s)") +
 +   ylab("estimated MSS (m/s)") +
-+   theme(legend.title = element_blank())
++   theme(
++     legend.title = element_blank(),
++     legend.position = "top")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-43-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-40-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1749,11 +1688,13 @@ R> ggplot(df, aes(x = time_lag, y = est_MAC, color = model)) +
 +   facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
 +   xlab("Time lag (s)") +
 +   ylab("estimated MAC (m/s/s)") +
-+   theme(legend.title = element_blank())
++   theme(
++     legend.title = element_blank(),
++     legend.position = "top")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-44-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-41-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1762,18 +1703,23 @@ The figure below depicts correctly identified time lag (i.e.~using time correcti
 \begin{CodeChunk}
 \begin{CodeInput}
 R> # time_correction
-R> ggplot(df, aes(x = time_lag, y = est_time_correction, color = model)) +
+R> ggplot(
++   df,
++   aes(x = time_lag, y = est_time_correction, color = model)
++ ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.7) +
 +   geom_abline(slope = -1, color = "black", linetype = "dashed") +
 +   facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
 +   xlab("Time lag (s)") +
 +   ylab("estimated time correction (s)") +
-+   theme(legend.title = element_blank())
++   theme(
++     legend.title = element_blank(),
++     legend.position = "top")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-45-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-42-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1782,17 +1728,22 @@ The next figure depicts estimated distance correction for the time and distance 
 \begin{CodeChunk}
 \begin{CodeInput}
 R> # distance_correction
-R> ggplot(df, aes(x = time_lag, y = est_distance_correction, color = model)) +
+R> ggplot(
++   df,
++   aes(x = time_lag, y = est_distance_correction, color = model)
++ ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.7) +
 +   facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
 +   xlab("Time lag (s)") +
 +   ylab("estimated distance correction (m)") +
-+   theme(legend.title = element_blank())
++   theme(
++     legend.title = element_blank(),
++     legend.position = "top")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-46-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-43-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1810,18 +1761,23 @@ R> model_df <- model_df %>%
 +     group = paste(MSS, MAC, time_lag)
 +   )
 R> 
-R> ggplot(model_df, aes(y = residuals, x = distance, color = time_lag, group = group)) +
+R> ggplot(
++   model_df,
++   aes(y = residuals, x = distance, color = time_lag, group = group)
++ ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.3) +
 +   facet_wrap(~model) +
 +   geom_hline(yintercept = 0, linetype = "dashed") +
 +   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
 +   xlab("Distance (m)") +
-+   ylab("Predicted time - observed time (s)")
++   ylab("Predicted time - observed time (s)")  +
++   theme(legend.position = "top") + 
++   labs(color = "Time lag")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-47-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1840,7 +1796,7 @@ Let's perform LOOCV using Jack's data and the time correction model:
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> jack_LOOCV <- shorts::model_using_splits_with_time_correction(
+R> jack_LOOCV <- model_using_splits_with_time_correction(
 +   distance = split_times$distance,
 +   time = split_times$jack_time,
 +   LOOCV = TRUE
@@ -1917,7 +1873,7 @@ R> ggplot(df, aes(x = value)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-49-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-46-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1943,11 +1899,14 @@ R> ggplot(df, aes(x = distance, y = resid, color = name)) +
 +   geom_point() +
 +   theme(legend.title = element_blank()) +
 +   xlab("Distance (m)") +
-+   ylab("Predicted - observed time (s)")
++   ylab("Predicted - observed time (s)") +
++   theme(
++     legend.title = element_blank(),
++     legend.position = "top")
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-50-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-47-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1973,38 +1932,38 @@ R> bolt_distance <- c(10, 20, 30, 40, 50, 60)
 R> bolt_time <- c(1.963, 2.983, 3.883, 4.763, 5.643, 6.493)
 R> 
 R> # No corrections model
-R> bolt_m1 <- shorts::model_using_splits(
+R> bolt_m1 <- model_using_splits(
 +   distance = bolt_distance,
 +   time = bolt_time
 + )
 R> 
 R> # Model with reaction time as fixed time correction
-R> bolt_m2 <- shorts::model_using_splits(
+R> bolt_m2 <- model_using_splits(
 +   distance = bolt_distance,
 +   time = bolt_time,
 +   time_correction = -bolt_reaction_time
 + )
 R> 
 R> # Model with estimated time correction
-R> bolt_m3 <- shorts::model_using_splits_with_time_correction(
+R> bolt_m3 <- model_using_splits_with_time_correction(
 +   distance = bolt_distance,
 +   time = bolt_time
 + )
 R> 
 R> # Model with estimated time correction, but deducted reaction time
-R> bolt_m4 <- shorts::model_using_splits_with_time_correction(
+R> bolt_m4 <- model_using_splits_with_time_correction(
 +   distance = bolt_distance,
 +   time = bolt_time - bolt_reaction_time
 + )
 R> 
 R> # Model with estimated time and distance corrections
-R> bolt_m5 <- shorts::model_using_splits_with_corrections(
+R> bolt_m5 <- model_using_splits_with_corrections(
 +   distance = bolt_distance,
 +   time = bolt_time
 + )
 R> 
 R> # Model with estimated time and distance corrections and deducted reaction time
-R> bolt_m6 <- shorts::model_using_splits_with_corrections(
+R> bolt_m6 <- model_using_splits_with_corrections(
 +   distance = bolt_distance,
 +   time = bolt_time - bolt_reaction_time
 + )
@@ -2073,39 +2032,29 @@ R> # Convert data to long
 R> df <- vescovi %>%
 +   select(1:13) %>%
 +   # slice(1:10) %>%
-+   pivot_longer(cols = 9:13, names_to = "distance", values_to = "time") %>%
++   pivot_longer(
++     cols = 9:13,
++     names_to = "distance",
++     values_to = "time"
++   ) %>%
 +   mutate(
 +     distance = as.numeric(str_extract(distance, "^[0-9]+"))
 +   )
-R> 
-R> head(df)
 \end{CodeInput}
-\begin{CodeOutput}
-#> # A tibble: 6 x 10
-#>   Team  Surface Athlete   Age Height Bodyweight   BMI   BSA distance
-#>   <chr> <chr>   <fct>   <dbl>  <dbl>      <dbl> <dbl> <dbl>    <dbl>
-#> 1 W So~ Natura~ FMSS-1~    21   163.       54.8  20.5   1.6        5
-#> 2 W So~ Natura~ FMSS-1~    21   163.       54.8  20.5   1.6       10
-#> 3 W So~ Natura~ FMSS-1~    21   163.       54.8  20.5   1.6       20
-#> 4 W So~ Natura~ FMSS-1~    21   163.       54.8  20.5   1.6       30
-#> 5 W So~ Natura~ FMSS-1~    21   163.       54.8  20.5   1.6       35
-#> 6 FH Sr Hard C~ FMSS-2~    21   172.       63.6  21.5   1.7        5
-#> # ... with 1 more variable: time <dbl>
-\end{CodeOutput}
 \end{CodeChunk}
 
 The following models were used: (1) no corrections model, (2) fixed time correction model (using 0.3s heuristic rule of thumb), (3) estimated time correction as a fixed effect model, (4) estimated time correction as a random effect model, (5) estimated distance correction as fixed effect model (and time correction as random effect), and (6) estimated distance correction as random effect model.
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> no_corrections <- shorts::mixed_model_using_splits(
+R> no_corrections <- mixed_model_using_splits(
 +   df,
 +   distance = "distance",
 +   time = "time",
 +   athlete = "Athlete"
 + )
 R> 
-R> fixed_correction <- shorts::mixed_model_using_splits(
+R> fixed_correction <- mixed_model_using_splits(
 +   df,
 +   distance = "distance",
 +   time = "time",
@@ -2113,7 +2062,7 @@ R> fixed_correction <- shorts::mixed_model_using_splits(
 +   time_correction = 0.3
 + )
 R> 
-R> time_correction_fixed <- shorts::mixed_model_using_splits_with_time_correction(
+R> time_correction_fixed <- mixed_model_using_splits_with_time_correction(
 +   df,
 +   distance = "distance",
 +   time = "time",
@@ -2121,7 +2070,7 @@ R> time_correction_fixed <- shorts::mixed_model_using_splits_with_time_correctio
 +   random = MSS + TAU ~ 1
 + )
 R> 
-R> time_correction_random <- shorts::mixed_model_using_splits_with_time_correction(
+R> time_correction_random <- mixed_model_using_splits_with_time_correction(
 +   df,
 +   distance = "distance",
 +   time = "time",
@@ -2129,7 +2078,7 @@ R> time_correction_random <- shorts::mixed_model_using_splits_with_time_correcti
 +   random = MSS + TAU + time_correction ~ 1
 + )
 R> 
-R> time_distance_correction_fixed <- shorts::mixed_model_using_splits_with_corrections(
+R> time_distance_correction_fixed <- mixed_model_using_splits_with_corrections(
 +   df,
 +   distance = "distance",
 +   time = "time",
@@ -2137,7 +2086,7 @@ R> time_distance_correction_fixed <- shorts::mixed_model_using_splits_with_corre
 +   random = MSS + TAU + time_correction ~ 1
 + )
 R> 
-R> time_distance_correction_random <- shorts::mixed_model_using_splits_with_corrections(
+R> time_distance_correction_random <- mixed_model_using_splits_with_corrections(
 +   df,
 +   distance = "distance",
 +   time = "time",
@@ -2198,7 +2147,7 @@ R> ggplot(model_fit, aes(x = RSE, y = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-54-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-51-1} \end{center}
 
 \end{CodeChunk}
 
@@ -2269,7 +2218,7 @@ R> ggplot(est_params, aes(y = model, x = value)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-55-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-52-1} \end{center}
 
 \end{CodeChunk}
 
@@ -2339,15 +2288,21 @@ R> ggplot(model_resid, aes(y = model)) +
 +   theme_bw(8) +
 +   geom_vline(
 +     data = model_SESOI,
-+     aes(xintercept = SESOI_lower), color = "blue", alpha = 0.5, linetype = "dashed"
++     aes(xintercept = SESOI_lower),
++     color = "blue", alpha = 0.5, linetype = "dashed"
 +   ) +
 +   geom_vline(
 +     data = model_SESOI,
-+     aes(xintercept = SESOI_upper), color = "blue", alpha = 0.5, linetype = "dashed"
++     aes(xintercept = SESOI_upper),
++     color = "blue", alpha = 0.5, linetype = "dashed"
 +   ) +
 +   geom_vline(xintercept = 0, color = "blue", alpha = 0.5) +
 +   geom_jitter(aes(x = resid), alpha = 0.1, height = 0.25) +
-+   geom_errorbarh(data = model_SESOI, aes(xmin = lower, xmax = upper), height = 0.1, color = "black") +
++   geom_errorbarh(
++     data = model_SESOI,
++     aes(xmin = lower, xmax = upper),
++     height = 0.1, color = "black"
++   ) +
 +   geom_point(data = model_SESOI, aes(x = bias), color = "black") +
 +   facet_wrap(~distance, scales = "free_x") +
 +   xlab("Predicted time - observed time (s)") +
@@ -2355,7 +2310,7 @@ R> ggplot(model_resid, aes(y = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-56-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-53-1} \end{center}
 
 \end{CodeChunk}
 
@@ -2393,7 +2348,7 @@ R> ggplot(df, aes(x = value, y = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-57-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-54-1} \end{center}
 
 \end{CodeChunk}
 

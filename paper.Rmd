@@ -175,7 +175,9 @@ gg <- ggplot(
   ) +
   ylab(NULL) +
   xlab("Time (s)") +
-  theme(legend.position = "top", legend.title = element_blank())
+  theme(
+    legend.position = "top",
+    legend.title = element_blank())
 
 plot(gg)
 ```
@@ -191,7 +193,9 @@ gg <- ggplot(
   geom_line(alpha = 0.7) +
   ylab(expression("Acceleration (ms"^-2 * ")")) +
   xlab(expression("Velocity (ms"^-1 * ")")) +
-  theme(legend.position = "top", legend.title = element_blank())
+  theme(
+    legend.position = "top",
+    legend.title = element_blank())
 
 plot(gg)
 ```
@@ -249,29 +253,6 @@ predict_acceleration_at_time(
   MSS = m1$parameters$MSS,
   TAU = m1$parameters$TAU
 )
-```
-
-Here is a plot of observed and model predicted split times, with the help of the \pkg{ggplot2} package [@R-ggplot2]:
-
-```{r}
-require(ggplot2)
-
-df <- data.frame(
-  distance = split_distance,
-  time = split_time,
-  pred_time = predict_time_at_distance(
-    distance = split_distance,
-    MSS = m1$parameters$MSS,
-    TAU = m1$parameters$TAU
-  )
-)
-
-ggplot(df, aes(x = distance)) +
-  theme_bw(8) +
-  geom_line(aes(y = time)) +
-  geom_point(aes(y = pred_time), color = "red") +
-  xlab("Distance (m)") +
-  ylab("Time (s)")
 ```
 
 ### Air resistance and the calculation of force and mechanical power
@@ -340,7 +321,7 @@ df <- predict_kinematics(
 head(df)
 ```
 
-Plotting the model predictions can be done once we convert data from wide to long with the help of \pkg{dplyr} [@R-dplyr], \pkg{tidyr} [@R-tidyr], and \pkg{tidyverse} [@R-tidyverse] packages:
+Plotting the model predictions can be done once we convert data from wide to long with the help of   \pkg{ggplot2} [@R-ggplot2], \pkg{dplyr} [@R-dplyr], \pkg{tidyr} [@R-tidyr], and \pkg{tidyverse} [@R-tidyverse] packages:
 
 ```{r}
 require(tidyverse)
@@ -380,7 +361,6 @@ find_max_power_distance(
   wind_velocity = 0.5
 )
 
-
 # Finds distance over 90% power range
 find_power_critical_distance(
   MSS = m1$parameters$MSS,
@@ -401,8 +381,6 @@ Sprint performance is often evaluated with a group of athletes (e.g., soccer clu
 
 ```{r}
 data(split_times)
-
-head(split_times)
 
 # Mixed model
 m2 <- mixed_model_using_splits(
@@ -425,7 +403,7 @@ Additional information about mixed-effects model performed using the `nlme` pack
 summary(m2)
 ```
 
-The following plot contains kinematics for all athletes in `split_times` dataset. Please note that power calculation takes default parameters for each individual:
+The following figure contains kinematics for all athletes in `split_times` dataset. Please note that power calculation takes default parameters for each individual:
 
 ```{r}
 df <- predict_kinematics(m2, max_time = 10)
@@ -441,7 +419,9 @@ ggplot(
   geom_line(alpha = 0.7) +
   ylab(NULL) +
   xlab("Distance (m)") +
-  theme(legend.position = "top", legend.title = element_blank())
+  theme(
+    legend.position = "top",
+    legend.title = element_blank())
 ```
 
 ## Estimating short sprint parameters using radar gun
@@ -482,8 +462,6 @@ Mixed-effects model using radar data is done using `mixed_model_using_radar` fun
 ```{r}
 data("radar_gun_data")
 
-head(radar_gun_data)
-
 m4 <- mixed_model_using_radar(
   radar_gun_data,
   time = "time",
@@ -500,9 +478,9 @@ There is a challenge when collecting sprint data that could have a substantial i
 
 ## Problems with time sync with radar gun
 
-One source of error in the modeled estimation using a radar gun is the time synchronization. In theory, synchronization is ideal when a sprint is initiated at $t=0$ (i.e., $v(t=0) = 0$). In practice, this is often not the case. Let's use our athlete and add and deduct 0.5s to simulate an error in synchronization and its effect on estimated MSS and TAU.
+One source of error in the modeled estimation using a radar gun is the time synchronization. In theory, synchronization is ideal when a sprint is initiated at $t=0$ (i.e., $v(t=0) = 0$). In practice, this is often not the case. Let's use our athlete and add and deduct 0.5s to simulate an error in synchronization and its effect on estimated MSS and TAU (Figure \@ref(fig:radar-gun-sync)).
 
-```{r}
+```{r radar-gun-sync, include=FALSE, fig.cap="Radar gun synchronization issues"}
 df <- tibble(
   `true time` = sprint_time,
   velocity = sprint_velocity,
@@ -510,17 +488,19 @@ df <- tibble(
   `0.5s deducted` = `true time` - 0.5
 )
 
-head(df)
-```
-
-```{r}
 plot_df <- pivot_longer(df, cols = -2, names_to = "Sync issue")
 
-ggplot(plot_df, aes(x = value, y = velocity, color = `Sync issue`)) +
+ggplot(
+  plot_df,
+  aes(x = value, y = velocity, color = `Sync issue`)
+) +
   theme_bw(8) +
   geom_line(alpha = 0.7) +
   xlab("Time (s)") +
-  ylab(expression("Velocity (" * ms^-1 * ")"))
+  ylab(expression("Velocity (" * ms^-1 * ")")) +
+  theme(
+    legend.title = element_blank(), 
+    legend.position = "top")
 ```
 
 The following three models estimate MSS and TAU from the three datasets:
@@ -622,7 +602,6 @@ m10 <- mixed_model_using_radar_with_time_correction(
 
 m10
 
-
 # Mixed model with time correction being random effect
 m11 <- mixed_model_using_radar_with_time_correction(
   radar_gun_data,
@@ -669,12 +648,18 @@ plot_df <- split_times %>%
   pivot_longer(cols = -1, names_to = "athlete", values_to = "time") %>%
   mutate(distance = factor(distance))
 
-ggplot(plot_df, aes(x = distance, y = time, color = athlete, group = athlete)) +
+ggplot(
+  plot_df,
+  aes(x = distance, y = time, color = athlete, group = athlete)
+) +
   theme_bw(8) +
   geom_point() +
   geom_line() +
   xlab("Distance (m)") +
-  ylab("Time (s)")
+  ylab("Time (s)") +
+  theme(
+    legend.title = element_blank(), 
+    legend.position = "top")
 ```
 
 Using the following code, we can see the differences in estimated MSS and TAU parameters:
@@ -738,8 +723,6 @@ sim_df <- sim_df %>%
 set.seed(1667)
 rand_noise <- rnorm(nrow(sim_df), 0, 10^-4)
 sim_df$time <- sim_df$time + rand_noise
-
-head(sim_df)
 ```
 
 Now when we have a simulation dataset, we can check the model estimates and predictions, given the flying start distance:
@@ -765,10 +748,14 @@ pred_wrapper <- function(data) {
     "est_time_correction", "est_distance_correction"
   )
 
-  cbind(data, params, data.frame(predicted_time = as.numeric(predicted_time)))
+  cbind(
+    data,
+    params,
+    data.frame(predicted_time = as.numeric(predicted_time))
+  )
 }
 
-# estimated parameters and predited time
+# estimated parameters and predicted time
 model_df <- sim_df %>%
   group_by(MSS, TAU, flying_start_distance) %>%
   do(pred_wrapper(.)) %>%
@@ -793,26 +780,36 @@ df <- model_df %>%
   )
 
 # MSS
-ggplot(df, aes(x = flying_start_distance, y = est_MSS, color = MAC_string)) +
+ggplot(
+  df,
+  aes(x = flying_start_distance, y = est_MSS, color = MAC_string)
+) +
   theme_bw(8) +
   geom_line(alpha = 0.7) +
   facet_wrap(~MSS_string, scales = "free_y") +
   xlab("Flying start distance (m)") +
   ylab("estimated MSS (m/s)") +
-  theme(legend.title = element_blank())
+  theme(
+    legend.title = element_blank(), 
+    legend.position = "top")
 ```
 
 As can be seen from the image, MSS is underestimated as flying start distance increases. The following image demonstrates the effect of flying start distance on estimated MAC:
 
 ```{r}
 # MAC
-ggplot(df, aes(x = flying_start_distance, y = est_MAC, color = MSS_string)) +
+ggplot(
+  df,
+  aes(x = flying_start_distance, y = est_MAC, color = MSS_string)
+) +
   theme_bw(8) +
   geom_line(alpha = 0.7) +
   facet_wrap(~MAC_string, scales = "free_y") +
   xlab("Flying start distance (m)") +
   ylab("estimated MAC (m/s/s)") +
-  theme(legend.title = element_blank())
+  theme(
+    legend.title = element_blank(), 
+    legend.position = "top")
 ```
 
 MAC (and also TAU) are highly affected by the flying start distance, and from the figure we can notice that MAC is overestimated as flying start distance increases.
@@ -821,13 +818,18 @@ And finally, the following image demonstrates the effect of flying start distanc
 
 ```{r}
 # PMAX
-ggplot(df, aes(x = flying_start_distance, y = est_PMAX, color = MSS_string)) +
+ggplot(
+  df,
+  aes(x = flying_start_distance, y = est_PMAX, color = MSS_string)
+) +
   theme_bw(8) +
   geom_line(alpha = 0.7) +
   facet_wrap(~MAC_string, scales = "free_y") +
   xlab("Flying start distance (m)") +
   ylab("estimated PMAX (W/kg)") +
-  theme(legend.title = element_blank())
+  theme(
+    legend.title = element_blank(), 
+    legend.position = "top")
 ```
 
 Estimated PMAX is also overestimated as flying start distance increases.
@@ -845,26 +847,36 @@ model_df <- model_df %>%
     group = paste(MSS, MAC, flying_start_distance)
   )
 
-ggplot(model_df, aes(y = residuals, x = distance, color = flying_start_distance, group = group)) +
+ggplot(
+  model_df,
+  aes(y = residuals, x = distance, color = flying_start_distance, group = group)
+) +
   theme_bw(8) +
   geom_line(alpha = 0.3) +
   facet_grid(MSS_string ~ MAC_string) +
   geom_hline(yintercept = 0, linetype = "dashed") +
   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
   xlab("Distance (m)") +
-  ylab("Predicted time - observed time (s)")
+  ylab("Predicted time - observed time (s)") +
+  theme(legend.position = "top") + 
+  labs(color = "Flying start distance")
 ```
 
 If we merge individual facets (i.e., combinations of MSS and MAC), we can get simpler images conveying issues with residuals when there is a flying start:
 
 ```{r}
-ggplot(model_df, aes(y = residuals, x = distance, color = flying_start_distance, group = group)) +
+ggplot(
+  model_df,
+  aes(y = residuals, x = distance, color = flying_start_distance, group = group)
+) +
   theme_bw(8) +
   geom_line(alpha = 0.3) +
   geom_hline(yintercept = 0, linetype = "dashed") +
   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
   xlab("Distance (m)") +
-  ylab("Predicted time - observed time (s)")
+  ylab("Predicted time - observed time (s)") +
+  theme(legend.position = "top") + 
+  labs(color = "Flying start distance")
 ```
 
 Clearly, any type of flying start where there is a difference between initial force production and start time can result in biased parameters and predictions. Since maximal sprint speed is difficult to improve, the effects of start inconsistencies can mask effects of the training intervention. It is thus crucial to standardize the start when testing and implementing the following techniques when using the \pkg{shorts} package. 
@@ -1036,7 +1048,7 @@ pred_wrapper <- function(data) {
   return(df)
 }
 
-# estimated parameters and predited time
+# estimated parameters and predicted time
 model_df <- sim_df %>%
   group_by(MSS, TAU, flying_start_distance) %>%
   do(pred_wrapper(.)) %>%
@@ -1068,67 +1080,92 @@ df <- model_df %>%
   )
 
 # MSS
-ggplot(df, aes(x = flying_start_distance, y = est_MSS, color = model)) +
+ggplot(
+  df,
+  aes(x = flying_start_distance, y = est_MSS, color = model)
+) +
   theme_bw(8) +
   geom_line(alpha = 0.7) +
   facet_grid(MSS_string ~ MAC_string, scales = "free_y") +
   xlab("Flying start distance (m)") +
   ylab("estimated MSS (m/s)") +
-  theme(legend.title = element_blank())
+  theme(
+    legend.title = element_blank(),
+    legend.position = "top")
 ```
 
 Similar outcomes are observed for the MAC parameter. The time and distance corrections model performs perfectly, while the time correction model performs almost as good.
 
 ```{r}
 # MAC
-ggplot(df, aes(x = flying_start_distance, y = est_MAC, color = model)) +
+ggplot(
+  df,
+  aes(x = flying_start_distance, y = est_MAC, color = model)
+) +
   theme_bw(8) +
   geom_line(alpha = 0.7) +
   facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
   xlab("Flying start distance (m)") +
   ylab("estimated MAC (m/s/s)") +
-  theme(legend.title = element_blank())
+  theme(
+    legend.title = element_blank(),
+    legend.position = "top")
 ```
 
 PMAX demonstrates the same properties as MSS and MAC. 
 
 ```{r}
 # PMAX
-ggplot(df, aes(x = flying_start_distance, y = est_PMAX, color = model)) +
+ggplot(
+  df,
+  aes(x = flying_start_distance, y = est_PMAX, color = model)
+) +
   theme_bw(8) +
   geom_line(alpha = 0.7) +
   facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
   xlab("Flying start distance (m)") +
   ylab("estimated PMAX (W/kg)") +
-  theme(legend.title = element_blank())
+  theme(
+    legend.title = element_blank(),
+    legend.position = "top")
 ```
 
 The following figure depicts estimated time correction, and as can be seen, only the time and distance correction model estimated the time correction correctly (i.e., the *stolen time*; indicated by the dashed line on the figure).
 
 ```{r}
 # time_correction
-ggplot(df, aes(x = flying_start_distance, y = est_time_correction, color = model)) +
+ggplot(
+  df,
+  aes(x = flying_start_distance, y = est_time_correction, color = model)
+) +
   theme_bw(8) +
   geom_line(alpha = 0.7) +
   geom_line(aes(y = stolen_time), color = "black", linetype = "dashed") +
   facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
   xlab("Flying start distance (m)") +
-  ylab("estimated time correction (s)") +
-  theme(legend.title = element_blank())
+  ylab("estimated time correction (s)")  +
+  theme(
+    legend.title = element_blank(),
+    legend.position = "top")
 ```
 
 The following figure depicts estimated distance correction, and same as with the time correction, only the time and distance correction model estimated the distance correction correctly (i.e., flying start distance; indicated by the dashed line on the figure, which represents *identity line* since flying start distance is already on the x-axis).
 
 ```{r}
 # distance_correction
-ggplot(df, aes(x = flying_start_distance, y = est_distance_correction, color = model)) +
+ggplot(
+  df,
+  aes(x = flying_start_distance, y = est_distance_correction, color = model)
+) +
   theme_bw(8) +
   geom_line(alpha = 0.7) +
   geom_abline(slope = 1, color = "black", linetype = "dashed") +
   facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
   xlab("Flying start distance (m)") +
   ylab("estimated distance correction (m)") +
-  theme(legend.title = element_blank())
+  theme(
+    legend.title = element_blank(),
+    legend.position = "top")
 ```
 
 The following figure depicts model residuals against the distance, and as can be seen, time correction and time and distance correction models performs much better than no correction and fixed correction models:
@@ -1144,14 +1181,19 @@ model_df <- model_df %>%
     group = paste(MSS, MAC, flying_start_distance)
   )
 
-ggplot(model_df, aes(y = residuals, x = distance, color = flying_start_distance, group = group)) +
+ggplot(
+  model_df,
+  aes(y = residuals, x = distance, color = flying_start_distance, group = group)
+) +
   theme_bw(8) +
   geom_line(alpha = 0.3) +
   facet_wrap(~model) +
   geom_hline(yintercept = 0, linetype = "dashed") +
   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
   xlab("Distance (m)") +
-  ylab("Predicted time - observed time (s)")
+  ylab("Predicted time - observed time (s)") +
+  theme(legend.position = "top") + 
+  labs(color = "Flying start distance")
 ```
 
 The outcomes from the simulation data clearly demonstrates that the time correction and time and distance correction models represent sound improvements in parameter estimation and model fit compared to no corrections model and fixed correction model when attempting to overcome the flying start issues. Since the time correction model is simpler and requires three parameters to be estimated, it might be practically more useful than the time and distance correction model, which requires four parameters estimation and thus more than five timing gates and sprint splits. 
@@ -1184,8 +1226,6 @@ sim_df <- sim_df %>%
 set.seed(1667)
 rand_noise <- rnorm(nrow(sim_df), 0, 10^-4)
 sim_df$time <- sim_df$time + rand_noise
-
-head(sim_df)
 ```
 
 ```{r}
@@ -1227,7 +1267,9 @@ ggplot(df, aes(x = time_lag, y = est_MSS, color = model)) +
   facet_grid(MSS_string ~ MAC_string, scales = "free_y") +
   xlab("Time lag (s)") +
   ylab("estimated MSS (m/s)") +
-  theme(legend.title = element_blank())
+  theme(
+    legend.title = element_blank(),
+    legend.position = "top")
 ```
 
 From the figure below it can be seen that time lag affects estimated MAC for the the model without correction and fixed correction models. Time correction and time and distance corrections model correctly estimated MAC.  
@@ -1240,34 +1282,46 @@ ggplot(df, aes(x = time_lag, y = est_MAC, color = model)) +
   facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
   xlab("Time lag (s)") +
   ylab("estimated MAC (m/s/s)") +
-  theme(legend.title = element_blank())
+  theme(
+    legend.title = element_blank(),
+    legend.position = "top")
 ```
 
 The figure below depicts correctly identified time lag (i.e. using time correction parameter) using time correction and time and distance corrections models.
 
 ```{r}
 # time_correction
-ggplot(df, aes(x = time_lag, y = est_time_correction, color = model)) +
+ggplot(
+  df,
+  aes(x = time_lag, y = est_time_correction, color = model)
+) +
   theme_bw(8) +
   geom_line(alpha = 0.7) +
   geom_abline(slope = -1, color = "black", linetype = "dashed") +
   facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
   xlab("Time lag (s)") +
   ylab("estimated time correction (s)") +
-  theme(legend.title = element_blank())
+  theme(
+    legend.title = element_blank(),
+    legend.position = "top")
 ```
 
 The next figure depicts estimated distance correction for the time and distance correction model. The estimated distance correction parameters looks jumpy due to random noise that we have to added to allow model fit. 
 
 ```{r}
 # distance_correction
-ggplot(df, aes(x = time_lag, y = est_distance_correction, color = model)) +
+ggplot(
+  df,
+  aes(x = time_lag, y = est_distance_correction, color = model)
+) +
   theme_bw(8) +
   geom_line(alpha = 0.7) +
   facet_grid(MAC_string ~ MSS_string, scales = "free_y") +
   xlab("Time lag (s)") +
   ylab("estimated distance correction (m)") +
-  theme(legend.title = element_blank())
+  theme(
+    legend.title = element_blank(),
+    legend.position = "top")
 ```
 
 The following figure depicts residuals (i.e., predicted time minus observed time). 
@@ -1283,14 +1337,19 @@ model_df <- model_df %>%
     group = paste(MSS, MAC, time_lag)
   )
 
-ggplot(model_df, aes(y = residuals, x = distance, color = time_lag, group = group)) +
+ggplot(
+  model_df,
+  aes(y = residuals, x = distance, color = time_lag, group = group)
+) +
   theme_bw(8) +
   geom_line(alpha = 0.3) +
   facet_wrap(~model) +
   geom_hline(yintercept = 0, linetype = "dashed") +
   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
   xlab("Distance (m)") +
-  ylab("Predicted time - observed time (s)")
+  ylab("Predicted time - observed time (s)")  +
+  theme(legend.position = "top") + 
+  labs(color = "Time lag")
 ```
 
 There are few other starting issues worth mentioning. For example, if the initial timing gate has a time delay (i.e., once triggered, there is a time delay before the timing starts). In this case, time lag is a negative number since it reduces the split times. Another common issue with timing gates in the practical field settings is the bad measurement of the distance and thus bad positions of the timing gates. 
@@ -1369,7 +1428,10 @@ ggplot(df, aes(x = distance, y = resid, color = name)) +
   geom_point() +
   theme(legend.title = element_blank()) +
   xlab("Distance (m)") +
-  ylab("Predicted - observed time (s)")
+  ylab("Predicted - observed time (s)") +
+  theme(
+    legend.title = element_blank(),
+    legend.position = "top")
 ```
 
 As expected, the model has more issues predicting unseen short or long sprints. Please note, that since LOOCV removes one observation, if the model estimates three parameters, then at least five observations are needed, since we need to make sure the model can be estimated once a single observation is removed. LOOCV can also be implemented with the mixed-effects models in the \pkg{shorts} package. 
@@ -1472,12 +1534,14 @@ data("vescovi")
 df <- vescovi %>%
   select(1:13) %>%
   # slice(1:10) %>%
-  pivot_longer(cols = 9:13, names_to = "distance", values_to = "time") %>%
+  pivot_longer(
+    cols = 9:13,
+    names_to = "distance",
+    values_to = "time"
+  ) %>%
   mutate(
     distance = as.numeric(str_extract(distance, "^[0-9]+"))
   )
-
-head(df)
 ```
 
 The following models were used: (1) no corrections model, (2) fixed time correction model (using 0.3s heuristic rule of thumb), (3) estimated time correction as a fixed effect model, (4) estimated time correction as a random effect model, (5) estimated distance correction as fixed effect model (and time correction as random effect), and (6) estimated distance correction as random effect model. 
@@ -1710,15 +1774,21 @@ ggplot(model_resid, aes(y = model)) +
   theme_bw(8) +
   geom_vline(
     data = model_SESOI,
-    aes(xintercept = SESOI_lower), color = "blue", alpha = 0.5, linetype = "dashed"
+    aes(xintercept = SESOI_lower),
+    color = "blue", alpha = 0.5, linetype = "dashed"
   ) +
   geom_vline(
     data = model_SESOI,
-    aes(xintercept = SESOI_upper), color = "blue", alpha = 0.5, linetype = "dashed"
+    aes(xintercept = SESOI_upper),
+    color = "blue", alpha = 0.5, linetype = "dashed"
   ) +
   geom_vline(xintercept = 0, color = "blue", alpha = 0.5) +
   geom_jitter(aes(x = resid), alpha = 0.1, height = 0.25) +
-  geom_errorbarh(data = model_SESOI, aes(xmin = lower, xmax = upper), height = 0.1, color = "black") +
+  geom_errorbarh(
+    data = model_SESOI,
+    aes(xmin = lower, xmax = upper),
+    height = 0.1, color = "black"
+  ) +
   geom_point(data = model_SESOI, aes(x = bias), color = "black") +
   facet_wrap(~distance, scales = "free_x") +
   xlab("Predicted time - observed time (s)") +
