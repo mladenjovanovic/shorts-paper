@@ -208,7 +208,7 @@ Let's consider an example of an athlete with MSS equal to 9 $ms^-1$, TAU equal t
   t(d) = TAU \times W(-e^{\frac{-d}{MSS \times TAU}} - 1) + \frac{d}{MSS} + TAU (\#eq:time-distance)
 \end{equation}
 
-$W$ in equation \@ref(eq:velocity-time) represents Lambert's W function [@R-LambertW]. MSS and TAU parameters are estimated using `shorts::model_using_splits` function:
+$W$ in equation \@ref(eq:velocity-time) represents Lambert's W function [@R-LambertW]. MSS and TAU parameters are estimated using `model_using_splits` function:
 
 ```{r}
 require(shorts)
@@ -217,7 +217,7 @@ split_distance <- c(10, 20, 30, 40)
 
 split_time <- c(2.17, 3.43, 4.60, 5.73)
 
-m1 <- shorts::model_using_splits(
+m1 <- model_using_splits(
   distance = split_distance,
   time = split_time
 )
@@ -233,18 +233,18 @@ Besides providing *residual standard error* (RSE), \pkg{shorts} functions provid
 summary(m1$model)
 ```
 
-Once we have estimated MSS and TAU, we can use `shorts::predict_` family of functions to predict various relationships (i.e. time at distance, acceleration at distance, velocity at time):
+Once we have estimated MSS and TAU, we can use `predict_` family of functions to predict various relationships (i.e. time at distance, acceleration at distance, velocity at time):
 
 ```{r}
 # Predict time at distance
-shorts::predict_time_at_distance(
+predict_time_at_distance(
   distance = split_distance,
   MSS = m1$parameters$MSS,
   TAU = m1$parameters$TAU
 )
 
 # Predict acceleration at time
-shorts::predict_acceleration_at_time(
+predict_acceleration_at_time(
   time = c(0, 1, 2, 3, 4, 5, 6),
   MSS = m1$parameters$MSS,
   TAU = m1$parameters$TAU
@@ -259,7 +259,7 @@ require(ggplot2)
 df <- data.frame(
   distance = split_distance,
   time = split_time,
-  pred_time = shorts::predict_time_at_distance(
+  pred_time = predict_time_at_distance(
     distance = split_distance,
     MSS = m1$parameters$MSS,
     TAU = m1$parameters$TAU
@@ -276,10 +276,10 @@ ggplot(df, aes(x = distance)) +
 
 ### Air resistance and the calculation of force and mechanical power
 
-To estimate force production at distance or time (using `shorts::predict_force_at_distance` and `shorts::predict_force_at_time` functions), as well as power production (using `shorts::predict_power_at_distance` and `shorts::predict_power_at_time` functions), one needs to take into account the air resistance. Air resistance (N) is estimated using `shorts::get_air_resistance` function, which takes velocity, body mass (kg), body height (m), barometric pressure (Torr), air temperature ($C^\circ$), and wind velocity ($ms^-1$) as parameters (please refer to @arsacModelingEnergetics100m2002, @samozinoSimpleMethodMeasuring2016, and @vaningenschenauCanCyclePower1991 for more information):
+To estimate force production at distance or time (using `predict_force_at_distance` and `predict_force_at_time` functions), as well as power production (using `predict_power_at_distance` and `predict_power_at_time` functions), one needs to take into account the air resistance. Air resistance (N) is estimated using `get_air_resistance` function, which takes velocity, body mass (kg), body height (m), barometric pressure (Torr), air temperature ($C^\circ$), and wind velocity ($ms^-1$) as parameters (please refer to @arsacModelingEnergetics100m2002, @samozinoSimpleMethodMeasuring2016, and @vaningenschenauCanCyclePower1991 for more information):
 
 ```{r}
-shorts::get_air_resistance(
+get_air_resistance(
   velocity = 5,
   bodymass = 80,
   bodyheight = 1.85,
@@ -289,15 +289,15 @@ shorts::get_air_resistance(
 )
 ```
 
-When estimating force and power, the air resistance parameters can be set using `"..."`, which are forwarded to the `shorts::get_air_resistance`:
+When estimating force and power, the air resistance parameters can be set using `"..."`, which are forwarded to the `get_air_resistance`:
 
 ```{r}
 # To calculate horizontal force produced
-shorts::predict_force_at_distance(
+predict_force_at_distance(
   distance = split_distance,
   MSS = m1$parameters$MSS,
   TAU = m1$parameters$TAU,
-  # Additional parameters forwarded to shorts::get_air_resistance
+  # Additional parameters forwarded to get_air_resistance
   # Otherwise, defaults are used
   bodymass = 80,
   bodyheight = 1.85,
@@ -307,11 +307,11 @@ shorts::predict_force_at_distance(
 )
 
 # To calculate power produced
-shorts::predict_power_at_distance(
+predict_power_at_distance(
   distance = split_distance,
   MSS = m1$parameters$MSS,
   TAU = m1$parameters$TAU,
-  # Additional parameters forwarded to shorts::get_air_resistance
+  # Additional parameters forwarded to get_air_resistance
   # Otherwise, defaults are used
   bodymass = 80,
   bodyheight = 1.85,
@@ -321,14 +321,14 @@ shorts::predict_power_at_distance(
 )
 ```
 
-The easiest way to get all kinematics for short sprints is to use `shorts::predict_kinematics` functions:
+The easiest way to get all kinematics for short sprints is to use `predict_kinematics` functions:
 
 ```{r}
-df <- shorts::predict_kinematics(
+df <- predict_kinematics(
   m1,
   max_time = 6,
   frequency = 100,
-  # Additional parameters forwarded to shorts::get_air_resistance
+  # Additional parameters forwarded to get_air_resistance
   # Otherwise, defaults are used
   bodymass = 80,
   bodyheight = 1.85,
@@ -357,21 +357,21 @@ ggplot(df, aes(x = distance, y = value)) +
 
 ### Utility functions 
 
-Another valuable addition for sport scientists and coaches is the ability to determine the distances and times where 90% of maximum sprinting speed is reached, or where peak power is within 90% range. To identify these values, \pkg{shorts} package comes with `shorts::find_` family of functions:
+Another valuable addition for sport scientists and coaches is the ability to determine the distances and times where 90% of maximum sprinting speed is reached, or where peak power is within 90% range. To identify these values, \pkg{shorts} package comes with `find_` family of functions:
 
 ```{r}
 # Finds distance where 90% of maximum sprinting speed is reached
-shorts::find_velocity_critical_distance(
+find_velocity_critical_distance(
   MSS = m1$parameters$MSS,
   TAU = m1$parameters$TAU,
   percent = 0.9
 )
 
 # Finds maximal power and distance (this time using air resistance)
-shorts::find_max_power_distance(
+find_max_power_distance(
   MSS = m1$parameters$MSS,
   TAU = m1$parameters$TAU,
-  # Additional parameters forwarded to shorts::get_air_resistance
+  # Additional parameters forwarded to get_air_resistance
   # Otherwise, defaults are used
   bodymass = 80,
   bodyheight = 1.85,
@@ -382,10 +382,10 @@ shorts::find_max_power_distance(
 
 
 # Finds distance over 90% power range
-shorts::find_power_critical_distance(
+find_power_critical_distance(
   MSS = m1$parameters$MSS,
   TAU = m1$parameters$TAU,
-  # Additional parameters forwarded to shorts::get_air_resistance
+  # Additional parameters forwarded to get_air_resistance
   # Otherwise, defaults are used
   bodymass = 80,
   bodyheight = 1.85,
@@ -397,7 +397,7 @@ shorts::find_power_critical_distance(
 
 ### Mixed-effects model
 
-Sprint performance is often evaluated with a group of athletes (e.g., soccer club) representing a single strata of interest. Sports scientists can estimate individual profiles, or utilize mixed-effects models. To perform mixed-effects models in \pkg{shorts} for split times, one can use `shorts::mixed_model_using_splits` function. To demonstrate this functionality, we load the `split_times` dataset provided in the \pkg{shorts} package:
+Sprint performance is often evaluated with a group of athletes (e.g., soccer club) representing a single strata of interest. Sports scientists can estimate individual profiles, or utilize mixed-effects models. To perform mixed-effects models in \pkg{shorts} for split times, one can use `mixed_model_using_splits` function. To demonstrate this functionality, we load the `split_times` dataset provided in the \pkg{shorts} package:
 
 ```{r}
 data(split_times)
@@ -405,7 +405,7 @@ data(split_times)
 head(split_times)
 
 # Mixed model
-m2 <- shorts::mixed_model_using_splits(
+m2 <- mixed_model_using_splits(
   data = split_times,
   distance = "distance",
   time = "time",
@@ -455,7 +455,7 @@ sprint_time <- seq(0, 6, 1)
 
 sprint_velocity <- c(0.00, 4.83, 7.07, 8.10, 8.59, 8.81, 8.91)
 
-m3 <- shorts::model_using_radar(
+m3 <- model_using_radar(
   velocity = sprint_velocity,
   time = sprint_time
 )
@@ -466,7 +466,7 @@ m3
 Both split and radar gun models allow the use of *weighted* non-linear regression. For example, we can give more weight to shorter distance or faster velocities. Weighted non-linear regression is performed by setting `weights` parameter: 
 
 ```{r}
-m3_weighted <- shorts::model_using_radar(
+m3_weighted <- model_using_radar(
   velocity = sprint_velocity,
   time = sprint_time,
   weights = 1 / (sprint_velocity + 1)
@@ -477,14 +477,14 @@ m3_weighted
 
 ### Mixed-effects model
 
-Mixed-effects model using radar data is done using `shorts::mixed_model_using_radar` function. To perform mixed model, let's load data that comes with \pkg{shorts} package. 
+Mixed-effects model using radar data is done using `mixed_model_using_radar` function. To perform mixed model, let's load data that comes with \pkg{shorts} package. 
 
 ```{r}
 data("radar_gun_data")
 
 head(radar_gun_data)
 
-m4 <- shorts::mixed_model_using_radar(
+m4 <- mixed_model_using_radar(
   radar_gun_data,
   time = "time",
   velocity = "velocity",
@@ -527,19 +527,19 @@ The following three models estimate MSS and TAU from the three datasets:
 
 ```{r}
 # Without synchronization issues
-m5 <- shorts::model_using_radar(
+m5 <- model_using_radar(
   velocity = df$velocity,
   time = df$`true time`
 )
 
 # With time added
-m6 <- shorts::model_using_radar(
+m6 <- model_using_radar(
   velocity = df$velocity,
   time = df$`0.5s added`
 )
 
 # With time deducted
-m7 <- shorts::model_using_radar(
+m7 <- model_using_radar(
   velocity = df$velocity,
   time = df$`0.5s deducted`
 )
@@ -566,25 +566,25 @@ As can be seen from the example, TAU is affected by an error in synchronization 
   v(t) = MSS \times (1 - e^{-\frac{t + time \; correction}{TAU}}) (\#eq:velocity-time-correction)
 \end{equation}
 
-This model is incorporated in the `shorts::model_using_radar_with_time_correction` function:
+This model is incorporated in the `model_using_radar_with_time_correction` function:
 
 ```{r}
 # With time added
-m8 <- shorts::model_using_radar_with_time_correction(
+m8 <- model_using_radar_with_time_correction(
   velocity = df$velocity,
   time = df$`0.5s added`
 )
 coef(m8)
 
 # With time deducted
-m9 <- shorts::model_using_radar_with_time_correction(
+m9 <- model_using_radar_with_time_correction(
   velocity = df$velocity,
   time = df$`0.5s deducted`
 )
 coef(m9)
 ```
 
-When using `shorts::predict_` family of functions, one can provide estimated time correction to get predictions at original time scale. 
+When using `predict_` family of functions, one can provide estimated time correction to get predictions at original time scale. 
 
 ```{r}
 # Using the true time
@@ -605,14 +605,14 @@ predict_velocity_at_time(
 
 ### Mixed-model approach
 
-When it comes to mixed-model approach, time correction can be modeled as a fixed effect or random effect using the `shorts::mixed_model_using_radar_with_time_correction` function. 
+When it comes to mixed-model approach, time correction can be modeled as a fixed effect or random effect using the `mixed_model_using_radar_with_time_correction` function. 
 
 ```{r}
 # Adding 0.5s to radar_gun_data
 radar_gun_data$time <- radar_gun_data$time + 0.5
 
 # Mixed model with time correction being fixed effect
-m10 <- shorts::mixed_model_using_radar_with_time_correction(
+m10 <- mixed_model_using_radar_with_time_correction(
   radar_gun_data,
   time = "time",
   velocity = "velocity",
@@ -624,7 +624,7 @@ m10
 
 
 # Mixed model with time correction being random effect
-m11 <- shorts::mixed_model_using_radar_with_time_correction(
+m11 <- mixed_model_using_radar_with_time_correction(
   radar_gun_data,
   time = "time",
   velocity = "velocity",
@@ -648,12 +648,12 @@ MAC <- MSS / TAU
 
 split_times <- tibble(
   distance = c(5, 10, 20, 30, 40),
-  john_time = shorts::predict_time_at_distance(distance, MSS, TAU),
+  john_time = predict_time_at_distance(distance, MSS, TAU),
 
   # Jack's performance
   jack_distance = distance + 0.5,
-  jack_true_time = shorts::predict_time_at_distance(jack_distance, MSS, TAU),
-  time_05m = shorts::predict_time_at_distance(0.5, MSS, TAU),
+  jack_true_time = predict_time_at_distance(jack_distance, MSS, TAU),
+  time_05m = predict_time_at_distance(0.5, MSS, TAU),
   jack_time = jack_true_time - time_05m
 )
 
@@ -687,12 +687,12 @@ rand_noise <- rnorm(nrow(split_times), 0, 10^-5)
 split_times$john_time <- split_times$john_time + rand_noise
 split_times$jack_time <- split_times$jack_time + rand_noise
 
-john_profile <- shorts::model_using_splits(
+john_profile <- model_using_splits(
   distance = split_times$distance,
   time = split_times$john_time
 )
 
-jack_profile <- shorts::model_using_splits(
+jack_profile <- model_using_splits(
   distance = split_times$distance,
   time = split_times$jack_time
 )
@@ -729,8 +729,8 @@ sim_df <- sim_df %>%
     TAU = MSS / MAC,
     PMAX = MSS * MAC / 4,
     true_distance = distance + flying_start_distance,
-    true_time = shorts::predict_time_at_distance(true_distance, MSS, TAU),
-    stolen_time = shorts::predict_time_at_distance(flying_start_distance, MSS, TAU),
+    true_time = predict_time_at_distance(true_distance, MSS, TAU),
+    stolen_time = predict_time_at_distance(flying_start_distance, MSS, TAU),
     time = true_time - stolen_time
   )
 
@@ -747,14 +747,14 @@ Now when we have a simulation dataset, we can check the model estimates and pred
 ```{r}
 # Prediction wrapper
 pred_wrapper <- function(data) {
-  model <- shorts::model_using_splits(
+  model <- model_using_splits(
     distance = data$distance,
     time = data$time
   )
 
   params <- data.frame(t(unlist(model$parameters)))
 
-  predicted_time <- shorts::predict_time_at_distance(
+  predicted_time <- predict_time_at_distance(
     distance = data$distance,
     MSS = model$parameters$MSS,
     TAU = model$parameters$TAU
@@ -879,22 +879,22 @@ When implementing *time correction*, equation \@ref(eq:time-distance) becomes:
   t(d) = TAU \times W(-e^{\frac{-d}{MSS \times TAU}} - 1) + \frac{d}{MSS} + TAU - time \; correction (\#eq:time-correction)
 \end{equation}
 
-Rather than providing *apriori* time correction from the literature, \pkg{shorts} package provides an estimation of this parameter from the data provided, together with MSS and TAU. To estimate time correction, we use `shorts::model_using_splits_with_time_correction` function. Here is how we can estimate Jack parameters using either provided time correction (e.g., +0.3 and +0.5s) or estimated time correction:
+Rather than providing *apriori* time correction from the literature, \pkg{shorts} package provides an estimation of this parameter from the data provided, together with MSS and TAU. To estimate time correction, we use `model_using_splits_with_time_correction` function. Here is how we can estimate Jack parameters using either provided time correction (e.g., +0.3 and +0.5s) or estimated time correction:
 
 ```{r}
-jack_profile_fixed_time_short <- shorts::model_using_splits(
+jack_profile_fixed_time_short <- model_using_splits(
   distance = split_times$distance,
   time = split_times$jack_time,
   time_correction = 0.3
 )
 
-jack_profile_fixed_time_long <- shorts::model_using_splits(
+jack_profile_fixed_time_long <- model_using_splits(
   distance = split_times$distance,
   time = split_times$jack_time,
   time_correction = 0.5
 )
 
-jack_profile_time_estimated <- shorts::model_using_splits_with_time_correction(
+jack_profile_time_estimated <- model_using_splits_with_time_correction(
   distance = split_times$distance,
   time = split_times$jack_time
 )
@@ -926,10 +926,10 @@ Another model definition, which is a novel approach implemented in the \pkg{shor
   t(d) = TAU \times W(-e^{\frac{-d + distance \; correction}{MSS \times TAU}} - 1) + \frac{d + distance \; correction}{MSS} + TAU - time \; correction (\#eq:distance-correction)
 \end{equation}
 
-This model is implemented in `shorts::model_using_splits_with_corrections` function. Below are the model estimates:
+This model is implemented in `model_using_splits_with_corrections` function. Below are the model estimates:
 
 ```{r}
-jack_profile_distance_correction <- shorts::model_using_splits_with_corrections(
+jack_profile_distance_correction <- model_using_splits_with_corrections(
   distance = split_times$distance,
   time = split_times$jack_time
 )
@@ -961,30 +961,30 @@ We will get back to these issues later, but we can examine how these models perf
 
 ```{r}
 pred_wrapper <- function(data) {
-  no_correction <- shorts::model_using_splits(
+  no_correction <- model_using_splits(
     distance = data$distance,
     time = data$time
   )
 
-  fixed_correction_short <- shorts::model_using_splits(
+  fixed_correction_short <- model_using_splits(
     distance = data$distance,
     time = data$time,
     time_correction = 0.3
   )
 
-  fixed_correction_long <- shorts::model_using_splits(
+  fixed_correction_long <- model_using_splits(
     distance = data$distance,
     time = data$time,
     time_correction = 0.5
   )
 
-  time_correction <- shorts::model_using_splits_with_time_correction(
+  time_correction <- model_using_splits_with_time_correction(
     distance = data$distance,
     time = data$time,
     control = nls.control(tol = 1)
   )
 
-  time_dist_correction <- shorts::model_using_splits_with_corrections(
+  time_dist_correction <- model_using_splits_with_corrections(
     distance = data$distance,
     time = data$time,
     control = nls.control(tol = 1)
@@ -1024,7 +1024,7 @@ pred_wrapper <- function(data) {
     params
   )
 
-  df$predicted_time <- shorts::predict_time_at_distance(
+  df$predicted_time <- predict_time_at_distance(
     distance = df$distance,
     MSS = df$est_MSS,
     TAU = df$est_TAU,
@@ -1156,7 +1156,7 @@ ggplot(model_df, aes(y = residuals, x = distance, color = flying_start_distance,
 
 The outcomes from the simulation data clearly demonstrates that the time correction and time and distance correction models represent sound improvements in parameter estimation and model fit compared to no corrections model and fixed correction model when attempting to overcome the flying start issues. Since the time correction model is simpler and requires three parameters to be estimated, it might be practically more useful than the time and distance correction model, which requires four parameters estimation and thus more than five timing gates and sprint splits. 
 
-Time correction and time and distance corrections are also implemented in the mixed-models using `shorts::mixed_model_using_splits_with_time_correction` and `shorts::mixed_model_using_splits_with_corrections`. We will showcase their use at the end of this article.
+Time correction and time and distance corrections are also implemented in the mixed-models using `mixed_model_using_splits_with_time_correction` and `mixed_model_using_splits_with_corrections`. We will showcase their use at the end of this article.
 
 ### Simulation of additional starting issues
 
@@ -1176,7 +1176,7 @@ sim_df <- sim_df %>%
   mutate(
     TAU = MSS / MAC,
     PMAX = MSS * MAC / 4,
-    true_time = shorts::predict_time_at_distance(distance, MSS, TAU),
+    true_time = predict_time_at_distance(distance, MSS, TAU),
     time = true_time + time_lag
   )
 
@@ -1306,7 +1306,7 @@ To estimate parameter stability, model over-fitting, and performance on the unse
 Let's perform LOOCV using Jack's data and the time correction model:
 
 ```{r}
-jack_LOOCV <- shorts::model_using_splits_with_time_correction(
+jack_LOOCV <- model_using_splits_with_time_correction(
   distance = split_times$distance,
   time = split_times$jack_time,
   LOOCV = TRUE
@@ -1391,38 +1391,38 @@ bolt_distance <- c(10, 20, 30, 40, 50, 60)
 bolt_time <- c(1.963, 2.983, 3.883, 4.763, 5.643, 6.493)
 
 # No corrections model
-bolt_m1 <- shorts::model_using_splits(
+bolt_m1 <- model_using_splits(
   distance = bolt_distance,
   time = bolt_time
 )
 
 # Model with reaction time as fixed time correction
-bolt_m2 <- shorts::model_using_splits(
+bolt_m2 <- model_using_splits(
   distance = bolt_distance,
   time = bolt_time,
   time_correction = -bolt_reaction_time
 )
 
 # Model with estimated time correction
-bolt_m3 <- shorts::model_using_splits_with_time_correction(
+bolt_m3 <- model_using_splits_with_time_correction(
   distance = bolt_distance,
   time = bolt_time
 )
 
 # Model with estimated time correction, but deducted reaction time
-bolt_m4 <- shorts::model_using_splits_with_time_correction(
+bolt_m4 <- model_using_splits_with_time_correction(
   distance = bolt_distance,
   time = bolt_time - bolt_reaction_time
 )
 
 # Model with estimated time and distance corrections
-bolt_m5 <- shorts::model_using_splits_with_corrections(
+bolt_m5 <- model_using_splits_with_corrections(
   distance = bolt_distance,
   time = bolt_time
 )
 
 # Model with estimated time and distance corrections and deducted reaction time
-bolt_m6 <- shorts::model_using_splits_with_corrections(
+bolt_m6 <- model_using_splits_with_corrections(
   distance = bolt_distance,
   time = bolt_time - bolt_reaction_time
 )
@@ -1483,14 +1483,14 @@ head(df)
 The following models were used: (1) no corrections model, (2) fixed time correction model (using 0.3s heuristic rule of thumb), (3) estimated time correction as a fixed effect model, (4) estimated time correction as a random effect model, (5) estimated distance correction as fixed effect model (and time correction as random effect), and (6) estimated distance correction as random effect model. 
 
 ```{r}
-no_corrections <- shorts::mixed_model_using_splits(
+no_corrections <- mixed_model_using_splits(
   df,
   distance = "distance",
   time = "time",
   athlete = "Athlete"
 )
 
-fixed_correction <- shorts::mixed_model_using_splits(
+fixed_correction <- mixed_model_using_splits(
   df,
   distance = "distance",
   time = "time",
@@ -1498,7 +1498,7 @@ fixed_correction <- shorts::mixed_model_using_splits(
   time_correction = 0.3
 )
 
-time_correction_fixed <- shorts::mixed_model_using_splits_with_time_correction(
+time_correction_fixed <- mixed_model_using_splits_with_time_correction(
   df,
   distance = "distance",
   time = "time",
@@ -1506,7 +1506,7 @@ time_correction_fixed <- shorts::mixed_model_using_splits_with_time_correction(
   random = MSS + TAU ~ 1
 )
 
-time_correction_random <- shorts::mixed_model_using_splits_with_time_correction(
+time_correction_random <- mixed_model_using_splits_with_time_correction(
   df,
   distance = "distance",
   time = "time",
@@ -1514,7 +1514,7 @@ time_correction_random <- shorts::mixed_model_using_splits_with_time_correction(
   random = MSS + TAU + time_correction ~ 1
 )
 
-time_distance_correction_fixed <- shorts::mixed_model_using_splits_with_corrections(
+time_distance_correction_fixed <- mixed_model_using_splits_with_corrections(
   df,
   distance = "distance",
   time = "time",
@@ -1522,7 +1522,7 @@ time_distance_correction_fixed <- shorts::mixed_model_using_splits_with_correcti
   random = MSS + TAU + time_correction ~ 1
 )
 
-time_distance_correction_random <- shorts::mixed_model_using_splits_with_corrections(
+time_distance_correction_random <- mixed_model_using_splits_with_corrections(
   df,
   distance = "distance",
   time = "time",
