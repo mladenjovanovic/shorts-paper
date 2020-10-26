@@ -1518,6 +1518,25 @@ bolt_model <- rbind(
 bolt_model
 ```
 
+Here is the model estimate of the time and distance it takes for Bolt to reach 99% of MSS:
+
+```{r}
+bolt_model <- bolt_model %>%
+  group_by(model) %>%
+  mutate(
+    dist_95_MSS = find_velocity_critical_distance(
+      MSS = MSS, TAU = TAU, time_correction = time_correction, 
+      distance_correction = distance_correction, percent = 0.99
+    ),
+   time_95_MSS = find_velocity_critical_time(
+      MSS = MSS, TAU = TAU, time_correction = time_correction, 
+      percent = 0.99
+    )
+  )
+
+bolt_model[c(1, 8, 9)]
+```
+
 ## Vescovi data
 
 The data from Vescovi represents a sub-set of data from a total of 220 high-level female athletes (151 soccer players and 69 field hockey players). Using a random number generator, a total of 52 players (35 soccer and 17 field hockey) were selected for the sample dataset.

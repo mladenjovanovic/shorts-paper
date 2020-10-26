@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.10.13)  22 OCT 2020 00:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.10.13)  26 OCT 2020 17:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -979,116 +979,121 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
  []
 
 [51]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 52 []
  []
 
 [52]
-<paper_files/figure-latex/unnamed-chunk-51-1.pdf, id=715, 433.62pt x 266.9975pt
->
-File: paper_files/figure-latex/unnamed-chunk-51-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-51-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-51-1.pdf  used 
-on input line 2150.
-(pdftex.def)             Requested size: 442.65375pt x 272.57419pt.
-
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 53
  []
 
 [53]
-Overfull \hbox (10.94998pt too wide) has occurred while \output is active
-\T1/aer/m/n/10.95 54 []
- []
-
-[54 <./paper_files/figure-latex/unnamed-chunk-51-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-52-1.pdf, id=729, 433.62pt x 266.9975pt
+<paper_files/figure-latex/unnamed-chunk-52-1.pdf, id=719, 433.62pt x 266.9975pt
 >
 File: paper_files/figure-latex/unnamed-chunk-52-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-52-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-52-1.pdf  used 
-on input line 2221.
+on input line 2183.
 (pdftex.def)             Requested size: 442.65375pt x 272.57419pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
+\T1/aer/m/n/10.95 54 []
+ []
+
+[54]
+Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 55
  []
 
-[55]
-Overfull \hbox (10.94998pt too wide) has occurred while \output is active
-\T1/aer/m/n/10.95 56 []
- []
-
-[56 <./paper_files/figure-latex/unnamed-chunk-52-1.pdf>]
-Overfull \hbox (10.94998pt too wide) has occurred while \output is active
-[] \T1/aer/m/n/10.95 57
- []
-
-[57]
-<paper_files/figure-latex/unnamed-chunk-53-1.pdf, id=750, 433.62pt x 266.9975pt
+[55 <./paper_files/figure-latex/unnamed-chunk-52-1.pdf>]
+<paper_files/figure-latex/unnamed-chunk-53-1.pdf, id=734, 433.62pt x 266.9975pt
 >
 File: paper_files/figure-latex/unnamed-chunk-53-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-53-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-53-1.pdf  used 
-on input line 2313.
+on input line 2254.
 (pdftex.def)             Requested size: 442.65375pt x 272.57419pt.
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \hbox (10.94998pt too wide) has occurred while \output is active
+\T1/aer/m/n/10.95 56 []
+ []
+
+[56]
+Overfull \hbox (10.94998pt too wide) has occurred while \output is active
+[] \T1/aer/m/n/10.95 57
+ []
+
+[57 <./paper_files/figure-latex/unnamed-chunk-53-1.pdf>]
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 58 []
  []
 
-[58 <./paper_files/figure-latex/unnamed-chunk-53-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-54-1.pdf, id=765, 433.62pt x 266.9975pt
+[58]
+<paper_files/figure-latex/unnamed-chunk-54-1.pdf, id=754, 433.62pt x 266.9975pt
 >
 File: paper_files/figure-latex/unnamed-chunk-54-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-54-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-54-1.pdf  used 
-on input line 2351.
+on input line 2346.
 (pdftex.def)             Requested size: 442.65375pt x 272.57419pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 59
  []
 
-[59 <./paper_files/figure-latex/unnamed-chunk-54-1.pdf>] (./paper.bbl
+[59 <./paper_files/figure-latex/unnamed-chunk-54-1.pdf>]
+<paper_files/figure-latex/unnamed-chunk-55-1.pdf, id=769, 433.62pt x 266.9975pt
+>
+File: paper_files/figure-latex/unnamed-chunk-55-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/unnamed-chunk-55-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-55-1.pdf  used 
+on input line 2384.
+(pdftex.def)             Requested size: 442.65375pt x 272.57419pt.
+
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 60 []
  []
 
-[60]
+[60 <./paper_files/figure-latex/unnamed-chunk-55-1.pdf>] (./paper.bbl
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 61
  []
 
-[61])
-Underfull \hbox (badness 10000) in paragraph at lines 2363--2363
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2363--2363
-
- []
-
-LaTeX Font Info:    Font shape `T1/pzc/m/n' in size <13> not available
-(Font)              Font shape `T1/pzc/m/it' tried instead on input line 2363.
-
+[61]
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 62 []
  []
 
-[62]
+[62])
+Underfull \hbox (badness 10000) in paragraph at lines 2396--2396
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2396--2396
+
+ []
+
+LaTeX Font Info:    Font shape `T1/pzc/m/n' in size <13> not available
+(Font)              Font shape `T1/pzc/m/it' tried instead on input line 2396.
+
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 63
  []
 
-[63] (./paper.aux)
+[63]
+Overfull \hbox (10.94998pt too wide) has occurred while \output is active
+\T1/aer/m/n/10.95 64 []
+ []
+
+[64] (./paper.aux)
 Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 2D7383E27B23BA47B5386E76C28FD730;2729.
 
@@ -1096,8 +1101,8 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 7649 strings out of 481861
- 128017 string characters out of 5929302
+ 7650 strings out of 481861
+ 128024 string characters out of 5929302
  413790 words of memory out of 5000000
  23584 multiletter control sequences out of 15000+600000
  578838 words of font info for 102 fonts, out of 8000000 for 9000
@@ -1127,10 +1132,10 @@ ovanovic/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><
 /Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmtt10.pfb></Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/type1/urw
 /zapfchan/uzcmi8a.pfb>
-Output written on paper.pdf (63 pages, 1203731 bytes).
+Output written on paper.pdf (64 pages, 1205286 bytes).
 PDF statistics:
- 940 PDF objects out of 1000 (max. 8388607)
- 788 compressed objects within 8 object streams
- 163 named destinations out of 1000 (max. 500000)
+ 944 PDF objects out of 1000 (max. 8388607)
+ 791 compressed objects within 8 object streams
+ 164 named destinations out of 1000 (max. 500000)
  293 words of extra memory for PDF output out of 10000 (max. 10000000)
 

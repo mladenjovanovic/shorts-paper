@@ -1493,6 +1493,33 @@ bolt_model
 ```
 
 ```r
+bolt_model <- bolt_model %>%
+  group_by(model) %>%
+  mutate(
+    dist_95_MSS = find_velocity_critical_distance(
+      MSS = MSS, TAU = TAU, time_correction = time_correction, 
+      distance_correction = distance_correction, percent = 0.99
+    ),
+   time_95_MSS = find_velocity_critical_time(
+      MSS = MSS, TAU = TAU, time_correction = time_correction, 
+      percent = 0.99
+    )
+  )
+
+bolt_model[c(1, 8, 9)]
+#> # A tibble: 6 x 3
+#> # Groups:   model [6]
+#>   model                    dist_95_MSS time_95_MSS
+#>   <chr>                          <dbl>       <dbl>
+#> 1 No correction                   68.7        7.20
+#> 2 No correction - RT              51.1        5.73
+#> 3 Time correction                 51.0        5.72
+#> 4 Time correction - RT            51.0        5.54
+#> 5 Distance correction             39.8        4.75
+#> 6 Distance correction - RT        39.8        4.57
+```
+
+```r
 data("vescovi")
 
 # Convert data to long
@@ -1608,7 +1635,7 @@ ggplot(model_fit, aes(x = RSE, y = model)) +
 
 ```
 
-<img src="figure/unnamed-chunk-51-1.png" title="plot of chunk unnamed-chunk-51" alt="plot of chunk unnamed-chunk-51" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-52-1.png" title="plot of chunk unnamed-chunk-52" alt="plot of chunk unnamed-chunk-52" width="100%" style="display: block; margin: auto;" />
 
 ```r
 est_params <- rbind(
@@ -1674,7 +1701,7 @@ ggplot(est_params, aes(y = model, x = value)) +
 
 ```
 
-<img src="figure/unnamed-chunk-52-1.png" title="plot of chunk unnamed-chunk-52" alt="plot of chunk unnamed-chunk-52" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-53-1.png" title="plot of chunk unnamed-chunk-53" alt="plot of chunk unnamed-chunk-53" width="100%" style="display: block; margin: auto;" />
 
 ```r
 model_resid <- rbind(
@@ -1759,7 +1786,7 @@ ggplot(model_resid, aes(y = model)) +
 
 ```
 
-<img src="figure/unnamed-chunk-53-1.png" title="plot of chunk unnamed-chunk-53" alt="plot of chunk unnamed-chunk-53" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-54-1.png" title="plot of chunk unnamed-chunk-54" alt="plot of chunk unnamed-chunk-54" width="100%" style="display: block; margin: auto;" />
 
 ```r
 df <- model_SESOI %>%
@@ -1792,6 +1819,6 @@ ggplot(df, aes(x = value, y = model)) +
 
 ```
 
-<img src="figure/unnamed-chunk-54-1.png" title="plot of chunk unnamed-chunk-54" alt="plot of chunk unnamed-chunk-54" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-55-1.png" title="plot of chunk unnamed-chunk-55" alt="plot of chunk unnamed-chunk-55" width="100%" style="display: block; margin: auto;" />
 
 

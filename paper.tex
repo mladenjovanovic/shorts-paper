@@ -2015,6 +2015,39 @@ R> bolt_model
 \end{CodeOutput}
 \end{CodeChunk}
 
+Here is the model estimate of the time and distance it takes for Bolt to reach 99\% of MSS:
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> bolt_model <- bolt_model %>%
++   group_by(model) %>%
++   mutate(
++     dist_95_MSS = find_velocity_critical_distance(
++       MSS = MSS, TAU = TAU, time_correction = time_correction, 
++       distance_correction = distance_correction, percent = 0.99
++     ),
++    time_95_MSS = find_velocity_critical_time(
++       MSS = MSS, TAU = TAU, time_correction = time_correction, 
++       percent = 0.99
++     )
++   )
+R> 
+R> bolt_model[c(1, 8, 9)]
+\end{CodeInput}
+\begin{CodeOutput}
+#> # A tibble: 6 x 3
+#> # Groups:   model [6]
+#>   model                    dist_95_MSS time_95_MSS
+#>   <chr>                          <dbl>       <dbl>
+#> 1 No correction                   68.7        7.20
+#> 2 No correction - RT              51.1        5.73
+#> 3 Time correction                 51.0        5.72
+#> 4 Time correction - RT            51.0        5.54
+#> 5 Distance correction             39.8        4.75
+#> 6 Distance correction - RT        39.8        4.57
+\end{CodeOutput}
+\end{CodeChunk}
+
 \hypertarget{vescovi-data}{%
 \subsection{Vescovi data}\label{vescovi-data}}
 
@@ -2147,7 +2180,7 @@ R> ggplot(model_fit, aes(x = RSE, y = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-51-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-52-1} \end{center}
 
 \end{CodeChunk}
 
@@ -2218,7 +2251,7 @@ R> ggplot(est_params, aes(y = model, x = value)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-52-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-53-1} \end{center}
 
 \end{CodeChunk}
 
@@ -2310,7 +2343,7 @@ R> ggplot(model_resid, aes(y = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-53-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-54-1} \end{center}
 
 \end{CodeChunk}
 
@@ -2348,7 +2381,7 @@ R> ggplot(df, aes(x = value, y = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-54-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-55-1} \end{center}
 
 \end{CodeChunk}
 
