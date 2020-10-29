@@ -477,9 +477,9 @@ There is a challenge when collecting sprint data that could have a substantial i
 
 ## Problems with time sync with radar gun
 
-One source of error in the modeled estimation using a radar gun is the time synchronization. In theory, synchronization is ideal when a sprint is initiated at $t=0$ (i.e., $v(t=0) = 0$). In practice, this is often not the case. Let's use our athlete and add and deduct 0.5s to simulate an error in synchronization and its effect on estimated MSS and TAU (Figure \@ref(fig:radar-gun-sync)).
+One source of error in the modeled estimation using a radar gun is the time synchronization. In theory, synchronization is ideal when a sprint is initiated at $t=0$ (i.e., $v(t=0) = 0$). In practice, this is often not the case. Let's use our athlete and add and deduct 0.5s to simulate an error in synchronization and its effect on estimated MSS and TAU.
 
-```{r radar-gun-sync, include=FALSE, fig.cap="Radar gun synchronization issues"}
+```{r}
 df <- tibble(
   `true time` = sprint_time,
   velocity = sprint_velocity,
@@ -1518,18 +1518,21 @@ bolt_model <- rbind(
 bolt_model
 ```
 
-Here is the model estimate of the time and distance it takes for Bolt to reach 99% of MSS:
+Here is the model estimate of the time and distance it takes for Bolt to reach 99% of MSS. Please note that we are not using distance and time correction parameters, since we want these estimates to be on the time/distance scale aligned with the actual sprint start, not the measurement scale.
 
 ```{r}
 bolt_model <- bolt_model %>%
   group_by(model) %>%
   mutate(
     dist_95_MSS = find_velocity_critical_distance(
-      MSS = MSS, TAU = TAU, time_correction = time_correction, 
-      distance_correction = distance_correction, percent = 0.99
+      MSS = MSS, TAU = TAU, 
+      #time_correction = time_correction, 
+      #distance_correction = distance_correction,
+      percent = 0.99
     ),
    time_95_MSS = find_velocity_critical_time(
-      MSS = MSS, TAU = TAU, time_correction = time_correction, 
+      MSS = MSS, TAU = TAU, 
+      time_correction = time_correction, 
       percent = 0.99
     )
   )

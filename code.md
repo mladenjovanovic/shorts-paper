@@ -393,6 +393,31 @@ m4
 #>       NaN
 ```
 
+```r
+df <- tibble(
+  `true time` = sprint_time,
+  velocity = sprint_velocity,
+  `0.5s added` = `true time` + 0.5,
+  `0.5s deducted` = `true time` - 0.5
+)
+
+plot_df <- pivot_longer(df, cols = -2, names_to = "Sync issue")
+
+ggplot(
+  plot_df,
+  aes(x = value, y = velocity, color = `Sync issue`)
+) +
+  theme_bw(8) +
+  geom_line(alpha = 0.7) +
+  xlab("Time (s)") +
+  ylab(expression("Velocity (" * ms^-1 * ")")) +
+  theme(
+    legend.title = element_blank(), 
+    legend.position = "top")
+
+```
+
+<img src="figure/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" width="100%" style="display: block; margin: auto;" />
 
 ```r
 # Without synchronization issues
@@ -600,7 +625,7 @@ ggplot(
 
 ```
 
-<img src="figure/unnamed-chunk-20-1.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-21-1.png" title="plot of chunk unnamed-chunk-21" alt="plot of chunk unnamed-chunk-21" width="100%" style="display: block; margin: auto;" />
 
 ```r
 # Since this is a perfect simulation and stats::nls will complain
@@ -730,7 +755,7 @@ ggplot(
 
 ```
 
-<img src="figure/unnamed-chunk-24-1.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-25-1.png" title="plot of chunk unnamed-chunk-25" alt="plot of chunk unnamed-chunk-25" width="100%" style="display: block; margin: auto;" />
 
 ```r
 # MAC
@@ -749,7 +774,7 @@ ggplot(
 
 ```
 
-<img src="figure/unnamed-chunk-25-1.png" title="plot of chunk unnamed-chunk-25" alt="plot of chunk unnamed-chunk-25" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-26-1.png" title="plot of chunk unnamed-chunk-26" alt="plot of chunk unnamed-chunk-26" width="100%" style="display: block; margin: auto;" />
 
 ```r
 # PMAX
@@ -768,7 +793,7 @@ ggplot(
 
 ```
 
-<img src="figure/unnamed-chunk-26-1.png" title="plot of chunk unnamed-chunk-26" alt="plot of chunk unnamed-chunk-26" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-27-1.png" title="plot of chunk unnamed-chunk-27" alt="plot of chunk unnamed-chunk-27" width="100%" style="display: block; margin: auto;" />
 
 ```r
 # Residuals
@@ -797,7 +822,7 @@ ggplot(
 
 ```
 
-<img src="figure/unnamed-chunk-27-1.png" title="plot of chunk unnamed-chunk-27" alt="plot of chunk unnamed-chunk-27" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-28-1.png" title="plot of chunk unnamed-chunk-28" alt="plot of chunk unnamed-chunk-28" width="100%" style="display: block; margin: auto;" />
 
 ```r
 ggplot(
@@ -815,7 +840,7 @@ ggplot(
 
 ```
 
-<img src="figure/unnamed-chunk-28-1.png" title="plot of chunk unnamed-chunk-28" alt="plot of chunk unnamed-chunk-28" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-29-1.png" title="plot of chunk unnamed-chunk-29" alt="plot of chunk unnamed-chunk-29" width="100%" style="display: block; margin: auto;" />
 
 ```r
 jack_profile_fixed_time_short <- model_using_splits(
@@ -1043,7 +1068,7 @@ ggplot(
 
 ```
 
-<img src="figure/unnamed-chunk-32-1.png" title="plot of chunk unnamed-chunk-32" alt="plot of chunk unnamed-chunk-32" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-33-1.png" title="plot of chunk unnamed-chunk-33" alt="plot of chunk unnamed-chunk-33" width="100%" style="display: block; margin: auto;" />
 
 ```r
 # MAC
@@ -1062,7 +1087,7 @@ ggplot(
 
 ```
 
-<img src="figure/unnamed-chunk-33-1.png" title="plot of chunk unnamed-chunk-33" alt="plot of chunk unnamed-chunk-33" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-34-1.png" title="plot of chunk unnamed-chunk-34" alt="plot of chunk unnamed-chunk-34" width="100%" style="display: block; margin: auto;" />
 
 ```r
 # PMAX
@@ -1081,7 +1106,7 @@ ggplot(
 
 ```
 
-<img src="figure/unnamed-chunk-34-1.png" title="plot of chunk unnamed-chunk-34" alt="plot of chunk unnamed-chunk-34" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-35-1.png" title="plot of chunk unnamed-chunk-35" alt="plot of chunk unnamed-chunk-35" width="100%" style="display: block; margin: auto;" />
 
 ```r
 # time_correction
@@ -1101,7 +1126,7 @@ ggplot(
 
 ```
 
-<img src="figure/unnamed-chunk-35-1.png" title="plot of chunk unnamed-chunk-35" alt="plot of chunk unnamed-chunk-35" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-36-1.png" title="plot of chunk unnamed-chunk-36" alt="plot of chunk unnamed-chunk-36" width="100%" style="display: block; margin: auto;" />
 
 ```r
 # distance_correction
@@ -1121,7 +1146,7 @@ ggplot(
 
 ```
 
-<img src="figure/unnamed-chunk-36-1.png" title="plot of chunk unnamed-chunk-36" alt="plot of chunk unnamed-chunk-36" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-37-1.png" title="plot of chunk unnamed-chunk-37" alt="plot of chunk unnamed-chunk-37" width="100%" style="display: block; margin: auto;" />
 
 ```r
 # Residuals
@@ -1150,7 +1175,7 @@ ggplot(
 
 ```
 
-<img src="figure/unnamed-chunk-37-1.png" title="plot of chunk unnamed-chunk-37" alt="plot of chunk unnamed-chunk-37" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-38-1.png" title="plot of chunk unnamed-chunk-38" alt="plot of chunk unnamed-chunk-38" width="100%" style="display: block; margin: auto;" />
 
 ```r
 sim_df <- expand.grid(
@@ -1219,7 +1244,7 @@ ggplot(df, aes(x = time_lag, y = est_MSS, color = model)) +
 
 ```
 
-<img src="figure/unnamed-chunk-40-1.png" title="plot of chunk unnamed-chunk-40" alt="plot of chunk unnamed-chunk-40" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-41-1.png" title="plot of chunk unnamed-chunk-41" alt="plot of chunk unnamed-chunk-41" width="100%" style="display: block; margin: auto;" />
 
 ```r
 # MAC
@@ -1235,7 +1260,7 @@ ggplot(df, aes(x = time_lag, y = est_MAC, color = model)) +
 
 ```
 
-<img src="figure/unnamed-chunk-41-1.png" title="plot of chunk unnamed-chunk-41" alt="plot of chunk unnamed-chunk-41" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-42-1.png" title="plot of chunk unnamed-chunk-42" alt="plot of chunk unnamed-chunk-42" width="100%" style="display: block; margin: auto;" />
 
 ```r
 # time_correction
@@ -1255,7 +1280,7 @@ ggplot(
 
 ```
 
-<img src="figure/unnamed-chunk-42-1.png" title="plot of chunk unnamed-chunk-42" alt="plot of chunk unnamed-chunk-42" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-43-1.png" title="plot of chunk unnamed-chunk-43" alt="plot of chunk unnamed-chunk-43" width="100%" style="display: block; margin: auto;" />
 
 ```r
 # distance_correction
@@ -1274,7 +1299,7 @@ ggplot(
 
 ```
 
-<img src="figure/unnamed-chunk-43-1.png" title="plot of chunk unnamed-chunk-43" alt="plot of chunk unnamed-chunk-43" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-44-1.png" title="plot of chunk unnamed-chunk-44" alt="plot of chunk unnamed-chunk-44" width="100%" style="display: block; margin: auto;" />
 
 ```r
 # Residuals
@@ -1303,7 +1328,7 @@ ggplot(
 
 ```
 
-<img src="figure/unnamed-chunk-44-1.png" title="plot of chunk unnamed-chunk-44" alt="plot of chunk unnamed-chunk-44" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-45-1.png" title="plot of chunk unnamed-chunk-45" alt="plot of chunk unnamed-chunk-45" width="100%" style="display: block; margin: auto;" />
 
 ```r
 jack_LOOCV <- model_using_splits_with_time_correction(
@@ -1375,7 +1400,7 @@ ggplot(df, aes(x = value)) +
 
 ```
 
-<img src="figure/unnamed-chunk-46-1.png" title="plot of chunk unnamed-chunk-46" alt="plot of chunk unnamed-chunk-46" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-47-1.png" title="plot of chunk unnamed-chunk-47" alt="plot of chunk unnamed-chunk-47" width="100%" style="display: block; margin: auto;" />
 
 ```r
 df <- data.frame(
@@ -1403,7 +1428,7 @@ ggplot(df, aes(x = distance, y = resid, color = name)) +
 
 ```
 
-<img src="figure/unnamed-chunk-47-1.png" title="plot of chunk unnamed-chunk-47" alt="plot of chunk unnamed-chunk-47" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-48-1.png" title="plot of chunk unnamed-chunk-48" alt="plot of chunk unnamed-chunk-48" width="100%" style="display: block; margin: auto;" />
 
 ```r
 bolt_reaction_time <- 0.183
@@ -1497,11 +1522,14 @@ bolt_model <- bolt_model %>%
   group_by(model) %>%
   mutate(
     dist_95_MSS = find_velocity_critical_distance(
-      MSS = MSS, TAU = TAU, time_correction = time_correction, 
-      distance_correction = distance_correction, percent = 0.99
+      MSS = MSS, TAU = TAU, 
+      #time_correction = time_correction, 
+      #distance_correction = distance_correction,
+      percent = 0.99
     ),
    time_95_MSS = find_velocity_critical_time(
-      MSS = MSS, TAU = TAU, time_correction = time_correction, 
+      MSS = MSS, TAU = TAU, 
+      time_correction = time_correction, 
       percent = 0.99
     )
   )
@@ -1515,8 +1543,8 @@ bolt_model[c(1, 8, 9)]
 #> 2 No correction - RT              51.1        5.73
 #> 3 Time correction                 51.0        5.72
 #> 4 Time correction - RT            51.0        5.54
-#> 5 Distance correction             39.8        4.75
-#> 6 Distance correction - RT        39.8        4.57
+#> 5 Distance correction             35.8        4.75
+#> 6 Distance correction - RT        35.8        4.57
 ```
 
 ```r
@@ -1635,7 +1663,7 @@ ggplot(model_fit, aes(x = RSE, y = model)) +
 
 ```
 
-<img src="figure/unnamed-chunk-52-1.png" title="plot of chunk unnamed-chunk-52" alt="plot of chunk unnamed-chunk-52" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-53-1.png" title="plot of chunk unnamed-chunk-53" alt="plot of chunk unnamed-chunk-53" width="100%" style="display: block; margin: auto;" />
 
 ```r
 est_params <- rbind(
@@ -1701,7 +1729,7 @@ ggplot(est_params, aes(y = model, x = value)) +
 
 ```
 
-<img src="figure/unnamed-chunk-53-1.png" title="plot of chunk unnamed-chunk-53" alt="plot of chunk unnamed-chunk-53" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-54-1.png" title="plot of chunk unnamed-chunk-54" alt="plot of chunk unnamed-chunk-54" width="100%" style="display: block; margin: auto;" />
 
 ```r
 model_resid <- rbind(
@@ -1786,7 +1814,7 @@ ggplot(model_resid, aes(y = model)) +
 
 ```
 
-<img src="figure/unnamed-chunk-54-1.png" title="plot of chunk unnamed-chunk-54" alt="plot of chunk unnamed-chunk-54" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-55-1.png" title="plot of chunk unnamed-chunk-55" alt="plot of chunk unnamed-chunk-55" width="100%" style="display: block; margin: auto;" />
 
 ```r
 df <- model_SESOI %>%
@@ -1819,6 +1847,6 @@ ggplot(df, aes(x = value, y = model)) +
 
 ```
 
-<img src="figure/unnamed-chunk-55-1.png" title="plot of chunk unnamed-chunk-55" alt="plot of chunk unnamed-chunk-55" width="100%" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-56-1.png" title="plot of chunk unnamed-chunk-56" alt="plot of chunk unnamed-chunk-56" width="100%" style="display: block; margin: auto;" />
 
 

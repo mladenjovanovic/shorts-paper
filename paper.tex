@@ -658,7 +658,36 @@ There is a challenge when collecting sprint data that could have a substantial i
 \hypertarget{problems-with-time-sync-with-radar-gun}{%
 \subsection{Problems with time sync with radar gun}\label{problems-with-time-sync-with-radar-gun}}
 
-One source of error in the modeled estimation using a radar gun is the time synchronization. In theory, synchronization is ideal when a sprint is initiated at \(t=0\) (i.e., \(v(t=0) = 0\)). In practice, this is often not the case. Let's use our athlete and add and deduct 0.5s to simulate an error in synchronization and its effect on estimated MSS and TAU (Figure \ref{fig:radar-gun-sync}).
+One source of error in the modeled estimation using a radar gun is the time synchronization. In theory, synchronization is ideal when a sprint is initiated at \(t=0\) (i.e., \(v(t=0) = 0\)). In practice, this is often not the case. Let's use our athlete and add and deduct 0.5s to simulate an error in synchronization and its effect on estimated MSS and TAU.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> df <- tibble(
++   `true time` = sprint_time,
++   velocity = sprint_velocity,
++   `0.5s added` = `true time` + 0.5,
++   `0.5s deducted` = `true time` - 0.5
++ )
+R> 
+R> plot_df <- pivot_longer(df, cols = -2, names_to = "Sync issue")
+R> 
+R> ggplot(
++   plot_df,
++   aes(x = value, y = velocity, color = `Sync issue`)
++ ) +
++   theme_bw(8) +
++   geom_line(alpha = 0.7) +
++   xlab("Time (s)") +
++   ylab(expression("Velocity (" * ms^-1 * ")")) +
++   theme(
++     legend.title = element_blank(), 
++     legend.position = "top")
+\end{CodeInput}
+
+
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-15-1} \end{center}
+
+\end{CodeChunk}
 
 The following three models estimate MSS and TAU from the three datasets:
 
@@ -925,7 +954,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1074,7 +1103,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-24-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1098,7 +1127,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-25-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-26-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1124,7 +1153,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-26-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-27-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1160,7 +1189,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-27-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-28-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1183,7 +1212,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-28-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1454,7 +1483,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-32-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-33-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1478,7 +1507,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-33-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-34-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1502,7 +1531,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-34-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-35-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1527,7 +1556,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-35-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1552,7 +1581,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-36-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-37-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1586,7 +1615,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-37-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-38-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1673,7 +1702,7 @@ R> ggplot(df, aes(x = time_lag, y = est_MSS, color = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-40-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-41-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1694,7 +1723,7 @@ R> ggplot(df, aes(x = time_lag, y = est_MAC, color = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-41-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-42-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1719,7 +1748,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-42-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-43-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1743,7 +1772,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-43-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1777,7 +1806,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-44-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-45-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1873,7 +1902,7 @@ R> ggplot(df, aes(x = value)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-46-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-47-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1906,7 +1935,7 @@ R> ggplot(df, aes(x = distance, y = resid, color = name)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-47-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-48-1} \end{center}
 
 \end{CodeChunk}
 
@@ -2015,7 +2044,7 @@ R> bolt_model
 \end{CodeOutput}
 \end{CodeChunk}
 
-Here is the model estimate of the time and distance it takes for Bolt to reach 99\% of MSS:
+Here is the model estimate of the time and distance it takes for Bolt to reach 99\% of MSS. Please note that we are not using distance and time correction parameters, since we want these estimates to be on the time/distance scale aligned with the actual sprint start, not the measurement scale.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -2023,11 +2052,14 @@ R> bolt_model <- bolt_model %>%
 +   group_by(model) %>%
 +   mutate(
 +     dist_95_MSS = find_velocity_critical_distance(
-+       MSS = MSS, TAU = TAU, time_correction = time_correction, 
-+       distance_correction = distance_correction, percent = 0.99
++       MSS = MSS, TAU = TAU, 
++       #time_correction = time_correction, 
++       #distance_correction = distance_correction,
++       percent = 0.99
 +     ),
 +    time_95_MSS = find_velocity_critical_time(
-+       MSS = MSS, TAU = TAU, time_correction = time_correction, 
++       MSS = MSS, TAU = TAU, 
++       time_correction = time_correction, 
 +       percent = 0.99
 +     )
 +   )
@@ -2043,8 +2075,8 @@ R> bolt_model[c(1, 8, 9)]
 #> 2 No correction - RT              51.1        5.73
 #> 3 Time correction                 51.0        5.72
 #> 4 Time correction - RT            51.0        5.54
-#> 5 Distance correction             39.8        4.75
-#> 6 Distance correction - RT        39.8        4.57
+#> 5 Distance correction             35.8        4.75
+#> 6 Distance correction - RT        35.8        4.57
 \end{CodeOutput}
 \end{CodeChunk}
 
@@ -2180,7 +2212,7 @@ R> ggplot(model_fit, aes(x = RSE, y = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-52-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-53-1} \end{center}
 
 \end{CodeChunk}
 
@@ -2251,7 +2283,7 @@ R> ggplot(est_params, aes(y = model, x = value)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-53-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-54-1} \end{center}
 
 \end{CodeChunk}
 
@@ -2343,7 +2375,7 @@ R> ggplot(model_resid, aes(y = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-54-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-55-1} \end{center}
 
 \end{CodeChunk}
 
@@ -2381,7 +2413,7 @@ R> ggplot(df, aes(x = value, y = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-55-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-56-1} \end{center}
 
 \end{CodeChunk}
 
