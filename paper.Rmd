@@ -211,7 +211,7 @@ Let's consider an example of an athlete with MSS equal to 9 $ms^-1$, TAU equal t
   t(d) = TAU \times W(-e^{\frac{-d}{MSS \times TAU}} - 1) + \frac{d}{MSS} + TAU (\#eq:time-distance)
 \end{equation}
 
-$W$ in equation \@ref(eq:velocity-time) represents Lambert's W function [@R-LambertW]. MSS and TAU parameters are estimated using `model_using_splits` function:
+$W$ in equation \@ref(eq:time-distance) represents Lambert's W function [@R-LambertW]. MSS and TAU parameters are estimated using `model_using_splits` function:
 
 ```{r}
 require(shorts)
@@ -1524,15 +1524,15 @@ Here is the model estimate of the time and distance it takes for Bolt to reach 9
 bolt_model <- bolt_model %>%
   group_by(model) %>%
   mutate(
-    dist_95_MSS = find_velocity_critical_distance(
+    dist_99_MSS = find_velocity_critical_distance(
       MSS = MSS, TAU = TAU, 
       #time_correction = time_correction, 
       #distance_correction = distance_correction,
       percent = 0.99
     ),
-   time_95_MSS = find_velocity_critical_time(
+   time_99_MSS = find_velocity_critical_time(
       MSS = MSS, TAU = TAU, 
-      time_correction = time_correction, 
+      #time_correction = time_correction, 
       percent = 0.99
     )
   )

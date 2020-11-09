@@ -152,7 +152,7 @@ Let's consider an example of an athlete with MSS equal to 9 \(ms^-1\), TAU equal
   t(d) = TAU \times W(-e^{\frac{-d}{MSS \times TAU}} - 1) + \frac{d}{MSS} + TAU \label{eq:time-distance}
 \end{equation}
 
-\(W\) in equation \eqref{eq:velocity-time} represents Lambert's W function \citep{R-LambertW}. MSS and TAU parameters are estimated using \texttt{model\_using\_splits} function:
+\(W\) in equation \eqref{eq:time-distance} represents Lambert's W function \citep{R-LambertW}. MSS and TAU parameters are estimated using \texttt{model\_using\_splits} function:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -2051,15 +2051,15 @@ Here is the model estimate of the time and distance it takes for Bolt to reach 9
 R> bolt_model <- bolt_model %>%
 +   group_by(model) %>%
 +   mutate(
-+     dist_95_MSS = find_velocity_critical_distance(
++     dist_99_MSS = find_velocity_critical_distance(
 +       MSS = MSS, TAU = TAU, 
 +       #time_correction = time_correction, 
 +       #distance_correction = distance_correction,
 +       percent = 0.99
 +     ),
-+    time_95_MSS = find_velocity_critical_time(
++    time_99_MSS = find_velocity_critical_time(
 +       MSS = MSS, TAU = TAU, 
-+       time_correction = time_correction, 
++       #time_correction = time_correction, 
 +       percent = 0.99
 +     )
 +   )
@@ -2069,14 +2069,14 @@ R> bolt_model[c(1, 8, 9)]
 \begin{CodeOutput}
 #> # A tibble: 6 x 3
 #> # Groups:   model [6]
-#>   model                    dist_95_MSS time_95_MSS
+#>   model                    dist_99_MSS time_99_MSS
 #>   <chr>                          <dbl>       <dbl>
 #> 1 No correction                   68.7        7.20
-#> 2 No correction - RT              51.1        5.73
-#> 3 Time correction                 51.0        5.72
+#> 2 No correction - RT              51.1        5.55
+#> 3 Time correction                 51.0        5.54
 #> 4 Time correction - RT            51.0        5.54
-#> 5 Distance correction             35.8        4.75
-#> 6 Distance correction - RT        35.8        4.57
+#> 5 Distance correction             35.8        3.94
+#> 6 Distance correction - RT        35.8        3.94
 \end{CodeOutput}
 \end{CodeChunk}
 
