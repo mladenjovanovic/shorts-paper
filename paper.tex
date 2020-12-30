@@ -1,3 +1,6 @@
+% To remove when JSS.cls is fixed
+% https://github.com/rstudio/rticles/issues/329
+\RequirePackage[2020/02/02]{latexrelease}
 \documentclass[
 ]{jss}
 
@@ -43,8 +46,12 @@ Toronto, ON Canada\\
   
   }
 
+% Pandoc citation processing
 
 % Pandoc header
+\usepackage[htt]{hyphenat} \usepackage{booktabs} \usepackage{microtype}
+
+\usepackage{flafter}
 
 \usepackage{amsmath}
 
@@ -53,9 +60,9 @@ Toronto, ON Canada\\
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-Short sprint performance is one of the most distinguishable and admired physical trait in sports. Short sprints, commonly performed in most team sports (e.g., soccer, field hockey, handball, football, etc.), are defined as maximal running from a stand still position over a distance that doesn't result in deceleration at the end. Peak anaerobic power is achieved within the first few seconds (\textless5s) of maximal efforts \citep{mangineSpeedForcePower2014}, whereas the ability to achieve maximal sprint speed varies based on the type of sport. For example, track and field sprinters are trained to achieve maximal speed later in a race (i.e., 50-60m) \citep{ward-smithEnergyConversionStrategies2001}, but team sport athletes have sport-specific attributes and reach it much sooner (i.e., 30-40m)\citep{brownAssessmentLinearSprinting2004}. Regardless of the differences in kinematics between athletes, evaluating short sprint performance is routinely included within a battery of fitness tests for a wide range of sports
+Short sprint performance is one of the most distinguishable and admired physical trait in sports. Short sprints, commonly performed in most team sports (e.g., soccer, field hockey, handball, football, etc.), are defined as maximal running from a stand still position over a distance that doesn't result in deceleration at the end. Peak anaerobic power is achieved within the first few seconds (\textless5 s) of maximal efforts \citep{mangineSpeedForcePower2014}, whereas the ability to achieve maximal sprint speed varies based on the type of sport. For example, track and field sprinters are trained to achieve maximal speed later in a race (i.e., 50-60 m) \citep{ward-smithEnergyConversionStrategies2001}, but team sport athletes have sport-specific attributes and reach it much sooner (i.e., 30-40 m)\citep{brownAssessmentLinearSprinting2004}. Regardless of the differences in kinematics between athletes, evaluating short sprint performance is routinely included within a battery of fitness tests for a wide range of sports
 
-The use of force plates is considered the gold standard for assessing mechanical properties of sprinting; however, there are logistical and financial challenges to capturing the profile of an entire sprint \citep{morinSimpleMethodComputing2019, samozinoSimpleMethodMeasuring2016}. Radar and laser technology are frequently used laboratory-grade methods \citep{buchheitMechanicalDeterminantsAcceleration2014, edwardsSprintAccelerationCharacteristics2020, jimenez-reyesRelationshipVerticalHorizontal2018, marcote-pequenoAssociationForceVelocity2019} but not normally accessible to practitioners working in sports. Undoubtedly, the most common method available and used to evaluate sprint performance are timing gates. Often multiple gates are positioned at varying distances to capture split times (e.g., 5, 10, 20m), which can now be incorporated into the method for determining sprint mechanical properties \citep{morinSimpleMethodComputing2019, samozinoSimpleMethodMeasuring2016}. This approach presents an advantage to practitioners who can use the outcomes to describe individual differences, quantify the effects of training interventions, and better understanding the limiting factors of performance. The \pkg{shorts} package \citep{R-shorts}, written in the R language \citep{R-base}, represents an open-source tool to help sport scientists translate raw timing data into detailed mechanical outcomes through mathematical modeling \citep{morinSimpleMethodComputing2019, samozinoSimpleMethodMeasuring2016}.
+The use of force plates is considered the gold standard for assessing mechanical properties of sprinting; however, there are logistical and financial challenges to capturing the profile of an entire sprint \citep{morinSimpleMethodComputing2019, samozinoSimpleMethodMeasuring2016}. Radar and laser technology are frequently used laboratory-grade methods \citep{buchheitMechanicalDeterminantsAcceleration2014, edwardsSprintAccelerationCharacteristics2020, jimenez-reyesRelationshipVerticalHorizontal2018, marcote-pequenoAssociationForceVelocity2019} but not normally accessible to practitioners working in sports. Undoubtedly, the most common method available and used to evaluate sprint performance are timing gates. Often multiple gates are positioned at varying distances to capture split times (e.g., 5, 10, 20 m), which can now be incorporated into the method for determining sprint mechanical properties \citep{morinSimpleMethodComputing2019, samozinoSimpleMethodMeasuring2016}. This approach presents an advantage to practitioners who can use the outcomes to describe individual differences, quantify the effects of training interventions, and better understanding the limiting factors of performance. The \pkg{shorts} package \citep{R-shorts}, written in the R language \citep{R-base}, represents an open-source tool to help sport scientists translate raw timing data into detailed mechanical outcomes through mathematical modeling \citep{morinSimpleMethodComputing2019, samozinoSimpleMethodMeasuring2016}.
 
 In the current paper, we will provide an explanation of one commonly used mathematical equation to model short sprints, modeling applications using the \pkg{shorts} package, issues that can arise during measurement and estimation, and potential solutions to those problems.
 
@@ -95,24 +102,21 @@ Let's consider four athletes with different levels of MSS (high versus low maxim
 
 \caption{\label{tab:four-athletes-table}Four athletes with different MSS and MAC parameters.}
 \centering
-\begin{tabular}[t]{l|r|r|r}
-\hline
+\begin{tabular}[t]{lrrr}
+\toprule
 Athlete & MSS & MAC & TAU\\
-\hline
+\midrule
 Athlete A & 12 & 10 & 1.20\\
-\hline
 Athlete B & 12 & 6 & 2.00\\
-\hline
 Athlete C & 8 & 10 & 0.80\\
-\hline
 Athlete D & 8 & 6 & 1.33\\
-\hline
+\bottomrule
 \end{tabular}
 \end{table}
 
 \end{CodeChunk}
 
-Figure \ref{fig:four-athletes-kinematics} depicts distance, velocity, and acceleration over time (from 0 to 6s).
+Figure \ref{fig:four-athletes-kinematics} depicts distance, velocity, and acceleration over time (from 0 to 6 s).
 
 \begin{CodeChunk}
 \begin{figure}
@@ -121,11 +125,11 @@ Figure \ref{fig:four-athletes-kinematics} depicts distance, velocity, and accele
 
 }
 
-\caption[Kinematic characteristic of four athletes with different MSS and MAC parameters over a period of 0 to 6seconds]{Kinematic characteristic of four athletes with different MSS and MAC parameters over a period of 0 to 6seconds.}\label{fig:four-athletes-kinematics}
+\caption[Kinematic characteristic of four athletes with different MSS and MAC parameters over a period of 0 to 6 seconds]{Kinematic characteristic of four athletes with different MSS and MAC parameters over a period of 0 to 6 seconds.}\label{fig:four-athletes-kinematics}
 \end{figure}
 \end{CodeChunk}
 
-Plotting acceleration against velocity (Figure \ref{fig:four-athletes-profile}), we will get Acceleration-Velocity profile, which is linear, according to the mathematical model.
+Plotting acceleration against velocity (Figure \ref{fig:four-athletes-profile}), we will get \emph{Acceleration-Velocity Profile}, which is linear, according to the mathematical model. If the athlete's body mass (kg) is known, as well as additional air resistance parameters (see \protect\hyperlink{air-resistance-and-the-calculation-of-force-and-mechanical-power}{Air resistance and the calculation of force and mechanical power} section of this paper), \emph{Force-Velocity Profile} can be estimated (see \protect\hyperlink{force-velocity-profile}{Force-Velocity profile} section of this paper).
 
 \begin{CodeChunk}
 \begin{figure}
@@ -141,18 +145,18 @@ Plotting acceleration against velocity (Figure \ref{fig:four-athletes-profile}),
 \hypertarget{estimation-using-shorts-package}{%
 \section{Estimation using shorts package}\label{estimation-using-shorts-package}}
 
-Short sprints profiling is usually performed by: (1) measuring split times using timing gates (i.e., positioned at various distances, e.g., 5, 10, 20, 30, 40m), (2) getting a velocity trace using a radar gun. Estimation of MSS and TAU parameters from equation \eqref{eq:velocity-time} is performed in \pkg{shorts} package using non-linear least squares regression implemented in the \texttt{nls} function in the \pkg{base} R \citep{R-base} and \texttt{nlme} function in the \pkg{nlme} package \citep{R-nlme} for the mixed-effect models.
+Short sprints profiling is usually performed by: (1) measuring split times using timing gates (i.e., positioned at various distances, e.g., 5, 10, 20, 30, 40 m), (2) getting a velocity trace using a radar gun. Estimation of MSS and TAU parameters from equation \eqref{eq:velocity-time} is performed in \pkg{shorts} package using non-linear least squares regression implemented in the \texttt{nls()} function in the \pkg{base} R \citep{R-base} and \texttt{nlme()} function in the \pkg{nlme} package \citep{R-nlme} for the mixed-effect models.
 
 \hypertarget{estimating-short-sprint-parameters-using-split-times}{%
 \subsection{Estimating short sprint parameters using split times}\label{estimating-short-sprint-parameters-using-split-times}}
 
-Let's consider an example of an athlete with MSS equal to 9 \(ms^-1\), TAU equal to 1.3, and MAC equal to 6.92 \(ms^-2\) performing 40m sprint with timing gates positioned at each 10m split. For split times, distance is a predictor, and time is the outcome variable, thus the equation \eqref{eq:velocity-time} becomes:
+Let's consider an example of an athlete with MSS equal to 9 \(ms^{-1}\), TAU equal to 1.3, and MAC equal to 6.92 \(ms^{-2}\) performing 40m sprint with timing gates positioned at each 10m split. For split times, distance is a predictor, and time is the outcome variable, thus the equation \eqref{eq:velocity-time} becomes:
 
 \begin{equation}
   t(d) = TAU \times W(-e^{\frac{-d}{MSS \times TAU}} - 1) + \frac{d}{MSS} + TAU \label{eq:time-distance}
 \end{equation}
 
-\(W\) in equation \eqref{eq:time-distance} represents Lambert's W function \citep{R-LambertW}. MSS and TAU parameters are estimated using \texttt{model\_using\_splits} function:
+\(W\) in equation \eqref{eq:time-distance} represents Lambert's W function \citep{R-LambertW}. MSS and TAU parameters are estimated using \texttt{model\_using\_splits()} function:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -186,13 +190,13 @@ R> m1
 \end{CodeOutput}
 \end{CodeChunk}
 
-Maximal relative power (PMAX) from the output is estimated using \(\frac{MSS \times MAC}{4}\), which disregards the air resistance. \texttt{time\_correction} and \texttt{distance\_corection} parameters will be covered later in the article.
+Maximal relative power (PMAX) from the output is estimated using \(\frac{MSS \times MAC}{4}\), which disregards the air resistance. \texttt{time\_correction} and \texttt{distance\_corection} parameters will be covered later in the paper.
 
-Besides providing \emph{residual standard error} (RSE), \pkg{shorts} functions provide additional model fit estimators. Additional information can be gained by exploring the returned object, particularly object returned from the \texttt{nls} function:
+Besides providing \emph{residual standard error} (RSE), \pkg{shorts} functions provide additional model fit estimators. Additional information can be gained by exploring the returned object, particularly object returned from the \texttt{nls()} function:
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> summary(m1$model)
+R> summary(m1)
 \end{CodeInput}
 \begin{CodeOutput}
 #> 
@@ -201,19 +205,45 @@ R> summary(m1$model)
 #> 
 #> Parameters:
 #>     Estimate Std. Error t value Pr(>|t|)    
-#> MSS   9.0121     0.0155     581  3.0e-06 ***
-#> TAU   1.3083     0.0066     198  2.5e-05 ***
+#> MSS   9.0121     0.0155     581 0.000003 ***
+#> TAU   1.3083     0.0066     198 0.000025 ***
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
 #> Residual standard error: 0.00249 on 2 degrees of freedom
 #> 
 #> Number of iterations to convergence: 4 
-#> Achieved convergence tolerance: 3.11e-06
+#> Achieved convergence tolerance: 0.00000311
 \end{CodeOutput}
 \end{CodeChunk}
 
-Once we have estimated MSS and TAU, we can use \texttt{predict\_} family of functions to predict various relationships (i.e.~time at distance, acceleration at distance, velocity at time):
+To extract estimated model parameters, use S3 \texttt{coef()} method:
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> coef(m1)
+\end{CodeInput}
+\begin{CodeOutput}
+#>                 MSS                 TAU                 MAC 
+#>                9.01                1.31                6.89 
+#>                PMAX     time_correction distance_correction 
+#>               15.52                0.00                0.00
+\end{CodeOutput}
+\end{CodeChunk}
+
+To create a simple plot of the model, use S3 \texttt{plot()} method, which returns \pkg{ggplot2} \citep{R-ggplot2} object:
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> plot(m1) + theme_bw(8)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-4-1} \end{center}
+
+\end{CodeChunk}
+
+Once we have estimated MSS and TAU, we can use \texttt{predict\_XXX()} family of functions to predict various relationships (i.e., time at distance, acceleration at distance, velocity at time, etc.):
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -244,7 +274,7 @@ R> predict_acceleration_at_time(
 \hypertarget{air-resistance-and-the-calculation-of-force-and-mechanical-power}{%
 \subsubsection{Air resistance and the calculation of force and mechanical power}\label{air-resistance-and-the-calculation-of-force-and-mechanical-power}}
 
-To estimate force production at distance or time (using \texttt{predict\_force\_at\_distance} and \texttt{predict\_force\_at\_time} functions), as well as power production (using \texttt{predict\_power\_at\_distance} and \texttt{predict\_power\_at\_time} functions), one needs to take into account the air resistance. Air resistance (N) is estimated using \texttt{get\_air\_resistance} function, which takes velocity, body mass (kg), body height (m), barometric pressure (Torr), air temperature (\(C^\circ\)), and wind velocity (\(ms^-1\)) as parameters (please refer to \citet{arsacModelingEnergetics100m2002}, \citet{samozinoSimpleMethodMeasuring2016}, and \citet{vaningenschenauCanCyclePower1991} for more information):
+To estimate force production at distance or time (using \texttt{predict\_force\_at\_distance()} and \texttt{predict\_force\_at\_time()} functions), as well as power production (using \texttt{predict\_power\_at\_distance()} and \texttt{predict\_power\_at\_time()} functions), one needs to take into account the air resistance. Air resistance (N) is estimated using \texttt{get\_air\_resistance()} function, which takes velocity, body mass (kg), body height (m), barometric pressure (Torr), air temperature (\(C^\circ\)), and wind velocity (\(ms^-1\)) as parameters (please refer to \citet{arsacModelingEnergetics100m2002}, \citet{samozinoSimpleMethodMeasuring2016}, and \citet{vaningenschenauCanCyclePower1991} for more information):
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -262,7 +292,7 @@ R> get_air_resistance(
 \end{CodeOutput}
 \end{CodeChunk}
 
-When estimating force and power, the air resistance parameters can be set using \texttt{"..."}, which are forwarded to the \texttt{get\_air\_resistance}:
+When estimating force and power, the air resistance parameters can be set using \texttt{"..."}, which are forwarded to the \texttt{get\_air\_resistance()}:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -304,7 +334,7 @@ R> predict_power_at_distance(
 \end{CodeOutput}
 \end{CodeChunk}
 
-The easiest way to get all kinematics for short sprints is to use \texttt{predict\_kinematics} functions:
+The easiest way to get all kinematics and kinetics for short sprints is to use \texttt{predict\_kinematics()} function:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -324,20 +354,34 @@ R>
 R> head(df)
 \end{CodeInput}
 \begin{CodeOutput}
-#>   time distance velocity acceleration air_resistance force power
-#> 1 0.00 0.000000   0.0000         6.89        0.07536   551   0.0
-#> 2 0.01 0.000344   0.0686         6.84        0.05609   547  37.5
-#> 3 0.02 0.001371   0.1367         6.78        0.03978   543  74.2
-#> 4 0.03 0.003076   0.2043         6.73        0.02636   539 110.0
-#> 5 0.04 0.005455   0.2714         6.68        0.01576   534 145.0
-#> 6 0.05 0.008502   0.3379         6.63        0.00792   530 179.2
-#>   relative_power
-#> 1          0.000
-#> 2          0.469
-#> 3          0.928
-#> 4          1.375
-#> 5          1.813
-#> 6          2.241
+#>   time distance velocity acceleration bodymass net_horizontal_force
+#> 1 0.00 0.000000   0.0000         6.89       80                  551
+#> 2 0.01 0.000344   0.0686         6.84       80                  547
+#> 3 0.02 0.001371   0.1367         6.78       80                  543
+#> 4 0.03 0.003076   0.2043         6.73       80                  539
+#> 5 0.04 0.005455   0.2714         6.68       80                  534
+#> 6 0.05 0.008502   0.3379         6.63       80                  530
+#>   air_resistance horizontal_force horizontal_force_relative
+#> 1        0.07536              551                      6.89
+#> 2        0.05609              547                      6.84
+#> 3        0.03978              543                      6.78
+#> 4        0.02636              539                      6.73
+#> 5        0.01576              534                      6.68
+#> 6        0.00792              530                      6.63
+#>   vertical_force resultant_force resultant_force_relative power
+#> 1            785             959                     12.0   0.0
+#> 2            785             957                     12.0  37.5
+#> 3            785             954                     11.9  74.2
+#> 4            785             952                     11.9 110.0
+#> 5            785             950                     11.9 145.0
+#> 6            785             947                     11.8 179.2
+#>   relative_power    RF force_angle
+#> 1          0.000 0.575        54.9
+#> 2          0.469 0.572        55.1
+#> 3          0.928 0.569        55.3
+#> 4          1.375 0.566        55.5
+#> 5          1.813 0.563        55.7
+#> 6          2.241 0.560        55.9
 \end{CodeOutput}
 \end{CodeChunk}
 
@@ -347,7 +391,10 @@ Plotting the model predictions can be done once we convert data from wide to lon
 \begin{CodeInput}
 R> require(tidyverse)
 R> 
-R> df <- pivot_longer(data = df, cols = -2)
+R> variable_names <- colnames(df)
+R> 
+R> df <- pivot_longer(data = df, cols = -2) %>%
++   mutate(name = factor(name, levels = variable_names))
 R> 
 R> ggplot(df, aes(x = distance, y = value)) +
 +   theme_bw(8) +
@@ -358,14 +405,16 @@ R> ggplot(df, aes(x = distance, y = value)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-7-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 \end{CodeChunk}
+
+These kinematic and kinetic variables are utilized in \protect\hyperlink{force-velocity-profile}{Force-Velocity profile} estimation, which is covered later in this paper.
 
 \hypertarget{utility-functions}{%
 \subsubsection{Utility functions}\label{utility-functions}}
 
-Another valuable addition for sport scientists and coaches is the ability to determine the distances and times where 90\% of maximum sprinting speed is reached, or where peak power is within 90\% range. To identify these values, \pkg{shorts} package comes with \texttt{find\_} family of functions:
+Another valuable addition for sport scientists and coaches is the ability to determine the distances and times where 90\% of maximum sprinting speed is reached, or where peak power is within 90\% range. To identify these values, \pkg{shorts} package comes with \texttt{find\_XXX()} family of functions:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -428,7 +477,7 @@ R> find_power_critical_distance(
 \hypertarget{mixed-effects-model}{%
 \subsubsection{Mixed-effects model}\label{mixed-effects-model}}
 
-Sprint performance is often evaluated with a group of athletes (e.g., soccer club) representing a single strata of interest. Sports scientists can estimate individual profiles, or utilize mixed-effects models. To perform mixed-effects models in \pkg{shorts} for split times, one can use \texttt{mixed\_model\_using\_splits} function. To demonstrate this functionality, we load the \texttt{split\_times} dataset provided in the \pkg{shorts} package:
+Sprint performance is often evaluated with a group of athletes (e.g., soccer club) representing a single strata of interest. Sports scientists can estimate individual profiles, or utilize mixed-effects models. To perform mixed-effects models in \pkg{shorts} for split times, one can use \texttt{mixed\_model\_using\_splits()} function. To demonstrate this functionality, we load the \texttt{split\_times} dataset provided in the \pkg{shorts} package:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -457,7 +506,7 @@ R> m2
 #>              24.818               0.000               0.000 
 #> 
 #> Estimated random model parameters
-#> ----------------------------------
+#> ---------------------------------
 #>     athlete  MSS   TAU  MAC PMAX time_correction distance_correction
 #> 1     James 9.69 0.847 11.4 27.7               0                   0
 #> 2       Jim 7.83 0.505 15.5 30.4               0                   0
@@ -474,7 +523,7 @@ R> m2
 \end{CodeOutput}
 \end{CodeChunk}
 
-Additional information about mixed-effects model performed using the \texttt{nlme} package \citep{R-nlme} can be obtained using \texttt{summary}:
+Additional information about mixed-effects model performed using the \texttt{nlme} package \citep{R-nlme} can be obtained using \texttt{summary()} function:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -483,7 +532,7 @@ R> summary(m2)
 \begin{CodeOutput}
 #> Nonlinear mixed-effects model fit by maximum likelihood
 #>   Model: corrected_time ~ TAU * I(LambertW::W(-exp(1)^(-distance/(MSS *      TAU) - 1))) + distance/MSS + TAU 
-#>  Data: train 
+#>   Data: train 
 #>     AIC   BIC logLik
 #>   -75.1 -66.7   43.5
 #> 
@@ -496,7 +545,7 @@ R> summary(m2)
 #> TAU      0.178  0.877
 #> Residual 0.026       
 #> 
-#> Fixed effects: MSS + TAU ~ 1 
+#> Fixed effects:  MSS + TAU ~ 1 
 #>     Value Std.Error DF t-value p-value
 #> MSS  8.06     0.495 24   16.30       0
 #> TAU  0.66     0.084 24    7.82       0
@@ -513,13 +562,51 @@ R> summary(m2)
 \end{CodeOutput}
 \end{CodeChunk}
 
+S3 method \texttt{coef()} when applied on mixed-model result will return both the fixed and random effects:
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> coef(m2)
+\end{CodeInput}
+\begin{CodeOutput}
+#> $fixed
+#>                 MSS                 TAU                 MAC 
+#>               8.065               0.655              12.309 
+#>                PMAX     time_correction distance_correction 
+#>              24.818               0.000               0.000 
+#> 
+#> $random
+#>     athlete  MSS   TAU  MAC PMAX time_correction distance_correction
+#> 1     James 9.69 0.847 11.4 27.7               0                   0
+#> 2       Jim 7.83 0.505 15.5 30.4               0                   0
+#> 3      John 7.78 0.727 10.7 20.8               0                   0
+#> 4 Kimberley 8.57 0.802 10.7 22.9               0                   0
+#> 5  Samantha 6.45 0.395 16.3 26.4               0                   0
+\end{CodeOutput}
+\end{CodeChunk}
+
+To create a simple plot of the model, use S3 \texttt{plot()} method:
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> plot(m2) + theme_bw(8)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-14-1} \end{center}
+
+\end{CodeChunk}
+
 The following figure contains kinematics for all athletes in \texttt{split\_times} dataset. Please note that power calculation takes default parameters for each individual:
 
 \begin{CodeChunk}
 \begin{CodeInput}
 R> df <- predict_kinematics(m2, max_time = 10)
 R> 
-R> df <- pivot_longer(df, cols = c(-1, -3))
+R> variable_names <- colnames(df)
+R> 
+R> df <- pivot_longer(df, cols = c(-1, -3)) %>%
++   mutate(name = factor(name, levels = variable_names))
 R> 
 R> ggplot(
 +   filter(df, distance < 40),
@@ -536,7 +623,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 \end{CodeChunk}
 
@@ -545,7 +632,7 @@ R> ggplot(
 
 Estimation of the short sprint profile using radar gun data takes time as predictor and velocity as the outcome variable. Thus equation \eqref{eq:velocity-time} is used to estimate MSS and TAU.
 
-Let's consider the same example of an athlete with MSS equal to 9\(ms^-1\), TAU equal to 1.3, and MAC equal to 6.92\(ms^-2\) performing 40m sprint with velocity estimated using radar run (in this case with 1Hz sampling rate).
+Let's consider the same example of an athlete with MSS equal to 9 \(ms^{-1}\), TAU equal to 1.3, and MAC equal to 6.92 \(ms^{-2}\) performing 40m sprint with velocity estimated using radar run (in this case with 1 Hz sampling rate).
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -575,6 +662,16 @@ R> m3
 #>      MAPE 
 #>       NaN
 \end{CodeOutput}
+\end{CodeChunk}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> plot(m3) + theme_bw(8)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-17-1} \end{center}
+
 \end{CodeChunk}
 
 Both split and radar gun models allow the use of \emph{weighted} non-linear regression. For example, we can give more weight to shorter distance or faster velocities. Weighted non-linear regression is performed by setting \texttt{weights} parameter:
@@ -609,7 +706,7 @@ R> m3_weighted
 \hypertarget{mixed-effects-model-1}{%
 \subsubsection{Mixed-effects model}\label{mixed-effects-model-1}}
 
-Mixed-effects model using radar data is done using \texttt{mixed\_model\_using\_radar} function. To perform mixed model, let's load data that comes with \pkg{shorts} package.
+Mixed-effects model using radar data is done using \texttt{mixed\_model\_using\_radar()} function. To perform mixed model, let's load data that comes with \pkg{shorts} package.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -633,7 +730,7 @@ R> m4
 #>               17.09                0.00                0.00 
 #> 
 #> Estimated random model parameters
-#> ----------------------------------
+#> ---------------------------------
 #>     athlete   MSS   TAU  MAC PMAX time_correction distance_correction
 #> 1     James 10.00 1.111 9.00 22.5               0                   0
 #> 2       Jim  8.00 0.889 9.00 18.0               0                   0
@@ -650,6 +747,74 @@ R> m4
 \end{CodeOutput}
 \end{CodeChunk}
 
+\begin{CodeChunk}
+\begin{CodeInput}
+R> plot(m4) + theme_bw(8)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-20-1} \end{center}
+
+\end{CodeChunk}
+
+\hypertarget{force-velocity-profile}{%
+\subsection{Force-Velocity profile}\label{force-velocity-profile}}
+
+To create \emph{Force-Velocity Profile} (FVP) using single athlete estimated sprint model parameters (i.e., TAU and MSS), you can use \texttt{get\_FV\_profile()} function. When estimating FVP, athlete body mass (kg) can be set using \texttt{bodymass} parameter, while the air resistance parameters can be set using \texttt{"..."}, which are forwarded to the \texttt{get\_air\_resistance()} function. Details of the FVP method implemented in the \pkg{shorts} package, as well as the interpretation from a sprint training perspective, are covered elsewhere \citep{haugenPowerForceVelocityProfilingSprinting2020, morinInterpretingPowerForceVelocityProfiles2016, morinSimpleMethodComputing2019, samozinoSimpleMethodMeasuring2016}.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> # To create Force-Velocity Profile
+R> fvp <- get_FV_profile(
++   MSS = m1$parameters$MSS,
++   TAU = m1$parameters$TAU,
++   bodymass = 80,
++   # Additional parameters forwarded to get_air_resistance
++   # Otherwise, defaults are used
++   bodyheight = 1.85,
++   barometric_pressure = 780,
++   air_temperature = 20,
++   wind_velocity = 0.5
++ )
+R> 
+R> fvp
+\end{CodeInput}
+\begin{CodeOutput}
+#> Estimated Force-Velocity Profile
+#> --------------------------------
+#>      bodymass            F0        F0_rel            V0          Pmax 
+#>      80.00000     544.51032       6.80638       9.36184    1274.40402 
+#> Pmax_relative      FV_slope  RFmax_cutoff         RFmax           Drf 
+#>      15.93005      -0.72703       0.30000       0.48779      -0.06676 
+#>        RSE_FV       RSE_Drf 
+#>       1.54814       0.00447
+\end{CodeOutput}
+\end{CodeChunk}
+
+To plot FVP kinematics and kinetics (which are exactly the same as generated by the \texttt{predict\_kinematics()} function), use S3 \texttt{plot()} function. By default, FVP estimated kinetics are plotted against velocity (on x-axis).
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> plot(fvp) + theme_bw(8)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-22-1} \end{center}
+
+\end{CodeChunk}
+
+To plot FVP estimated kinetics against time, use \texttt{type\ =\ "time"} parameter:
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> plot(fvp, "time") + theme_bw(8)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-23-1} \end{center}
+
+\end{CodeChunk}
+
 \hypertarget{problems-with-estimation}{%
 \section{Problems with estimation}\label{problems-with-estimation}}
 
@@ -658,7 +823,7 @@ There is a challenge when collecting sprint data that could have a substantial i
 \hypertarget{problems-with-time-sync-with-radar-gun}{%
 \subsection{Problems with time sync with radar gun}\label{problems-with-time-sync-with-radar-gun}}
 
-One source of error in the modeled estimation using a radar gun is the time synchronization. In theory, synchronization is ideal when a sprint is initiated at \(t=0\) (i.e., \(v(t=0) = 0\)). In practice, this is often not the case. Let's use our athlete and add and deduct 0.5s to simulate an error in synchronization and its effect on estimated MSS and TAU.
+One source of error in the modeled estimation using a radar gun is the time synchronization. In theory, synchronization is ideal when a sprint is initiated at \(t=0\) (i.e., \(v(t=0) = 0\)). In practice, this is often not the case. Let's use our athlete and add and deduct 0.5 s to simulate an error in synchronization and its effect on estimated MSS and TAU.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -685,7 +850,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
 \end{CodeChunk}
 
@@ -738,13 +903,13 @@ R> rbind(
 \end{CodeOutput}
 \end{CodeChunk}
 
-As can be seen from the example, TAU is affected by an error in synchronization of time with velocity. The potential solution incorporated into the \pkg{shorts} package involves estimation of the \emph{time correction} parameter using the following equation:
+As can be seen from the example, all estimated parameters are affected by an error in synchronization of time with velocity (with MSS being the least affected in this example). The potential solution incorporated into the \pkg{shorts} package involves estimation of the \emph{time correction} parameter using the following equation:
 
 \begin{equation}
   v(t) = MSS \times (1 - e^{-\frac{t + time \; correction}{TAU}}) \label{eq:velocity-time-correction}
 \end{equation}
 
-This model is incorporated in the \texttt{model\_using\_radar\_with\_time\_correction} function:
+This model is incorporated in the \texttt{model\_using\_radar\_with\_time\_correction()} function:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -778,7 +943,7 @@ R> coef(m9)
 \end{CodeOutput}
 \end{CodeChunk}
 
-When using \texttt{predict\_} family of functions, one can provide estimated time correction to get predictions at original time scale.
+When using \texttt{predict\_XXX()} family of functions, one can provide estimated time correction to get predictions at original time scale.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -803,14 +968,15 @@ R> predict_velocity_at_time(
 + )
 \end{CodeInput}
 \begin{CodeOutput}
-#> [1] 7.82e-05 4.83e+00 7.07e+00 8.11e+00 8.59e+00 8.81e+00 8.91e+00
+#> [1] 0.0000782 4.8299729 7.0681475 8.1053182 8.5859434 8.8086652
+#> [7] 8.9118746
 \end{CodeOutput}
 \end{CodeChunk}
 
 \hypertarget{mixed-model-approach}{%
 \subsubsection{Mixed-model approach}\label{mixed-model-approach}}
 
-When it comes to mixed-model approach, time correction can be modeled as a fixed effect or random effect using the \texttt{mixed\_model\_using\_radar\_with\_time\_correction} function.
+When it comes to mixed-model approach, time correction can be modeled as a fixed effect or random effect using the \texttt{mixed\_model\_using\_radar\_with\_time\_correction()} function.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -837,7 +1003,7 @@ R> m10
 #>               17.10               -0.50                0.00 
 #> 
 #> Estimated random model parameters
-#> ----------------------------------
+#> ---------------------------------
 #>     athlete   MSS   TAU  MAC PMAX time_correction distance_correction
 #> 1     James 10.00 1.111 9.00 22.5            -0.5                   0
 #> 2       Jim  8.00 0.889 9.00 18.0            -0.5                   0
@@ -874,7 +1040,7 @@ R> m11
 #>               17.10               -0.50                0.00 
 #> 
 #> Estimated random model parameters
-#> ----------------------------------
+#> ---------------------------------
 #>     athlete   MSS   TAU  MAC PMAX time_correction distance_correction
 #> 1     James 10.00 1.110 9.00 22.5            -0.5                   0
 #> 2       Jim  8.00 0.889 9.00 18.0            -0.5                   0
@@ -894,9 +1060,9 @@ R> m11
 \hypertarget{problems-at-the-start-when-using-split-times}{%
 \subsection{Problems at the start when using split times}\label{problems-at-the-start-when-using-split-times}}
 
-Let's imagine we have two twin brothers with same short sprint characteristics: MSS equal to 9\(ms^-1\), TAU equal to 1.3, and MAC equal to 6.92\(ms^-2\). Let's call them John and Jack. They both perform 40m sprint using timing gates set at 5, 10, 20, 30, and 40m. The initial timing gate at the start (i.e., \(d=0m\)) serves to activate the timing system (i.e., when they cross the beam).
+Let's imagine we have two twin brothers with same short sprint characteristics: MSS equal to 9 \(ms^{-1}\), TAU equal to 1.3, and MAC equal to 6.92 \(ms^{-2}\). Let's call them John and Jack. They both perform 40m sprint using timing gates set at 5, 10, 20, 30, and 40 m. The initial timing gate at the start (i.e., \(d=0\) m) serves to activate the timing system (i.e., when they cross the beam).
 
-John represents the \emph{theoretical model}, in which we assume that the initial force production and the timing initiation are perfectly synchronized. Jack, on the other hand, represents a \emph{practical model}, and decides to move slightly behind the initial timing gate (i.e.~for 0.5m) and use body rocking to initiate the sprint start. In other words, Jack is using a \emph{flying start}, a common scenario when testing field sports athletes. Let's see how their sprint outcomes differ.
+John represents the \emph{theoretical model}, in which we assume that the initial force production and the timing initiation are perfectly synchronized. Jack, on the other hand, represents a \emph{practical model}, and decides to move slightly behind the initial timing gate (i.e.~for 0.5 m) and use body rocking to initiate the sprint start. In other words, Jack is using a \emph{flying start}, a common scenario when testing field sports athletes. Let's see how their sprint outcomes differ.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -954,7 +1120,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-21-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 \end{CodeChunk}
 
@@ -980,8 +1146,8 @@ R> jack_profile <- model_using_splits(
 + )
 R> 
 R> sprint_parameters <- rbind(
-+   unlist(john_profile$parameters),
-+   unlist(jack_profile$parameters)
++   coef(john_profile),
++   coef(jack_profile)
 + )
 R> 
 R> rownames(sprint_parameters) <- c("John", "Jack")
@@ -997,7 +1163,7 @@ R> sprint_parameters
 
 As can be seen from the results, a flying start yields biased estimates, particularly for the TAU, MAC and PMAX.
 
-Below is a simulation sprint with 5, 10, 20, 30, 40, and 50m splits, with MSS and MAC varying from 6 to 9 (\(ms^-1\) and \(ms^-2\) respectively), and flying start distance varying from 0 to 1m.
+Below is a simulation sprint with 5, 10, 20, 30, 40, and 50 m splits, with MSS and MAC varying from 6 to 9 (\(ms^{-1}\) and \(ms^{-2}\) respectively), and flying start distance varying from 0 to 1 m.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -1025,7 +1191,7 @@ R> sim_df <- sim_df %>%
 R> 
 R> # Add small noise to allow model fit
 R> set.seed(1667)
-R> rand_noise <- rnorm(nrow(sim_df), 0, 10^-4)
+R> rand_noise <- rnorm(nrow(sim_df), 0, 10^-5)
 R> sim_df$time <- sim_df$time + rand_noise
 \end{CodeInput}
 \end{CodeChunk}
@@ -1041,7 +1207,7 @@ R> pred_wrapper <- function(data) {
 +     time = data$time
 +   )
 + 
-+   params <- data.frame(t(unlist(model$parameters)))
++   params <- data.frame(t(coef(model)))
 + 
 +   predicted_time <- predict_time_at_distance(
 +     distance = data$distance,
@@ -1072,7 +1238,7 @@ R> model_df$residuals <- model_df$predicted_time - model_df$time
 \end{CodeInput}
 \end{CodeChunk}
 
-The following image demonstrates the effect of flying start distance on estimated MSS:
+The following figure demonstrates the effect of flying start distance on estimated MSS:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -1103,11 +1269,11 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-25-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-34-1} \end{center}
 
 \end{CodeChunk}
 
-As can be seen from the image, MSS is underestimated as flying start distance increases. The following image demonstrates the effect of flying start distance on estimated MAC:
+As can be seen from the figure, MSS is underestimated as flying start distance increases. The following image demonstrates the effect of flying start distance on estimated MAC:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -1127,7 +1293,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-26-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-35-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1153,13 +1319,13 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-27-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
 \end{CodeChunk}
 
 Estimated PMAX is also overestimated as flying start distance increases.
 
-Model residuals are also affected by flying start distance. The shape of residuals distribution depends on number and splits utilized (e.g., 10, 20, 30, 40m versus 5, 15, 30m), but here we can see the effect of the flying start distance on the model residuals per split distance utilized in our simulation:
+Model residuals are also affected by flying start distance. The shape of residuals distribution depends on number and splits utilized (e.g., 10, 20, 30, 40 m versus 5, 15, 30 m), but here we can see the effect of the flying start distance on the model residuals per split distance utilized in our simulation:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -1175,7 +1341,11 @@ R> model_df <- model_df %>%
 R> 
 R> ggplot(
 +   model_df,
-+   aes(y = residuals, x = distance, color = flying_start_distance, group = group)
++   aes(
++     y = residuals,
++     x = distance,
++     color = flying_start_distance,
++     group = group)
 + ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.3) +
@@ -1189,17 +1359,21 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-28-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-37-1} \end{center}
 
 \end{CodeChunk}
 
-If we merge individual facets (i.e., combinations of MSS and MAC), we can get simpler images conveying issues with residuals when there is a flying start:
+If we merge individual facets (i.e., combinations of MSS and MAC), we can get simpler figure conveying issues with residuals when there is a flying start:
 
 \begin{CodeChunk}
 \begin{CodeInput}
 R> ggplot(
 +   model_df,
-+   aes(y = residuals, x = distance, color = flying_start_distance, group = group)
++   aes(
++     y = residuals,
++     x = distance,
++     color = flying_start_distance,
++     group = group)
 + ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.3) +
@@ -1212,7 +1386,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-29-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-38-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1221,15 +1395,17 @@ Clearly, any type of flying start where there is a difference between initial fo
 \hypertarget{how-to-overcome-missing-the-initial-force-production-when-using-timing-gates}{%
 \subsubsection{How to overcome missing the initial force production when using timing gates?}\label{how-to-overcome-missing-the-initial-force-production-when-using-timing-gates}}
 
-A potential solution is to use a correction factor - the recommendation in the literature is +0.5sec \citep{haugenSprintMechanicalProperties2020, haugenSprintMechanicalVariables2019}. Interestingly, the average difference between using timing gates and a block start for 40 m sprint time was 0.27 sec \citep{haugenDifferenceStartImpact2012}. So, while a timing correction factor is warranted to avoid subsequent errors in estimates of kinetic variables (e.g., overestimate power), a correction factor that is too large will have the opposite effect (e.g., underestimate power).
+A potential solution is to use a correction factor - the recommendation in the literature is +0.5 s \citep{haugenSprintMechanicalProperties2020, haugenSprintMechanicalVariables2019}. Interestingly, the average difference between using timing gates and a block start for 40 m sprint time was 0.27 s \citep{haugenDifferenceStartImpact2012}. So, while a timing correction factor is warranted to avoid subsequent errors in estimates of kinetic variables (e.g., overestimate power), a correction factor that is too large will have the opposite effect (e.g., underestimate power).
 
-When implementing \emph{time correction}, equation \eqref{eq:time-distance} becomes:
+Rather than providing \emph{apriori} time correction from the literature, \pkg{shorts} package provides an estimation of this parameter from the data provided, together with MSS and TAU. Exactly the same method is suggested by \citet{stenrothForcevelocityProfilingIce2020}, named \emph{time shift method}, and the estimated parameter named \emph{time shift parameter}. We have named this parameter \emph{time correction} to be in agreement with the parameter introduced in \protect\hyperlink{problems-with-time-sync-with-radar-gun}{Problems with time sync with radar gun} section of this paper, as well as the available literature.
+
+When implementing time correction, equation \eqref{eq:time-distance} becomes:
 
 \begin{equation}
   t(d) = TAU \times W(-e^{\frac{-d}{MSS \times TAU}} - 1) + \frac{d}{MSS} + TAU - time \; correction \label{eq:time-correction}
 \end{equation}
 
-Rather than providing \emph{apriori} time correction from the literature, \pkg{shorts} package provides an estimation of this parameter from the data provided, together with MSS and TAU. To estimate time correction, we use \texttt{model\_using\_splits\_with\_time\_correction} function. Here is how we can estimate Jack parameters using either provided time correction (e.g., +0.3 and +0.5s) or estimated time correction:
+To estimate time correction parameter, we use \texttt{model\_using\_splits\_with\_time\_correction()} function. Here is how we can estimate Jack parameters using either provided time correction (e.g., +0.3 and +0.5 s) or estimated time correction:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -1251,11 +1427,11 @@ R> jack_profile_time_estimated <- model_using_splits_with_time_correction(
 + )
 R> 
 R> jack_parameters <- rbind(
-+   unlist(john_profile$parameters),
-+   unlist(jack_profile$parameters),
-+   unlist(jack_profile_fixed_time_short$parameters),
-+   unlist(jack_profile_fixed_time_long$parameters),
-+   unlist(jack_profile_time_estimated$parameters)
++   coef(john_profile),
++   coef(jack_profile),
++   coef(jack_profile_fixed_time_short),
++   coef(jack_profile_fixed_time_long),
++   coef(jack_profile_time_estimated)
 + )
 R> 
 R> rownames(jack_parameters) <- c(
@@ -1290,15 +1466,15 @@ R> jack_parameters
 \end{CodeOutput}
 \end{CodeChunk}
 
-In Jack's case, both +0.3s fixed time correction and time correction estimation yield parameters closer to John's (i.e.~true parameters).
+In Jack's case, both +0.3 s fixed time correction and time correction estimation yield parameters closer to John's (i.e.~true parameters).
 
-Another model definition, which is a novel approach implemented in the \pkg{shorts} packages, is to utilize \emph{distance correction}, besides time correction. Thus, equation \eqref{eq:time-distance} becomes:
+Another model definition, which is a novel approach implemented in the \pkg{shorts} package, is to utilize \emph{distance correction}, besides time correction. Thus, equation \eqref{eq:time-distance} becomes:
 
 \begin{equation}
   t(d) = TAU \times W(-e^{\frac{-d + distance \; correction}{MSS \times TAU}} - 1) + \frac{d + distance \; correction}{MSS} + TAU - time \; correction \label{eq:distance-correction}
 \end{equation}
 
-This model is implemented in \texttt{model\_using\_splits\_with\_corrections} function. Below are the model estimates:
+This model is implemented in \texttt{model\_using\_splits\_with\_corrections()} function. Below are the model estimates:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -1308,12 +1484,12 @@ R> jack_profile_distance_correction <- model_using_splits_with_corrections(
 + )
 R> 
 R> jack_parameters <- rbind(
-+   unlist(john_profile$parameters),
-+   unlist(jack_profile$parameters),
-+   unlist(jack_profile_fixed_time_short$parameters),
-+   unlist(jack_profile_fixed_time_long$parameters),
-+   unlist(jack_profile_time_estimated$parameters),
-+   unlist(jack_profile_distance_correction$parameters)
++   coef(john_profile),
++   coef(jack_profile),
++   coef(jack_profile_fixed_time_short),
++   coef(jack_profile_fixed_time_long),
++   coef(jack_profile_time_estimated),
++   coef(jack_profile_distance_correction)
 + )
 R> 
 R> rownames(jack_parameters) <- c(
@@ -1352,7 +1528,7 @@ R> jack_parameters
 \end{CodeOutput}
 \end{CodeChunk}
 
-As can be seen from the results, adding distance correction results in correctly estimating Jack's sprint parameters. There are a few issues with this model definition. Besides being novel and still not validated with actual data, distance correction model has four parameters to estimate, which implies that at least five sprint splits are needed. This imposes practical limitations, since acquiring six timing gate (one for the start and five for splits) might be practically troublesome.
+As can be seen from the results, adding distance correction results in correctly estimating Jack's sprint parameters. There are a few issues with this model definition. Besides being novel and still not validated with actual data, distance correction model has four parameters to estimate, which implies that at least five sprint splits are needed. This imposes practical limitations, since acquiring six timing gate (one for the start and five for splits) might be practically troublesome. One strategy that is sometimes implemented is adding zeros to the sample (i.e., \(t=0\) and \(d=0\)), which increase the number of observations. Unfortunately, this strategy should not be implemented, as explained later in the \protect\hyperlink{should-we-add-zero-to-the-sample}{Should we add zero to the sample?} section of this paper.
 
 We will get back to these issues later, but we can examine how these models perform using simulated data with varying flying start distance. The following code contains the wrapper that performs all four models (no correction, fixed time correction, estimated time correction, and estimated time and distance correction):
 
@@ -1392,23 +1568,23 @@ R> pred_wrapper <- function(data) {
 +   params <- rbind(
 +     data.frame(
 +       model = "No correction",
-+       t(unlist(no_correction$parameters))
++       t(coef(no_correction))
 +     ),
 +     data.frame(
 +       model = "Fixed correction +0.3s",
-+       t(unlist(fixed_correction_short$parameters))
++       t(coef(fixed_correction_short))
 +     ),
 +     data.frame(
 +       model = "Fixed correction +0.5s",
-+       t(unlist(fixed_correction_long$parameters))
++       t(coef(fixed_correction_long))
 +     ),
 +     data.frame(
 +       model = "Time correction",
-+       t(unlist(time_correction$parameters))
++       t(coef(time_correction))
 +     ),
 +     data.frame(
 +       model = "Time and distance correction",
-+       t(unlist(time_dist_correction$parameters))
++       t(coef(time_dist_correction))
 +     )
 +   )
 + 
@@ -1483,7 +1659,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-33-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-42-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1507,7 +1683,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-34-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-43-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1531,7 +1707,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-35-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1556,7 +1732,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-36-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-45-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1581,7 +1757,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-37-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-46-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1601,7 +1777,11 @@ R> model_df <- model_df %>%
 R> 
 R> ggplot(
 +   model_df,
-+   aes(y = residuals, x = distance, color = flying_start_distance, group = group)
++   aes(
++     y = residuals,
++     x = distance,
++     color = flying_start_distance,
++     group = group)
 + ) +
 +   theme_bw(8) +
 +   geom_line(alpha = 0.3) +
@@ -1615,20 +1795,20 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-38-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-47-1} \end{center}
 
 \end{CodeChunk}
 
 The outcomes from the simulation data clearly demonstrates that the time correction and time and distance correction models represent sound improvements in parameter estimation and model fit compared to no corrections model and fixed correction model when attempting to overcome the flying start issues. Since the time correction model is simpler and requires three parameters to be estimated, it might be practically more useful than the time and distance correction model, which requires four parameters estimation and thus more than five timing gates and sprint splits.
 
-Time correction and time and distance corrections are also implemented in the mixed-models using \texttt{mixed\_model\_using\_splits\_with\_time\_correction} and \texttt{mixed\_model\_using\_splits\_with\_corrections}. We will showcase their use at the end of this article.
+Time correction and time and distance corrections are also implemented in the mixed-models using \texttt{mixed\_model\_using\_splits\_with\_time\_correction()} and \texttt{mixed\_model\_using\_splits\_with\_corrections()}. We will showcase their use at the end of this paper.
 
 \hypertarget{simulation-of-additional-starting-issues}{%
 \subsubsection{Simulation of additional starting issues}\label{simulation-of-additional-starting-issues}}
 
-Starting behind the initial timing gate represent only one issue (i.e.~flying start). In this section, we simulate one more issue to check the sensitivity of the presented models to other (less common) perturbations when performing field testing.
+Starting behind the initial timing gate represent only one issue (i.e., flying start). In this section, we simulate one more issue to check the sensitivity of the presented models to other (less common) perturbations when performing field testing.
 
-One issue that might happen with timing gates is triggering the timing system before the sprint is initiated (e.g., by cutting the beam with an arm swing prematurely). This is very similar to the situation when timing starts on a signal (i.e., gun during 100m sprint race) and there is \emph{reaction time} (RT) involved. Both of these scenarios represent \emph{time lag} that is added to the split times. Below we simulate the effect of this time lag on model estimates and predictions.
+One issue that might happen with timing gates is triggering the timing system before the sprint is initiated (e.g., by cutting the beam with an arm swing prematurely). This is very similar to the situation when timing starts on a signal (i.e., gun during 100 m sprint race) and there is \emph{reaction time} (RT) involved. Both of these scenarios represent \emph{time lag} that is added to the split times. Below we simulate the effect of this time lag on model estimates and predictions.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -1702,7 +1882,7 @@ R> ggplot(df, aes(x = time_lag, y = est_MSS, color = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-41-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-50-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1723,7 +1903,7 @@ R> ggplot(df, aes(x = time_lag, y = est_MAC, color = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-42-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-51-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1748,11 +1928,11 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-43-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-52-1} \end{center}
 
 \end{CodeChunk}
 
-The next figure depicts estimated distance correction for the time and distance correction model. The estimated distance correction parameters looks jumpy due to random noise that we have to added to allow model fit.
+The next figure depicts estimated distance correction for the time and distance correction model. The estimated distance correction parameters looks jumpy due to random noise that we have to added to allow model fit, as well as the model estimation error.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -1772,7 +1952,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-44-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-53-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1806,7 +1986,7 @@ R> ggplot(
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-45-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-54-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1816,10 +1996,86 @@ The number and distances of the timing gates can also affect the precision of th
 
 In field testing, multiple starting issues can be present. For example, one might have a bad position of the initial gate, athlete might be moved back but also manage to trigger the gate before the start commence. More elaborate simulation is beyond the scope of the current paper.
 
+\hypertarget{should-we-add-zero-to-the-sample}{%
+\subsection{Should we add zero to the sample?}\label{should-we-add-zero-to-the-sample}}
+
+Fellow sports scientists are often considering adding \(t=0\) s at \(d=0\) m to the collected split times with the aim of increasing the number of observations. The question is whether this strategy is sound and if it should be employed. The short answer is no, it shouldn't, particularly if there are flying start issues. In the following example, we are demonstrating the issue when zeros are added to the sample when fitting multiple models with the known true parameters:
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> # Create split times from known MSS and TAU
+R> df <- tibble(
++   distance = c(5, 10, 20, 30, 40),
++   time = predict_time_at_distance(
++     distance,
++     MSS = 9,
++     TAU = 1.3
++   )
++ ) %>%
++   mutate(
++     # Add random noise to time
++     time = time + rnorm(n(), 0, 10^-5),
++     gate_time = time - 0.1
++   )
+R> 
+R> # Model without time correction
+R> m_no_correction <- model_using_splits(
++   distance = df$distance, 
++   time = df$gate_time
++ )
+R> 
+R> # Model without time correction, but with zeros added
+R> m_no_correction_zero <- model_using_splits(
++   distance = c(0, df$distance), 
++   time = c(0, df$gate_time)
++ )
+R> 
+R> # Model without adding zeros for the start
+R> m_no_zero <- model_using_splits_with_time_correction(
++   distance = df$distance, 
++   time = df$gate_time
++ )
+R> 
+R> # Model with added zeros for the start (d=0 and t=0)
+R> m_with_zero <- model_using_splits_with_time_correction(
++   distance = c(0, df$distance), 
++   time = c(0, df$gate_time)
++ )
+R> 
+R> # Print results
+R> data.frame(
++   model = c(
++     "Without time correction",
++     "Without time correction with zeros added", 
++     "With time correction",
++     "With time correction with zeros added"),
++   rbind(
++     coef(m_no_correction),
++     coef(m_no_correction_zero),
++     coef(m_no_zero),
++     coef(m_with_zero))
++ )
+\end{CodeInput}
+\begin{CodeOutput}
+#>                                      model  MSS  TAU  MAC PMAX
+#> 1                  Without time correction 8.78 1.09 8.06 17.7
+#> 2 Without time correction with zeros added 8.78 1.09 8.06 17.7
+#> 3                     With time correction 9.00 1.30 6.92 15.6
+#> 4    With time correction with zeros added 8.79 1.10 7.97 17.5
+#>   time_correction distance_correction
+#> 1         0.00000                   0
+#> 2         0.00000                   0
+#> 3         0.09994                   0
+#> 4         0.00739                   0
+\end{CodeOutput}
+\end{CodeChunk}
+
+As can be seen from the output, only the model with time correction is able to correctly recover true sprint parameters, but adding zeros to the sample in this case, results in MSS and TAU estimates very close to the estimates of the model without time corrections. Thus, adding zeros to the sample nullifies the potential benefits of using time correction model and should be avoided in practice.
+
 \hypertarget{leave-one-out-cross-validation}{%
 \section{Leave-one-out Cross-Validation}\label{leave-one-out-cross-validation}}
 
-To estimate parameter stability, model over-fitting, and performance on the unseen data, \pkg{shorts} model function comes with implemented \emph{leave-one-out cross validation} (LOOCV) \citep{jamesIntroductionStatisticalLearning2017, jovanovicBmbstatsBootstrapMagnitudebased2020, kuhnAppliedPredictiveModeling2018}. LOOCV involves a simple, yet powerful procedure, of removing each observation, rebuilding the model, and making predictions for that removed observation. This process is repeated for each observations in the model dataset. LOOCV allows one to check estimated parameters stability, and model performance on the unseen data.
+To estimate parameter stability, model over-fitting, and performance on the unseen data, \pkg{shorts} model function comes with implemented \emph{leave-one-out cross validation} (LOOCV) \citep{jamesIntroductionStatisticalLearning2017, jovanovicBmbstatsBootstrapMagnitudebased2020, kuhnAppliedPredictiveModeling2018}. LOOCV involves a simple, yet powerful procedure, of removing each observation, rebuilding the model, and making predictions for that removed observation. This process is repeated for each observation in the model dataset. LOOCV allows one to check estimated parameters stability, and model performance on the unseen data.
 
 Let's perform LOOCV using Jack's data and the time correction model:
 
@@ -1902,7 +2158,7 @@ R> ggplot(df, aes(x = value)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-47-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-57-1} \end{center}
 
 \end{CodeChunk}
 
@@ -1935,11 +2191,11 @@ R> ggplot(df, aes(x = distance, y = resid, color = name)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-48-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-58-1} \end{center}
 
 \end{CodeChunk}
 
-As expected, the model has more issues predicting unseen short or long sprints. Please note, that since LOOCV removes one observation, if the model estimates three parameters, then at least five observations are needed, since we need to make sure the model can be estimated once a single observation is removed. LOOCV can also be implemented with the mixed-effects models in the \pkg{shorts} package.
+As expected, the model has more issues predicting unseen split times for both short or long distances. Please note, that since LOOCV removes one observation, if the model estimates three parameters, then at least five observations are needed, since we need to make sure the model can be estimated once a single observation is removed. LOOCV can also be implemented with the mixed-effects models in the \pkg{shorts} package.
 
 \hypertarget{example-analysis}{%
 \section{Example analysis}\label{example-analysis}}
@@ -1951,7 +2207,7 @@ Let's utilize demonstrated functionalities of the \pkg{shorts} package using rea
 
 The following dataset represents Usain Bolt's race in the finals at the IAAF World Championship held in London, 2017. Since reaction time enters the splits, we want to see how that will affect the model estimates, and particularly, if the estimated time correction model will pick-up reaction time.
 
-For the sake of this analysis, only 10m splits over 60m are used.
+For the sake of this analysis, only 10 m splits over 60 m race distance are used.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -2085,7 +2341,7 @@ R> bolt_model[c(1, 8, 9)]
 
 The data from Vescovi represents a sub-set of data from a total of 220 high-level female athletes (151 soccer players and 69 field hockey players). Using a random number generator, a total of 52 players (35 soccer and 17 field hockey) were selected for the sample dataset.
 
-The protocol for assessing linear sprint speed has been described previously \citep{vescoviImpactMaximumSpeed2014, vescoviLocomotorHeartRateMetabolic2016, vescoviSprintSpeedCharacteristics2012} and was identical for each cohort. Briefly, all athletes performed a standardized warm-up that included general exercises such as jogging, shuffling, multi-directional movements, and dynamic stretching exercises. Infrared timing gates (Brower Timing, Utah) were positioned at the start line and at 5, 10, 20, 30, and 35 meters at a height of approximately 1.0 meter. Participants stood with their lead foot positioned approximately 5 cm behind the initial infrared beam (i.e., start line). Only forward movement was permitted (no leaning or rocking backwards) and timing started when the laser of the starting gate was triggered. The best 35 m time, and all associated split times were kept for analysis.
+The protocol for assessing linear sprint speed has been described previously \citep{vescoviImpactMaximumSpeed2014, vescoviLocomotorHeartRateMetabolic2016, vescoviSprintSpeedCharacteristics2012} and was identical for each cohort. Briefly, all athletes performed a standardized warm-up that included general exercises such as jogging, shuffling, multi-directional movements, and dynamic stretching exercises. Infrared timing gates (Brower Timing, Utah) were positioned at the start line and at 5, 10, 20, 30, and 35 m at a height of approximately 1.0 m. Participants stood with their lead foot positioned approximately 5 cm behind the initial infrared beam (i.e., start line). Only forward movement was permitted (no leaning or rocking backwards) and timing started when the laser of the starting gate was triggered. The best 35 m time, and all associated split times were kept for analysis.
 
 Below is the mixed-effects models analysis of the dataset.
 
@@ -2212,7 +2468,7 @@ R> ggplot(model_fit, aes(x = RSE, y = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-53-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-63-1} \end{center}
 
 \end{CodeChunk}
 
@@ -2283,13 +2539,13 @@ R> ggplot(est_params, aes(y = model, x = value)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-54-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-64-1} \end{center}
 
 \end{CodeChunk}
 
 The following image depicts model residuals across distance splits. To provide practical magnitude of the residuals, we have used between subject observed time SD multiplied with 0.2 and -0.2. This provides practical anchor for the residual magnitude, often referred to as \emph{smallest worthwhile change} (SWC) or \emph{smallest effect size of interest} (SESOI) \citep{jovanovicBmbstatsBootstrapMagnitudebased2020}. If the residuals are within this magnitude band, then the model is good in making practically useful predictions.
 
-Error bars represent residual bias \(\pm\) 1SD.
+Error bars represent residual bias \(\pm\) 1 SD.
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -2375,7 +2631,7 @@ R> ggplot(model_resid, aes(y = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-55-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-65-1} \end{center}
 
 \end{CodeChunk}
 
@@ -2413,7 +2669,7 @@ R> ggplot(df, aes(x = value, y = model)) +
 \end{CodeInput}
 
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-56-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-66-1} \end{center}
 
 \end{CodeChunk}
 

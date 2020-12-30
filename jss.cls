@@ -138,11 +138,11 @@
 \title{Title}
 \Abstract{---!!!---an abstract is required---!!!---}
 \Plainauthor{\@author}
-\Volume{VV}
-\Year{YYYY}
-\Month{MMMMMM}
-\Issue{II}
-\Submitdate{yyyy-mm-dd}
+\Volume{}
+\Year{2020}
+\Month{December}
+\Issue{}
+\Submitdate{2020-12-26}
 \Acceptdate{yyyy-mm-dd}
 \Address{
   Firstname Lastname\\
@@ -162,11 +162,11 @@
 \ISBN{x-xxxxx-xxx-x}
 \Pages{xv + 123}
 \Price{USD 69.95 (P)}
-\URL{http://link/to/webpage/}
-\DOI{10.18637/jss.v000.i00}
+\URL{https://osf.io/preprints/sportrxiv/4jw62/}
+\DOI{10.31236/osf.io/4jw62}
 \if@article
   \Seriesname{Issue}
-  \Hypersubject{Journal of Statistical Software}
+  \Hypersubject{SportRxiv Preprints}
   \Plaintitle{\@title}
   \Shorttitle{\@title}
   \Plainkeywords{\@Keywords}
@@ -247,12 +247,12 @@
     \vfill
     \hrule \nopagebreak
     \vspace{.1\baselineskip}
-    {\fontfamily{pzc} \fontsize{13}{15} \selectfont Journal of Statistical Software}
+    {\fontfamily{pzc} \fontsize{13}{15} \selectfont SportRxiv Preprints}
     \hfill
-    \url{http://www.jstatsoft.org/}\\ \nopagebreak
-    published by the Foundation for Open Access Statistics
+    \url{https://www.sportrxiv.org/}\\ \nopagebreak
+    Proudly powered by the support of STORK members
     \hfill
-    \url{http://www.foastat.org/}\\[.3\baselineskip] \nopagebreak
+    \url{http://storkinesiology.org/}\\[.3\baselineskip] \nopagebreak
     {\@Month{} \@Year, Volume~\@Volume, \@Seriesname~\@Issue}
     \hfill
     \@Firstdate\\ \nopagebreak
@@ -277,7 +277,7 @@
   \hspace{-2em} \includegraphics[height=23mm,keepaspectratio]{jsslogo} \hfill
   \parbox[b][23mm]{118mm}{\hrule height 3pt
    \center{
-   {\fontfamily{pzc} \fontsize{28}{32} \selectfont Journal of Statistical Software}
+   {\fontfamily{pzc} \fontsize{28}{32} \selectfont SportRxiv Preprints}
    \vfill
    {\it \small \@Month{} \@Year, Volume~\@Volume, \@Seriesname~\@Issue.%
             \hfill \href{https://doi.org/\@DOI}{doi:\,\@DOI}}}\\[0.1cm]
@@ -486,7 +486,7 @@
 \if@notitle
   %% \AtBeginDocument{\maketitle}
 \else
-  \@ifundefined{AddToHook}{\AtBeginDocument{\maketitle}}{\AddToHook{begindocument}[maketitle]{\maketitle}}
+  \AtBeginDocument{\maketitle}
 \fi
 %% commands
 \newcommand\code{\bgroup\@makeother\_\@makeother\~\@makeother\$\@codex}

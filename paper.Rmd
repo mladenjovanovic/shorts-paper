@@ -18,6 +18,8 @@ author:
     email: \email{vescovij@gmail.com}
 title:
   formatted: "\\pkg{shorts}: An R Package for Modeling Short Sprints"
+DOI: "10.31236/osf.io/4jw62"
+URL: https://osf.io/preprints/sportrxiv/4jw62/
 abstract: >
   Short sprint performance is one of the most distinguishable and admired physical trait in sports. Short sprints have been modeled using the mono-exponential equation that involves two parameters: (1) maximum sprinting speed (MSS) and (2) relative acceleration (TAU). The most common methods to assess short sprint performance are with a radar gun or timing gates. In this paper, we: 1) provide the \pkg{shorts} package that can model sprint timing data from these two sources; 2) discuss potential issues with assessing sprint time (synchronization and flying start, respectively); and 3) provide model definitions within the \pkg{shorts} package to help alleviate errors within the subsequent parameter outcomes.
 keywords:
@@ -27,31 +29,46 @@ preamble: >
 output:
   bookdown::pdf_book:
     base_format: rticles::jss_article
+    extra_dependencies: ["flafter"]
 citation_package: natbib
 bibliography: [references.bib, packages.bib]
 link-citations: yes
+header-includes: >
+  \usepackage[htt]{hyphenat}
+  \usepackage{booktabs}
+  \usepackage{microtype}
 editor_options: 
   chunk_output_type: console
 ---
-
 
 ```{r setup, include=FALSE}
 require(knitr)
 require(shorts)
 require(tidyverse)
 require(bookdown)
+require(magick)
+
+pdf2png <- function(path) {
+  # only do the conversion for non-LaTeX output
+  if (knitr::is_latex_output()) 
+    return(path)
+  path2 <- xfun::with_ext(path, "png")
+  img <- magick::image_read_pdf(path)
+  magick::image_write(img, path2, format = "png")
+  path2
+}
 
 my_random_seed <- 1667
 set.seed(my_random_seed)
-
-options("width" = 70)
 
 knitr::opts_chunk$set(
   comment = "#>",
   collapse = TRUE,
   cache = FALSE,
   fig.retina = 0.8, # figures are either vectors or 300 dpi diagrams
-  dpi = 300,
+  dpi = 600,
+  dev = "png",
+  fig.process = pdf2png,
   out.width = "100%",
   fig.align = "center",
   fig.width = 6,
@@ -71,14 +88,18 @@ knitr::opts_chunk$set(
 
 # Set rounding
 op <- options()
-options(digits = 3)
+
+options(
+  digits = 3,
+  "width" = 70,
+  scipen = 999)
 ```
 
 # Introduction
 
-Short sprint performance is one of the most distinguishable and admired physical trait in sports. Short sprints, commonly performed in most team sports (e.g., soccer, field hockey, handball, football, etc.), are defined as maximal running from a stand still position over a distance that doesn't result in deceleration at the end. Peak anaerobic power is achieved within the first few seconds (<5s) of maximal efforts [@mangineSpeedForcePower2014], whereas the ability to achieve maximal sprint speed varies based on the type of sport. For example, track and field sprinters are trained to achieve maximal speed later in a race (i.e., 50-60m) [@ward-smithEnergyConversionStrategies2001], but team sport athletes have sport-specific attributes and reach it much sooner (i.e., 30-40m)[@brownAssessmentLinearSprinting2004]. Regardless of the differences in kinematics between athletes, evaluating short sprint performance is routinely included within a battery of fitness tests for a wide range of sports
+Short sprint performance is one of the most distinguishable and admired physical trait in sports. Short sprints, commonly performed in most team sports (e.g., soccer, field hockey, handball, football, etc.), are defined as maximal running from a stand still position over a distance that doesn't result in deceleration at the end. Peak anaerobic power is achieved within the first few seconds (<5 s) of maximal efforts [@mangineSpeedForcePower2014], whereas the ability to achieve maximal sprint speed varies based on the type of sport. For example, track and field sprinters are trained to achieve maximal speed later in a race (i.e., 50-60 m) [@ward-smithEnergyConversionStrategies2001], but team sport athletes have sport-specific attributes and reach it much sooner (i.e., 30-40 m)[@brownAssessmentLinearSprinting2004]. Regardless of the differences in kinematics between athletes, evaluating short sprint performance is routinely included within a battery of fitness tests for a wide range of sports
 
-The use of force plates is considered the gold standard for assessing mechanical properties of sprinting; however, there are logistical and financial challenges to capturing the profile of an entire sprint [@morinSimpleMethodComputing2019; @samozinoSimpleMethodMeasuring2016]. Radar and laser technology are frequently used laboratory-grade methods [@buchheitMechanicalDeterminantsAcceleration2014; @edwardsSprintAccelerationCharacteristics2020; @jimenez-reyesRelationshipVerticalHorizontal2018; @marcote-pequenoAssociationForceVelocity2019] but not normally accessible to practitioners working in sports. Undoubtedly, the most common method available and used to evaluate sprint performance are timing gates. Often multiple gates are positioned at varying distances to capture split times (e.g., 5, 10, 20m), which can now be incorporated into the method for determining sprint mechanical properties [@morinSimpleMethodComputing2019; @samozinoSimpleMethodMeasuring2016]. This approach presents an advantage to practitioners who can use the outcomes to describe individual differences, quantify the effects of training interventions, and better understanding the limiting factors of performance. The \pkg{shorts} package [@R-shorts], written in the R language [@R-base], represents an open-source tool to help sport scientists translate raw timing data into detailed mechanical outcomes through mathematical modeling [@morinSimpleMethodComputing2019; @samozinoSimpleMethodMeasuring2016].
+The use of force plates is considered the gold standard for assessing mechanical properties of sprinting; however, there are logistical and financial challenges to capturing the profile of an entire sprint [@morinSimpleMethodComputing2019; @samozinoSimpleMethodMeasuring2016]. Radar and laser technology are frequently used laboratory-grade methods [@buchheitMechanicalDeterminantsAcceleration2014; @edwardsSprintAccelerationCharacteristics2020; @jimenez-reyesRelationshipVerticalHorizontal2018; @marcote-pequenoAssociationForceVelocity2019] but not normally accessible to practitioners working in sports. Undoubtedly, the most common method available and used to evaluate sprint performance are timing gates. Often multiple gates are positioned at varying distances to capture split times (e.g., 5, 10, 20 m), which can now be incorporated into the method for determining sprint mechanical properties [@morinSimpleMethodComputing2019; @samozinoSimpleMethodMeasuring2016]. This approach presents an advantage to practitioners who can use the outcomes to describe individual differences, quantify the effects of training interventions, and better understanding the limiting factors of performance. The \pkg{shorts} package [@R-shorts], written in the R language [@R-base], represents an open-source tool to help sport scientists translate raw timing data into detailed mechanical outcomes through mathematical modeling [@morinSimpleMethodComputing2019; @samozinoSimpleMethodMeasuring2016].
 
 In the current paper, we will provide an explanation of one commonly used mathematical equation to model short sprints, modeling applications using the \pkg{shorts} package, issues that can arise during measurement and estimation, and potential solutions to those problems. 
 
@@ -127,13 +148,14 @@ athletes <- athletes %>%
 knitr::kable(
   athletes,
   caption = "Four athletes with different MSS and MAC parameters.",
-  digits = 2
+  digits = 2,
+  booktabs = TRUE
 )
 ```
 
-Figure \@ref(fig:four-athletes-kinematics) depicts distance, velocity, and acceleration over time (from 0 to 6s). 
+Figure \@ref(fig:four-athletes-kinematics) depicts distance, velocity, and acceleration over time (from 0 to 6 s). 
 
-```{r four-athletes-kinematics, echo=FALSE, fig.cap="Kinematic characteristic of four athletes with different MSS and MAC parameters over a period of 0 to 6seconds."}
+```{r four-athletes-kinematics, echo=FALSE, fig.cap="Kinematic characteristic of four athletes with different MSS and MAC parameters over a period of 0 to 6 seconds."}
 kinematics <- expand_grid(
   athletes,
   time = seq(0, 6, length.out = 1000)
@@ -181,7 +203,7 @@ gg <- ggplot(
 plot(gg)
 ```
 
-Plotting acceleration against velocity (Figure \@ref(fig:four-athletes-profile)), we will get Acceleration-Velocity profile, which is linear, according to the mathematical model.
+Plotting acceleration against velocity (Figure \@ref(fig:four-athletes-profile)), we will get *Acceleration-Velocity Profile*, which is linear, according to the mathematical model. If the athlete's body mass (kg) is known, as well as additional air resistance parameters (see [Air resistance and the calculation of force and mechanical power] section of this paper), *Force-Velocity Profile* can be estimated (see [Force-Velocity profile] section of this paper). 
 
 ```{r four-athletes-profile, echo=FALSE, fig.cap="Acceleration-Velocity profile of four athletes with different MSS and MAC parameters."}
 gg <- ggplot(
@@ -201,17 +223,17 @@ plot(gg)
 
 # Estimation using shorts package
 
-Short sprints profiling is usually performed by: (1) measuring split times using timing gates (i.e., positioned at various distances, e.g., 5, 10, 20, 30, 40m), (2) getting a velocity trace using a radar gun. Estimation of MSS and TAU parameters from equation \@ref(eq:velocity-time) is performed in \pkg{shorts} package using non-linear least squares regression implemented in the `nls` function in the \pkg{base} R [@R-base] and `nlme` function in the \pkg{nlme} package [@R-nlme] for the mixed-effect models.
+Short sprints profiling is usually performed by: (1) measuring split times using timing gates (i.e., positioned at various distances, e.g., 5, 10, 20, 30, 40 m), (2) getting a velocity trace using a radar gun. Estimation of MSS and TAU parameters from equation \@ref(eq:velocity-time) is performed in \pkg{shorts} package using non-linear least squares regression implemented in the `nls()` function in the \pkg{base} R [@R-base] and `nlme()` function in the \pkg{nlme} package [@R-nlme] for the mixed-effect models.
 
 ## Estimating short sprint parameters using split times
 
-Let's consider an example of an athlete with MSS equal to 9 $ms^-1$, TAU equal to 1.3, and MAC equal to 6.92 $ms^-2$ performing 40m sprint with timing gates positioned at each 10m split. For split times, distance is a predictor, and time is the outcome variable, thus the equation \@ref(eq:velocity-time) becomes:
+Let's consider an example of an athlete with MSS equal to 9 $ms^{-1}$, TAU equal to 1.3, and MAC equal to 6.92 $ms^{-2}$ performing 40m sprint with timing gates positioned at each 10m split. For split times, distance is a predictor, and time is the outcome variable, thus the equation \@ref(eq:velocity-time) becomes:
 
 \begin{equation}
   t(d) = TAU \times W(-e^{\frac{-d}{MSS \times TAU}} - 1) + \frac{d}{MSS} + TAU (\#eq:time-distance)
 \end{equation}
 
-$W$ in equation \@ref(eq:time-distance) represents Lambert's W function [@R-LambertW]. MSS and TAU parameters are estimated using `model_using_splits` function:
+$W$ in equation \@ref(eq:time-distance) represents Lambert's W function [@R-LambertW]. MSS and TAU parameters are estimated using `model_using_splits()` function:
 
 ```{r}
 require(shorts)
@@ -228,15 +250,27 @@ m1 <- model_using_splits(
 m1
 ```
 
-Maximal relative power (PMAX) from the output is estimated using $\frac{MSS \times MAC}{4}$, which disregards the air resistance. `time_correction` and `distance_corection` parameters will be covered later in the article. 
+Maximal relative power (PMAX) from the output is estimated using $\frac{MSS \times MAC}{4}$, which disregards the air resistance. `time_correction` and `distance_corection` parameters will be covered later in the paper.
 
-Besides providing *residual standard error* (RSE), \pkg{shorts} functions provide additional model fit estimators. Additional information can be gained by exploring the returned object, particularly object returned from the `nls` function:
+Besides providing *residual standard error* (RSE), \pkg{shorts} functions provide additional model fit estimators. Additional information can be gained by exploring the returned object, particularly object returned from the `nls()` function:
 
 ```{r}
-summary(m1$model)
+summary(m1)
 ```
 
-Once we have estimated MSS and TAU, we can use `predict_` family of functions to predict various relationships (i.e. time at distance, acceleration at distance, velocity at time):
+To extract estimated model parameters, use S3 `coef()` method:
+
+```{r}
+coef(m1)
+```
+
+To create a simple plot of the model, use S3 `plot()` method, which returns \pkg{ggplot2} [@R-ggplot2] object:
+
+```{r}
+plot(m1) + theme_bw(8)
+```
+
+Once we have estimated MSS and TAU, we can use `predict_XXX()` family of functions to predict various relationships (i.e., time at distance, acceleration at distance, velocity at time, etc.):
 
 ```{r}
 # Predict time at distance
@@ -256,7 +290,7 @@ predict_acceleration_at_time(
 
 ### Air resistance and the calculation of force and mechanical power
 
-To estimate force production at distance or time (using `predict_force_at_distance` and `predict_force_at_time` functions), as well as power production (using `predict_power_at_distance` and `predict_power_at_time` functions), one needs to take into account the air resistance. Air resistance (N) is estimated using `get_air_resistance` function, which takes velocity, body mass (kg), body height (m), barometric pressure (Torr), air temperature ($C^\circ$), and wind velocity ($ms^-1$) as parameters (please refer to @arsacModelingEnergetics100m2002, @samozinoSimpleMethodMeasuring2016, and @vaningenschenauCanCyclePower1991 for more information):
+To estimate force production at distance or time (using `predict_force_at_distance()` and `predict_force_at_time()` functions), as well as power production (using `predict_power_at_distance()` and `predict_power_at_time()` functions), one needs to take into account the air resistance. Air resistance (N) is estimated using `get_air_resistance()` function, which takes velocity, body mass (kg), body height (m), barometric pressure (Torr), air temperature ($C^\circ$), and wind velocity ($ms^-1$) as parameters (please refer to @arsacModelingEnergetics100m2002, @samozinoSimpleMethodMeasuring2016, and @vaningenschenauCanCyclePower1991 for more information):
 
 ```{r}
 get_air_resistance(
@@ -269,7 +303,7 @@ get_air_resistance(
 )
 ```
 
-When estimating force and power, the air resistance parameters can be set using `"..."`, which are forwarded to the `get_air_resistance`:
+When estimating force and power, the air resistance parameters can be set using `"..."`, which are forwarded to the `get_air_resistance()`:
 
 ```{r}
 # To calculate horizontal force produced
@@ -301,7 +335,7 @@ predict_power_at_distance(
 )
 ```
 
-The easiest way to get all kinematics for short sprints is to use `predict_kinematics` functions:
+The easiest way to get all kinematics and kinetics for short sprints is to use `predict_kinematics()` function:
 
 ```{r}
 df <- predict_kinematics(
@@ -325,7 +359,10 @@ Plotting the model predictions can be done once we convert data from wide to lon
 ```{r}
 require(tidyverse)
 
-df <- pivot_longer(data = df, cols = -2)
+variable_names <- colnames(df)
+
+df <- pivot_longer(data = df, cols = -2) %>%
+  mutate(name = factor(name, levels = variable_names))
 
 ggplot(df, aes(x = distance, y = value)) +
   theme_bw(8) +
@@ -335,9 +372,11 @@ ggplot(df, aes(x = distance, y = value)) +
   xlab("Distance (m)")
 ```
 
+These kinematic and kinetic variables are utilized in [Force-Velocity profile] estimation, which is covered later in this paper. 
+
 ### Utility functions 
 
-Another valuable addition for sport scientists and coaches is the ability to determine the distances and times where 90% of maximum sprinting speed is reached, or where peak power is within 90% range. To identify these values, \pkg{shorts} package comes with `find_` family of functions:
+Another valuable addition for sport scientists and coaches is the ability to determine the distances and times where 90% of maximum sprinting speed is reached, or where peak power is within 90% range. To identify these values, \pkg{shorts} package comes with `find_XXX()` family of functions:
 
 ```{r}
 # Finds distance where 90% of maximum sprinting speed is reached
@@ -376,7 +415,7 @@ find_power_critical_distance(
 
 ### Mixed-effects model
 
-Sprint performance is often evaluated with a group of athletes (e.g., soccer club) representing a single strata of interest. Sports scientists can estimate individual profiles, or utilize mixed-effects models. To perform mixed-effects models in \pkg{shorts} for split times, one can use `mixed_model_using_splits` function. To demonstrate this functionality, we load the `split_times` dataset provided in the \pkg{shorts} package:
+Sprint performance is often evaluated with a group of athletes (e.g., soccer club) representing a single strata of interest. Sports scientists can estimate individual profiles, or utilize mixed-effects models. To perform mixed-effects models in \pkg{shorts} for split times, one can use `mixed_model_using_splits()` function. To demonstrate this functionality, we load the `split_times` dataset provided in the \pkg{shorts} package:
 
 ```{r}
 data(split_times)
@@ -396,10 +435,22 @@ m2 <- mixed_model_using_splits(
 m2
 ```
 
-Additional information about mixed-effects model performed using the `nlme` package [@R-nlme] can be obtained using `summary`:
+Additional information about mixed-effects model performed using the `nlme` package [@R-nlme] can be obtained using `summary()` function:
 
 ```{r}
 summary(m2)
+```
+
+S3 method `coef()` when applied on mixed-model result will return both the fixed and random effects:
+
+```{r}
+coef(m2)
+```
+
+To create a simple plot of the model, use S3 `plot()` method:
+
+```{r}
+plot(m2) + theme_bw(8)
 ```
 
 The following figure contains kinematics for all athletes in `split_times` dataset. Please note that power calculation takes default parameters for each individual:
@@ -407,7 +458,10 @@ The following figure contains kinematics for all athletes in `split_times` datas
 ```{r}
 df <- predict_kinematics(m2, max_time = 10)
 
-df <- pivot_longer(df, cols = c(-1, -3))
+variable_names <- colnames(df)
+
+df <- pivot_longer(df, cols = c(-1, -3)) %>%
+  mutate(name = factor(name, levels = variable_names))
 
 ggplot(
   filter(df, distance < 40),
@@ -427,7 +481,7 @@ ggplot(
 
 Estimation of the short sprint profile using radar gun data takes time as predictor and velocity as the outcome variable. Thus equation \@ref(eq:velocity-time) is used to estimate MSS and TAU. 
 
-Let's consider the same example of an athlete with MSS equal to 9$ms^-1$, TAU equal to 1.3, and MAC equal to 6.92$ms^-2$ performing 40m sprint with velocity estimated using radar run (in this case with 1Hz sampling rate).
+Let's consider the same example of an athlete with MSS equal to 9 $ms^{-1}$, TAU equal to 1.3, and MAC equal to 6.92 $ms^{-2}$ performing 40m sprint with velocity estimated using radar run (in this case with 1 Hz sampling rate).
 
 ```{r}
 sprint_time <- seq(0, 6, 1)
@@ -440,6 +494,10 @@ m3 <- model_using_radar(
 )
 
 m3
+```
+
+```{r}
+plot(m3) + theme_bw(8)
 ```
 
 Both split and radar gun models allow the use of *weighted* non-linear regression. For example, we can give more weight to shorter distance or faster velocities. Weighted non-linear regression is performed by setting `weights` parameter: 
@@ -456,7 +514,7 @@ m3_weighted
 
 ### Mixed-effects model
 
-Mixed-effects model using radar data is done using `mixed_model_using_radar` function. To perform mixed model, let's load data that comes with \pkg{shorts} package. 
+Mixed-effects model using radar data is done using `mixed_model_using_radar()` function. To perform mixed model, let's load data that comes with \pkg{shorts} package. 
 
 ```{r}
 data("radar_gun_data")
@@ -471,13 +529,50 @@ m4 <- mixed_model_using_radar(
 m4
 ```
 
+```{r}
+plot(m4) + theme_bw(8)
+```
+
+## Force-Velocity profile
+
+To create *Force-Velocity Profile* (FVP) using single athlete estimated sprint model parameters (i.e., TAU and MSS), you can use `get_FV_profile()` function. When estimating FVP, athlete body mass (kg) can be set using `bodymass` parameter, while the air resistance parameters can be set using `"..."`, which are forwarded to the `get_air_resistance()` function. Details of the FVP method implemented in the \pkg{shorts} package, as well as the interpretation from a sprint training perspective, are covered elsewhere [@haugenPowerForceVelocityProfilingSprinting2020; @morinInterpretingPowerForceVelocityProfiles2016; @morinSimpleMethodComputing2019; @samozinoSimpleMethodMeasuring2016]. 
+
+```{r}
+# To create Force-Velocity Profile
+fvp <- get_FV_profile(
+  MSS = m1$parameters$MSS,
+  TAU = m1$parameters$TAU,
+  bodymass = 80,
+  # Additional parameters forwarded to get_air_resistance
+  # Otherwise, defaults are used
+  bodyheight = 1.85,
+  barometric_pressure = 780,
+  air_temperature = 20,
+  wind_velocity = 0.5
+)
+
+fvp
+```
+
+To plot FVP kinematics and kinetics (which are exactly the same as generated by the `predict_kinematics()` function), use S3 `plot()` function. By default, FVP estimated kinetics are plotted against velocity (on x-axis). 
+
+```{r}
+plot(fvp) + theme_bw(8)
+```
+
+To plot FVP estimated kinetics against time, use `type = "time"` parameter:
+
+```{r}
+plot(fvp, "time") + theme_bw(8)
+```
+
 # Problems with estimation
 
 There is a challenge when collecting sprint data that could have a substantial impact on modeled outcomes. To ensure accurate parameter outcomes, the initial force production must be synced with start time [@haugenPowerForceVelocityProfilingSprinting2020; @haugenSprintMechanicalVariables2019]. Below we describe this challenge when using radar guns or timing gates and suggest potential solutions within the \pkg{shorts} package.
 
 ## Problems with time sync with radar gun
 
-One source of error in the modeled estimation using a radar gun is the time synchronization. In theory, synchronization is ideal when a sprint is initiated at $t=0$ (i.e., $v(t=0) = 0$). In practice, this is often not the case. Let's use our athlete and add and deduct 0.5s to simulate an error in synchronization and its effect on estimated MSS and TAU.
+One source of error in the modeled estimation using a radar gun is the time synchronization. In theory, synchronization is ideal when a sprint is initiated at $t=0$ (i.e., $v(t=0) = 0$). In practice, this is often not the case. Let's use our athlete and add and deduct 0.5 s to simulate an error in synchronization and its effect on estimated MSS and TAU.
 
 ```{r}
 df <- tibble(
@@ -539,13 +634,13 @@ rbind(
 )
 ```
 
-As can be seen from the example, TAU is affected by an error in synchronization of time with velocity. The potential solution incorporated into the \pkg{shorts} package involves estimation of the *time correction* parameter using the following equation: 
+As can be seen from the example, all estimated parameters are affected by an error in synchronization of time with velocity (with MSS being the least affected in this example). The potential solution incorporated into the \pkg{shorts} package involves estimation of the *time correction* parameter using the following equation: 
 
 \begin{equation}
   v(t) = MSS \times (1 - e^{-\frac{t + time \; correction}{TAU}}) (\#eq:velocity-time-correction)
 \end{equation}
 
-This model is incorporated in the `model_using_radar_with_time_correction` function:
+This model is incorporated in the `model_using_radar_with_time_correction()` function:
 
 ```{r}
 # With time added
@@ -563,7 +658,7 @@ m9 <- model_using_radar_with_time_correction(
 coef(m9)
 ```
 
-When using `predict_` family of functions, one can provide estimated time correction to get predictions at original time scale. 
+When using `predict_XXX()` family of functions, one can provide estimated time correction to get predictions at original time scale. 
 
 ```{r}
 # Using the true time
@@ -584,7 +679,7 @@ predict_velocity_at_time(
 
 ### Mixed-model approach
 
-When it comes to mixed-model approach, time correction can be modeled as a fixed effect or random effect using the `mixed_model_using_radar_with_time_correction` function. 
+When it comes to mixed-model approach, time correction can be modeled as a fixed effect or random effect using the `mixed_model_using_radar_with_time_correction()` function. 
 
 ```{r}
 # Adding 0.5s to radar_gun_data
@@ -615,9 +710,9 @@ m11
 
 ## Problems at the start when using split times
 
-Let's imagine we have two twin brothers with same short sprint characteristics: MSS equal to 9$ms^-1$, TAU equal to 1.3, and MAC equal to 6.92$ms^-2$. Let's call them John and Jack. They both perform 40m sprint using timing gates set at 5, 10, 20, 30, and 40m. The initial timing gate at the start (i.e., $d=0m$) serves to activate the timing system (i.e., when they cross the beam).
+Let's imagine we have two twin brothers with same short sprint characteristics: MSS equal to 9 $ms^{-1}$, TAU equal to 1.3, and MAC equal to 6.92 $ms^{-2}$. Let's call them John and Jack. They both perform 40m sprint using timing gates set at 5, 10, 20, 30, and 40 m. The initial timing gate at the start (i.e., $d=0$ m) serves to activate the timing system (i.e., when they cross the beam).
 
-John represents the *theoretical model*, in which we assume that the initial force production and the timing initiation are perfectly synchronized. Jack, on the other hand, represents a *practical model*, and decides to move slightly behind the initial timing gate (i.e. for 0.5m) and use body rocking to initiate the sprint start. In other words, Jack is using a *flying start*, a common scenario when testing field sports athletes.  Let's see how their sprint outcomes differ.
+John represents the *theoretical model*, in which we assume that the initial force production and the timing initiation are perfectly synchronized. Jack, on the other hand, represents a *practical model*, and decides to move slightly behind the initial timing gate (i.e. for 0.5 m) and use body rocking to initiate the sprint start. In other words, Jack is using a *flying start*, a common scenario when testing field sports athletes. Let's see how their sprint outcomes differ.
 
 ```{r}
 MSS <- 9
@@ -682,8 +777,8 @@ jack_profile <- model_using_splits(
 )
 
 sprint_parameters <- rbind(
-  unlist(john_profile$parameters),
-  unlist(jack_profile$parameters)
+  coef(john_profile),
+  coef(jack_profile)
 )
 
 rownames(sprint_parameters) <- c("John", "Jack")
@@ -693,7 +788,7 @@ sprint_parameters
 
 As can be seen from the results, a flying start yields biased estimates, particularly for the TAU, MAC and PMAX.
 
-Below is a simulation sprint with 5, 10, 20, 30, 40, and 50m splits, with MSS and MAC varying from 6 to 9 ($ms^-1$ and $ms^-2$ respectively), and flying start distance varying from 0 to 1m. 
+Below is a simulation sprint with 5, 10, 20, 30, 40, and 50 m splits, with MSS and MAC varying from 6 to 9 ($ms^{-1}$ and $ms^{-2}$ respectively), and flying start distance varying from 0 to 1 m. 
 
 ```{r}
 sim_df <- expand.grid(
@@ -720,7 +815,7 @@ sim_df <- sim_df %>%
 
 # Add small noise to allow model fit
 set.seed(1667)
-rand_noise <- rnorm(nrow(sim_df), 0, 10^-4)
+rand_noise <- rnorm(nrow(sim_df), 0, 10^-5)
 sim_df$time <- sim_df$time + rand_noise
 ```
 
@@ -734,7 +829,7 @@ pred_wrapper <- function(data) {
     time = data$time
   )
 
-  params <- data.frame(t(unlist(model$parameters)))
+  params <- data.frame(t(coef(model)))
 
   predicted_time <- predict_time_at_distance(
     distance = data$distance,
@@ -764,7 +859,7 @@ model_df <- sim_df %>%
 model_df$residuals <- model_df$predicted_time - model_df$time
 ```
 
-The following image demonstrates the effect of flying start distance on estimated MSS:
+The following figure demonstrates the effect of flying start distance on estimated MSS:
 
 ```{r}
 # Estimates plot
@@ -793,7 +888,7 @@ ggplot(
     legend.position = "top")
 ```
 
-As can be seen from the image, MSS is underestimated as flying start distance increases. The following image demonstrates the effect of flying start distance on estimated MAC:
+As can be seen from the figure, MSS is underestimated as flying start distance increases. The following image demonstrates the effect of flying start distance on estimated MAC:
 
 ```{r}
 # MAC
@@ -833,7 +928,7 @@ ggplot(
 
 Estimated PMAX is also overestimated as flying start distance increases.
 
-Model residuals are also affected by flying start distance. The shape of residuals distribution depends on number and splits utilized (e.g., 10, 20, 30, 40m versus 5, 15, 30m), but here we can see the effect of the flying start distance on the model residuals per split distance utilized in our simulation:
+Model residuals are also affected by flying start distance. The shape of residuals distribution depends on number and splits utilized (e.g., 10, 20, 30, 40 m versus 5, 15, 30 m), but here we can see the effect of the flying start distance on the model residuals per split distance utilized in our simulation:
 
 ```{r}
 # Residuals
@@ -848,7 +943,11 @@ model_df <- model_df %>%
 
 ggplot(
   model_df,
-  aes(y = residuals, x = distance, color = flying_start_distance, group = group)
+  aes(
+    y = residuals,
+    x = distance,
+    color = flying_start_distance,
+    group = group)
 ) +
   theme_bw(8) +
   geom_line(alpha = 0.3) +
@@ -861,12 +960,16 @@ ggplot(
   labs(color = "Flying start distance")
 ```
 
-If we merge individual facets (i.e., combinations of MSS and MAC), we can get simpler images conveying issues with residuals when there is a flying start:
+If we merge individual facets (i.e., combinations of MSS and MAC), we can get simpler figure conveying issues with residuals when there is a flying start:
 
 ```{r}
 ggplot(
   model_df,
-  aes(y = residuals, x = distance, color = flying_start_distance, group = group)
+  aes(
+    y = residuals,
+    x = distance,
+    color = flying_start_distance,
+    group = group)
 ) +
   theme_bw(8) +
   geom_line(alpha = 0.3) +
@@ -882,15 +985,17 @@ Clearly, any type of flying start where there is a difference between initial fo
 
 ### How to overcome missing the initial force production when using timing gates?
 
-A potential solution is to use a correction factor - the recommendation in the literature is +0.5sec [@haugenSprintMechanicalProperties2020; @haugenSprintMechanicalVariables2019]. Interestingly, the average difference between using timing gates and a block start for 40 m sprint time was 0.27 sec [@haugenDifferenceStartImpact2012]. So, while a timing correction factor is warranted to avoid subsequent errors in estimates of kinetic variables (e.g., overestimate power), a correction factor that is too large will have the opposite effect (e.g., underestimate power).  
+A potential solution is to use a correction factor - the recommendation in the literature is +0.5 s [@haugenSprintMechanicalProperties2020; @haugenSprintMechanicalVariables2019]. Interestingly, the average difference between using timing gates and a block start for 40 m sprint time was 0.27 s [@haugenDifferenceStartImpact2012]. So, while a timing correction factor is warranted to avoid subsequent errors in estimates of kinetic variables (e.g., overestimate power), a correction factor that is too large will have the opposite effect (e.g., underestimate power).  
 
-When implementing *time correction*, equation \@ref(eq:time-distance) becomes:
+Rather than providing *apriori* time correction from the literature, \pkg{shorts} package provides an estimation of this parameter from the data provided, together with MSS and TAU. Exactly the same method is suggested by @stenrothForcevelocityProfilingIce2020, named *time shift method*, and the estimated parameter named *time shift parameter*. We have named this parameter *time correction* to be in agreement with the parameter introduced in [Problems with time sync with radar gun] section of this paper, as well as the available literature. 
+
+When implementing time correction, equation \@ref(eq:time-distance) becomes:
 
 \begin{equation}
   t(d) = TAU \times W(-e^{\frac{-d}{MSS \times TAU}} - 1) + \frac{d}{MSS} + TAU - time \; correction (\#eq:time-correction)
 \end{equation}
 
-Rather than providing *apriori* time correction from the literature, \pkg{shorts} package provides an estimation of this parameter from the data provided, together with MSS and TAU. To estimate time correction, we use `model_using_splits_with_time_correction` function. Here is how we can estimate Jack parameters using either provided time correction (e.g., +0.3 and +0.5s) or estimated time correction:
+To estimate time correction parameter, we use `model_using_splits_with_time_correction()` function. Here is how we can estimate Jack parameters using either provided time correction (e.g., +0.3 and +0.5 s) or estimated time correction:
 
 ```{r}
 jack_profile_fixed_time_short <- model_using_splits(
@@ -911,11 +1016,11 @@ jack_profile_time_estimated <- model_using_splits_with_time_correction(
 )
 
 jack_parameters <- rbind(
-  unlist(john_profile$parameters),
-  unlist(jack_profile$parameters),
-  unlist(jack_profile_fixed_time_short$parameters),
-  unlist(jack_profile_fixed_time_long$parameters),
-  unlist(jack_profile_time_estimated$parameters)
+  coef(john_profile),
+  coef(jack_profile),
+  coef(jack_profile_fixed_time_short),
+  coef(jack_profile_fixed_time_long),
+  coef(jack_profile_time_estimated)
 )
 
 rownames(jack_parameters) <- c(
@@ -929,15 +1034,15 @@ rownames(jack_parameters) <- c(
 jack_parameters
 ```
 
-In Jack's case, both +0.3s fixed time correction and time correction estimation yield parameters closer to John's (i.e. true parameters). 
+In Jack's case, both +0.3 s fixed time correction and time correction estimation yield parameters closer to John's (i.e. true parameters). 
 
-Another model definition, which is a novel approach implemented in the \pkg{shorts} packages, is to utilize *distance correction*, besides time correction. Thus, equation \@ref(eq:time-distance) becomes:
+Another model definition, which is a novel approach implemented in the \pkg{shorts} package, is to utilize *distance correction*, besides time correction. Thus, equation \@ref(eq:time-distance) becomes:
 
 \begin{equation}
   t(d) = TAU \times W(-e^{\frac{-d + distance \; correction}{MSS \times TAU}} - 1) + \frac{d + distance \; correction}{MSS} + TAU - time \; correction (\#eq:distance-correction)
 \end{equation}
 
-This model is implemented in `model_using_splits_with_corrections` function. Below are the model estimates:
+This model is implemented in `model_using_splits_with_corrections()` function. Below are the model estimates:
 
 ```{r}
 jack_profile_distance_correction <- model_using_splits_with_corrections(
@@ -946,12 +1051,12 @@ jack_profile_distance_correction <- model_using_splits_with_corrections(
 )
 
 jack_parameters <- rbind(
-  unlist(john_profile$parameters),
-  unlist(jack_profile$parameters),
-  unlist(jack_profile_fixed_time_short$parameters),
-  unlist(jack_profile_fixed_time_long$parameters),
-  unlist(jack_profile_time_estimated$parameters),
-  unlist(jack_profile_distance_correction$parameters)
+  coef(john_profile),
+  coef(jack_profile),
+  coef(jack_profile_fixed_time_short),
+  coef(jack_profile_fixed_time_long),
+  coef(jack_profile_time_estimated),
+  coef(jack_profile_distance_correction)
 )
 
 rownames(jack_parameters) <- c(
@@ -966,7 +1071,7 @@ rownames(jack_parameters) <- c(
 jack_parameters
 ```
 
-As can be seen from the results, adding distance correction results in correctly estimating Jack's sprint parameters. There are a few issues with this model definition. Besides being novel and still not validated with actual data, distance correction model has four parameters to estimate, which implies that at least five sprint splits are needed. This imposes practical limitations, since acquiring six timing gate (one for the start and five for splits) might be practically troublesome. 
+As can be seen from the results, adding distance correction results in correctly estimating Jack's sprint parameters. There are a few issues with this model definition. Besides being novel and still not validated with actual data, distance correction model has four parameters to estimate, which implies that at least five sprint splits are needed. This imposes practical limitations, since acquiring six timing gate (one for the start and five for splits) might be practically troublesome. One strategy that is sometimes implemented is adding zeros to the sample (i.e., $t=0$ and $d=0$), which increase the number of observations. Unfortunately, this strategy should not be implemented, as explained later in the [Should we add zero to the sample?] section of this paper. 
 
 We will get back to these issues later, but we can examine how these models perform using simulated data with varying flying start distance. The following code contains the wrapper that performs all four models (no correction, fixed time correction, estimated time correction, and estimated time and distance correction):
 
@@ -1005,23 +1110,23 @@ pred_wrapper <- function(data) {
   params <- rbind(
     data.frame(
       model = "No correction",
-      t(unlist(no_correction$parameters))
+      t(coef(no_correction))
     ),
     data.frame(
       model = "Fixed correction +0.3s",
-      t(unlist(fixed_correction_short$parameters))
+      t(coef(fixed_correction_short))
     ),
     data.frame(
       model = "Fixed correction +0.5s",
-      t(unlist(fixed_correction_long$parameters))
+      t(coef(fixed_correction_long))
     ),
     data.frame(
       model = "Time correction",
-      t(unlist(time_correction$parameters))
+      t(coef(time_correction))
     ),
     data.frame(
       model = "Time and distance correction",
-      t(unlist(time_dist_correction$parameters))
+      t(coef(time_dist_correction))
     )
   )
 
@@ -1182,7 +1287,11 @@ model_df <- model_df %>%
 
 ggplot(
   model_df,
-  aes(y = residuals, x = distance, color = flying_start_distance, group = group)
+  aes(
+    y = residuals,
+    x = distance,
+    color = flying_start_distance,
+    group = group)
 ) +
   theme_bw(8) +
   geom_line(alpha = 0.3) +
@@ -1197,13 +1306,13 @@ ggplot(
 
 The outcomes from the simulation data clearly demonstrates that the time correction and time and distance correction models represent sound improvements in parameter estimation and model fit compared to no corrections model and fixed correction model when attempting to overcome the flying start issues. Since the time correction model is simpler and requires three parameters to be estimated, it might be practically more useful than the time and distance correction model, which requires four parameters estimation and thus more than five timing gates and sprint splits. 
 
-Time correction and time and distance corrections are also implemented in the mixed-models using `mixed_model_using_splits_with_time_correction` and `mixed_model_using_splits_with_corrections`. We will showcase their use at the end of this article.
+Time correction and time and distance corrections are also implemented in the mixed-models using `mixed_model_using_splits_with_time_correction()` and `mixed_model_using_splits_with_corrections()`. We will showcase their use at the end of this paper.
 
 ### Simulation of additional starting issues
 
-Starting behind the initial timing gate represent only one issue (i.e. flying start). In this section, we simulate one more issue to check the sensitivity of the presented models to other (less common) perturbations when performing field testing. 
+Starting behind the initial timing gate represent only one issue (i.e., flying start). In this section, we simulate one more issue to check the sensitivity of the presented models to other (less common) perturbations when performing field testing. 
 
-One issue that might happen with timing gates is triggering the timing system before the sprint is initiated (e.g., by cutting the beam with an arm swing prematurely). This is very similar to the situation when timing starts on a signal (i.e., gun during 100m sprint race) and there is *reaction time* (RT) involved. Both of these scenarios represent *time lag* that is added to the split times. Below we simulate the effect of this time lag on model estimates and predictions. 
+One issue that might happen with timing gates is triggering the timing system before the sprint is initiated (e.g., by cutting the beam with an arm swing prematurely). This is very similar to the situation when timing starts on a signal (i.e., gun during 100 m sprint race) and there is *reaction time* (RT) involved. Both of these scenarios represent *time lag* that is added to the split times. Below we simulate the effect of this time lag on model estimates and predictions. 
 
 ```{r}
 sim_df <- expand.grid(
@@ -1305,7 +1414,7 @@ ggplot(
     legend.position = "top")
 ```
 
-The next figure depicts estimated distance correction for the time and distance correction model. The estimated distance correction parameters looks jumpy due to random noise that we have to added to allow model fit. 
+The next figure depicts estimated distance correction for the time and distance correction model. The estimated distance correction parameters looks jumpy due to random noise that we have to added to allow model fit, as well as the model estimation error. 
 
 ```{r}
 # distance_correction
@@ -1357,9 +1466,70 @@ The number and distances of the timing gates can also affect the precision of th
 
 In field testing, multiple starting issues can be present. For example, one might have a bad position of the initial gate, athlete might be moved back but also manage to trigger the gate before the start commence. More elaborate simulation is beyond the scope of the current paper.
 
+## Should we add zero to the sample?
+
+Fellow sports scientists are often considering adding $t=0$ s at $d=0$ m to the collected split times with the aim of increasing the number of observations. The question is whether this strategy is sound and if it should be employed. The short answer is no, it shouldn't, particularly if there are flying start issues. In the following example, we are demonstrating the issue when zeros are added to the sample when fitting multiple models with the known true parameters:
+
+```{r}
+# Create split times from known MSS and TAU
+df <- tibble(
+  distance = c(5, 10, 20, 30, 40),
+  time = predict_time_at_distance(
+    distance,
+    MSS = 9,
+    TAU = 1.3
+  )
+) %>%
+  mutate(
+    # Add random noise to time
+    time = time + rnorm(n(), 0, 10^-5),
+    gate_time = time - 0.1
+  )
+
+# Model without time correction
+m_no_correction <- model_using_splits(
+  distance = df$distance, 
+  time = df$gate_time
+)
+
+# Model without time correction, but with zeros added
+m_no_correction_zero <- model_using_splits(
+  distance = c(0, df$distance), 
+  time = c(0, df$gate_time)
+)
+
+# Model without adding zeros for the start
+m_no_zero <- model_using_splits_with_time_correction(
+  distance = df$distance, 
+  time = df$gate_time
+)
+
+# Model with added zeros for the start (d=0 and t=0)
+m_with_zero <- model_using_splits_with_time_correction(
+  distance = c(0, df$distance), 
+  time = c(0, df$gate_time)
+)
+
+# Print results
+data.frame(
+  model = c(
+    "Without time correction",
+    "Without time correction with zeros added", 
+    "With time correction",
+    "With time correction with zeros added"),
+  rbind(
+    coef(m_no_correction),
+    coef(m_no_correction_zero),
+    coef(m_no_zero),
+    coef(m_with_zero))
+)
+```
+
+As can be seen from the output, only the model with time correction is able to correctly recover true sprint parameters, but adding zeros to the sample in this case, results in MSS and TAU estimates very close to the estimates of the model without time corrections. Thus, adding zeros to the sample nullifies the potential benefits of using time correction model and should be avoided in practice. 
+
 # Leave-one-out Cross-Validation
 
-To estimate parameter stability, model over-fitting, and performance on the unseen data, \pkg{shorts} model function comes with implemented *leave-one-out cross validation* (LOOCV) [@jamesIntroductionStatisticalLearning2017; @jovanovicBmbstatsBootstrapMagnitudebased2020; @kuhnAppliedPredictiveModeling2018]. LOOCV involves a simple, yet powerful procedure, of removing each observation, rebuilding the model, and making predictions for that removed observation. This process is repeated for each observations in the model dataset. LOOCV allows one to check estimated parameters stability, and model performance on the unseen data. 
+To estimate parameter stability, model over-fitting, and performance on the unseen data, \pkg{shorts} model function comes with implemented *leave-one-out cross validation* (LOOCV) [@jamesIntroductionStatisticalLearning2017; @jovanovicBmbstatsBootstrapMagnitudebased2020; @kuhnAppliedPredictiveModeling2018]. LOOCV involves a simple, yet powerful procedure, of removing each observation, rebuilding the model, and making predictions for that removed observation. This process is repeated for each observation in the model dataset. LOOCV allows one to check estimated parameters stability, and model performance on the unseen data. 
 
 Let's perform LOOCV using Jack's data and the time correction model:
 
@@ -1433,7 +1603,7 @@ ggplot(df, aes(x = distance, y = resid, color = name)) +
     legend.position = "top")
 ```
 
-As expected, the model has more issues predicting unseen short or long sprints. Please note, that since LOOCV removes one observation, if the model estimates three parameters, then at least five observations are needed, since we need to make sure the model can be estimated once a single observation is removed. LOOCV can also be implemented with the mixed-effects models in the \pkg{shorts} package. 
+As expected, the model has more issues predicting unseen split times for both short or long distances. Please note, that since LOOCV removes one observation, if the model estimates three parameters, then at least five observations are needed, since we need to make sure the model can be estimated once a single observation is removed. LOOCV can also be implemented with the mixed-effects models in the \pkg{shorts} package. 
 
 # Example analysis
 
@@ -1443,7 +1613,7 @@ Let's utilize demonstrated functionalities of the \pkg{shorts} package using rea
 
 The following dataset represents Usain Bolt's race in the finals at the IAAF World Championship held in London, 2017. Since reaction time enters the splits, we want to see how that will affect the model estimates, and particularly, if the estimated time correction model will pick-up reaction time. 
 
-For the sake of this analysis, only 10m splits over 60m are used. 
+For the sake of this analysis, only 10 m splits over 60 m race distance are used. 
 
 ```{r}
 bolt_reaction_time <- 0.183
@@ -1544,7 +1714,7 @@ bolt_model[c(1, 8, 9)]
 
 The data from Vescovi represents a sub-set of data from a total of 220 high-level female athletes (151 soccer players and 69 field hockey players). Using a random number generator, a total of 52 players (35 soccer and 17 field hockey) were selected for the sample dataset.
 
-The protocol for assessing linear sprint speed has been described previously [@vescoviImpactMaximumSpeed2014; @vescoviLocomotorHeartRateMetabolic2016; @vescoviSprintSpeedCharacteristics2012] and was identical for each cohort.  Briefly, all athletes performed a standardized warm-up that included general exercises such as jogging, shuffling, multi-directional movements, and dynamic stretching exercises. Infrared timing gates (Brower Timing, Utah) were positioned at the start line and at 5, 10, 20, 30, and 35 meters at a height of approximately 1.0 meter. Participants stood with their lead foot positioned approximately 5 cm behind the initial infrared beam (i.e., start line). Only forward movement was permitted (no leaning or rocking backwards) and timing started when the laser of the starting gate was triggered. The best 35 m time, and all associated split times were kept for analysis.
+The protocol for assessing linear sprint speed has been described previously [@vescoviImpactMaximumSpeed2014; @vescoviLocomotorHeartRateMetabolic2016; @vescoviSprintSpeedCharacteristics2012] and was identical for each cohort.  Briefly, all athletes performed a standardized warm-up that included general exercises such as jogging, shuffling, multi-directional movements, and dynamic stretching exercises. Infrared timing gates (Brower Timing, Utah) were positioned at the start line and at 5, 10, 20, 30, and 35 m at a height of approximately 1.0 m. Participants stood with their lead foot positioned approximately 5 cm behind the initial infrared beam (i.e., start line). Only forward movement was permitted (no leaning or rocking backwards) and timing started when the laser of the starting gate was triggered. The best 35 m time, and all associated split times were kept for analysis.
 
 Below is the mixed-effects models analysis of the dataset. 
 
@@ -1732,7 +1902,7 @@ ggplot(est_params, aes(y = model, x = value)) +
 
 The following image depicts model residuals across distance splits. To provide practical magnitude of the residuals, we have used between subject observed time SD multiplied with 0.2 and -0.2. This provides practical anchor for the residual magnitude, often referred to as *smallest worthwhile change* (SWC) or *smallest effect size of interest* (SESOI) [@jovanovicBmbstatsBootstrapMagnitudebased2020]. If the residuals are within this magnitude band, then the model is good in making practically useful predictions.  
 
-Error bars represent residual bias $\pm$ 1SD. 
+Error bars represent residual bias $\pm$ 1 SD. 
 
 ```{r}
 model_resid <- rbind(
