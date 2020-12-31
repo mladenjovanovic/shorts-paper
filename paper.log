@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.12.25)  30 DEC 2020 21:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.12.25)  30 DEC 2020 21:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1971,11 +1971,11 @@ LaTeX Info: Redefining \nameref on input line 58.
 \@outlinefile=\write4
 \openout4 = `paper.out'.
 
-<jsslogo.jpg, id=88, 552.0625pt x 245.91875pt>
+<jsslogo.jpg, id=88, 540.0175pt x 393.47pt>
 File: jsslogo.jpg Graphic file (type jpg)
 <use jsslogo.jpg>
 Package pdftex.def Info: jsslogo.jpg  used on input line 58.
-(pdftex.def)             Requested size: 146.9108pt x 65.44208pt.
+(pdftex.def)             Requested size: 89.80768pt x 65.43607pt.
 LaTeX Font Info:    Trying to load font information for T1+pzc on input line 58
 .
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/psnfss/t1pzc.fd
@@ -1983,11 +1983,6 @@ File: t1pzc.fd 2020/03/25 font definitions for T1/pzc.
 )
 LaTeX Font Info:    Font shape `T1/pzc/m/n' in size <28> not available
 (Font)              Font shape `T1/pzc/m/it' tried instead on input line 58.
-
-Overfull \hbox (42.43042pt too wide) in paragraph at lines 58--58
-[]  [] 
- []
-
 LaTeX Font Info:    Trying to load font information for T1+aett on input line 5
 8.
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/ae/t1aett.fd
@@ -2927,7 +2922,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2684.
 Here is how much of TeX's memory you used:
  10224 strings out of 481305
  171325 string characters out of 5915050
- 472060 words of memory out of 5000000
+ 472125 words of memory out of 5000000
  25984 multiletter control sequences out of 15000+600000
  498391 words of font info for 621 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -2956,7 +2951,7 @@ ovanovic/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><
 /Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmtt10.pfb></Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/type1/urw
 /zapfchan/uzcmi8a.pfb>
-Output written on paper.pdf (71 pages, 1439124 bytes).
+Output written on paper.pdf (71 pages, 1440734 bytes).
 PDF statistics:
  1067 PDF objects out of 1200 (max. 8388607)
  892 compressed objects within 9 object streams

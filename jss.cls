@@ -5,17 +5,17 @@
 %% The original source files were:
 %%
 %% jss.dtx  (with options: `class')
-%%
+%% 
 %% IMPORTANT NOTICE:
-%%
+%% 
 %% For the copyright see the source file.
-%%
+%% 
 %% Any modified versions of this file must be renamed
 %% with new filenames distinct from jss.cls.
-%%
+%% 
 %% For distribution of the original source see the terms
 %% for copying and modification in the file jss.dtx.
-%%
+%% 
 %% This generated file may be distributed as long as the
 %% original source files, as listed above, are part of the
 %% same distribution. (The sources need not necessarily be
@@ -138,11 +138,11 @@
 \title{Title}
 \Abstract{---!!!---an abstract is required---!!!---}
 \Plainauthor{\@author}
-\Volume{}
-\Year{2020}
-\Month{December}
-\Issue{}
-\Submitdate{2020-12-26}
+\Volume{VV}
+\Year{YYYY}
+\Month{MMMMMM}
+\Issue{II}
+\Submitdate{yyyy-mm-dd}
 \Acceptdate{yyyy-mm-dd}
 \Address{
   Firstname Lastname\\
@@ -162,11 +162,11 @@
 \ISBN{x-xxxxx-xxx-x}
 \Pages{xv + 123}
 \Price{USD 69.95 (P)}
-\URL{https://osf.io/preprints/sportrxiv/4jw62/}
-\DOI{10.31236/osf.io/4jw62}
+\URL{http://link/to/webpage/}
+\DOI{10.18637/jss.v000.i00}
 \if@article
   \Seriesname{Issue}
-  \Hypersubject{SportRxiv Preprints}
+  \Hypersubject{Journal of Statistical Software}
   \Plaintitle{\@title}
   \Shorttitle{\@title}
   \Plainkeywords{\@Keywords}
@@ -247,12 +247,12 @@
     \vfill
     \hrule \nopagebreak
     \vspace{.1\baselineskip}
-    {\fontfamily{pzc} \fontsize{13}{15} \selectfont SportRxiv Preprints}
+    {\fontfamily{pzc} \fontsize{13}{15} \selectfont Journal of Statistical Software}
     \hfill
-    \url{https://www.sportrxiv.org/}\\ \nopagebreak
-    Proudly powered by the support of STORK members
+    \url{http://www.jstatsoft.org/}\\ \nopagebreak
+    published by the Foundation for Open Access Statistics
     \hfill
-    \url{http://storkinesiology.org/}\\[.3\baselineskip] \nopagebreak
+    \url{http://www.foastat.org/}\\[.3\baselineskip] \nopagebreak
     {\@Month{} \@Year, Volume~\@Volume, \@Seriesname~\@Issue}
     \hfill
     \@Firstdate\\ \nopagebreak
@@ -277,7 +277,7 @@
   \hspace{-2em} \includegraphics[height=23mm,keepaspectratio]{jsslogo} \hfill
   \parbox[b][23mm]{118mm}{\hrule height 3pt
    \center{
-   {\fontfamily{pzc} \fontsize{28}{32} \selectfont SportRxiv Preprints}
+   {\fontfamily{pzc} \fontsize{28}{32} \selectfont Journal of Statistical Software}
    \vfill
    {\it \small \@Month{} \@Year, Volume~\@Volume, \@Seriesname~\@Issue.%
             \hfill \href{https://doi.org/\@DOI}{doi:\,\@DOI}}}\\[0.1cm]

@@ -1,4 +1,4 @@
-## ----setup, include=FALSE-----------------------------------------------------------------------------------
+## ----setup, include=FALSE-------------------------------------------
 require(knitr)
 require(shorts)
 require(tidyverse)
@@ -6,8 +6,6 @@ require(bookdown)
 
 my_random_seed <- 1667
 set.seed(my_random_seed)
-
-options("width" = 70)
 
 knitr::opts_chunk$set(
   comment = "#>",
@@ -34,10 +32,14 @@ knitr::opts_chunk$set(
 
 # Set rounding
 op <- options()
-options(digits = 3)
+
+options(
+  digits = 3,
+  "width" = 70,
+  scipen = 999)
 
 
-## ----four-athletes-table, echo=FALSE------------------------------------------------------------------------
+## ----four-athletes-table, echo=FALSE--------------------------------
 athletes <- tribble(
   ~Athlete, ~MSS, ~MAC,
   "Athlete A", 12, 10,
@@ -52,11 +54,12 @@ athletes <- athletes %>%
 knitr::kable(
   athletes,
   caption = "Four athletes with different MSS and MAC parameters.",
-  digits = 2
+  digits = 2,
+  booktabs = TRUE
 )
 
 
-## ----four-athletes-kinematics, echo=FALSE, fig.cap="Kinematic characteristic of four athletes with different MSS and MAC parameters over a period of 0 to 6seconds."----
+## ----four-athletes-kinematics, echo=FALSE, fig.cap="Kinematic characteristic of four athletes with different MSS and MAC parameters over a period of 0 to 6 seconds."----
 kinematics <- expand_grid(
   athletes,
   time = seq(0, 6, length.out = 1000)
@@ -120,7 +123,7 @@ gg <- ggplot(
 plot(gg)
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 require(shorts)
 
 split_distance <- c(10, 20, 30, 40)
@@ -135,11 +138,19 @@ m1 <- model_using_splits(
 m1
 
 
-## -----------------------------------------------------------------------------------------------------------
-summary(m1$model)
+## -------------------------------------------------------------------
+summary(m1)
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
+coef(m1)
+
+
+## -------------------------------------------------------------------
+plot(m1) + theme_bw(8)
+
+
+## -------------------------------------------------------------------
 # Predict time at distance
 predict_time_at_distance(
   distance = split_distance,
@@ -155,7 +166,7 @@ predict_acceleration_at_time(
 )
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 get_air_resistance(
   velocity = 5,
   bodymass = 80,
@@ -166,7 +177,7 @@ get_air_resistance(
 )
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # To calculate horizontal force produced
 predict_force_at_distance(
   distance = split_distance,
@@ -196,7 +207,7 @@ predict_power_at_distance(
 )
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 df <- predict_kinematics(
   m1,
   max_time = 6,
@@ -213,10 +224,13 @@ df <- predict_kinematics(
 head(df)
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 require(tidyverse)
 
-df <- pivot_longer(data = df, cols = -2)
+variable_names <- colnames(df)
+
+df <- pivot_longer(data = df, cols = -2) %>%
+  mutate(name = factor(name, levels = variable_names))
 
 ggplot(df, aes(x = distance, y = value)) +
   theme_bw(8) +
@@ -226,7 +240,7 @@ ggplot(df, aes(x = distance, y = value)) +
   xlab("Distance (m)")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # Finds distance where 90% of maximum sprinting speed is reached
 find_velocity_critical_distance(
   MSS = m1$parameters$MSS,
@@ -261,7 +275,7 @@ find_power_critical_distance(
 )
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 data(split_times)
 
 # Mixed model
@@ -279,14 +293,25 @@ m2 <- mixed_model_using_splits(
 m2
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 summary(m2)
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
+coef(m2)
+
+
+## -------------------------------------------------------------------
+plot(m2) + theme_bw(8)
+
+
+## -------------------------------------------------------------------
 df <- predict_kinematics(m2, max_time = 10)
 
-df <- pivot_longer(df, cols = c(-1, -3))
+variable_names <- colnames(df)
+
+df <- pivot_longer(df, cols = c(-1, -3)) %>%
+  mutate(name = factor(name, levels = variable_names))
 
 ggplot(
   filter(df, distance < 40),
@@ -302,7 +327,7 @@ ggplot(
     legend.title = element_blank())
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 sprint_time <- seq(0, 6, 1)
 
 sprint_velocity <- c(0.00, 4.83, 7.07, 8.10, 8.59, 8.81, 8.91)
@@ -315,7 +340,11 @@ m3 <- model_using_radar(
 m3
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
+plot(m3) + theme_bw(8)
+
+
+## -------------------------------------------------------------------
 m3_weighted <- model_using_radar(
   velocity = sprint_velocity,
   time = sprint_time,
@@ -325,7 +354,7 @@ m3_weighted <- model_using_radar(
 m3_weighted
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 data("radar_gun_data")
 
 m4 <- mixed_model_using_radar(
@@ -338,7 +367,36 @@ m4 <- mixed_model_using_radar(
 m4
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
+plot(m4) + theme_bw(8)
+
+
+## -------------------------------------------------------------------
+# To create Force-Velocity Profile
+fvp <- get_FV_profile(
+  MSS = m1$parameters$MSS,
+  TAU = m1$parameters$TAU,
+  bodymass = 80,
+  # Additional parameters forwarded to get_air_resistance
+  # Otherwise, defaults are used
+  bodyheight = 1.85,
+  barometric_pressure = 780,
+  air_temperature = 20,
+  wind_velocity = 0.5
+)
+
+fvp
+
+
+## -------------------------------------------------------------------
+plot(fvp) + theme_bw(8)
+
+
+## -------------------------------------------------------------------
+plot(fvp, "time") + theme_bw(8)
+
+
+## -------------------------------------------------------------------
 df <- tibble(
   `true time` = sprint_time,
   velocity = sprint_velocity,
@@ -357,11 +415,11 @@ ggplot(
   xlab("Time (s)") +
   ylab(expression("Velocity (" * ms^-1 * ")")) +
   theme(
-    legend.title = element_blank(), 
+    legend.title = element_blank(),
     legend.position = "top")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # Without synchronization issues
 m5 <- model_using_radar(
   velocity = df$velocity,
@@ -396,7 +454,7 @@ rbind(
 )
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # With time added
 m8 <- model_using_radar_with_time_correction(
   velocity = df$velocity,
@@ -412,7 +470,7 @@ m9 <- model_using_radar_with_time_correction(
 coef(m9)
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # Using the true time
 predict_velocity_at_time(
   time = df$`true time`,
@@ -429,7 +487,7 @@ predict_velocity_at_time(
 )
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # Adding 0.5s to radar_gun_data
 radar_gun_data$time <- radar_gun_data$time + 0.5
 
@@ -456,7 +514,7 @@ m11 <- mixed_model_using_radar_with_time_correction(
 m11
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 MSS <- 9
 TAU <- 1.3
 MAC <- MSS / TAU
@@ -475,7 +533,7 @@ split_times <- tibble(
 split_times
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 plot_df <- split_times %>%
   select(distance, john_time, jack_time) %>%
   rename(John = john_time, Jack = jack_time) %>%
@@ -492,11 +550,11 @@ ggplot(
   xlab("Distance (m)") +
   ylab("Time (s)") +
   theme(
-    legend.title = element_blank(), 
+    legend.title = element_blank(),
     legend.position = "top")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # Since this is a perfect simulation and stats::nls will complain
 # we need to add very small noise, or measurement error to the times
 set.seed(1667)
@@ -515,8 +573,8 @@ jack_profile <- model_using_splits(
 )
 
 sprint_parameters <- rbind(
-  unlist(john_profile$parameters),
-  unlist(jack_profile$parameters)
+  coef(john_profile),
+  coef(jack_profile)
 )
 
 rownames(sprint_parameters) <- c("John", "Jack")
@@ -524,7 +582,7 @@ rownames(sprint_parameters) <- c("John", "Jack")
 sprint_parameters
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 sim_df <- expand.grid(
   MSS = c(6, 7, 8, 9),
   MAC = c(6, 7, 8, 9),
@@ -549,11 +607,11 @@ sim_df <- sim_df %>%
 
 # Add small noise to allow model fit
 set.seed(1667)
-rand_noise <- rnorm(nrow(sim_df), 0, 10^-4)
+rand_noise <- rnorm(nrow(sim_df), 0, 10^-5)
 sim_df$time <- sim_df$time + rand_noise
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # Prediction wrapper
 pred_wrapper <- function(data) {
   model <- model_using_splits(
@@ -561,7 +619,7 @@ pred_wrapper <- function(data) {
     time = data$time
   )
 
-  params <- data.frame(t(unlist(model$parameters)))
+  params <- data.frame(t(coef(model)))
 
   predicted_time <- predict_time_at_distance(
     distance = data$distance,
@@ -591,7 +649,7 @@ model_df <- sim_df %>%
 model_df$residuals <- model_df$predicted_time - model_df$time
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # Estimates plot
 df <- model_df %>%
   group_by(MSS, TAU, flying_start_distance) %>%
@@ -614,11 +672,11 @@ ggplot(
   xlab("Flying start distance (m)") +
   ylab("estimated MSS (m/s)") +
   theme(
-    legend.title = element_blank(), 
+    legend.title = element_blank(),
     legend.position = "top")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # MAC
 ggplot(
   df,
@@ -630,11 +688,11 @@ ggplot(
   xlab("Flying start distance (m)") +
   ylab("estimated MAC (m/s/s)") +
   theme(
-    legend.title = element_blank(), 
+    legend.title = element_blank(),
     legend.position = "top")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # PMAX
 ggplot(
   df,
@@ -646,11 +704,11 @@ ggplot(
   xlab("Flying start distance (m)") +
   ylab("estimated PMAX (W/kg)") +
   theme(
-    legend.title = element_blank(), 
+    legend.title = element_blank(),
     legend.position = "top")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # Residuals
 model_df <- model_df %>%
   mutate(
@@ -663,7 +721,11 @@ model_df <- model_df %>%
 
 ggplot(
   model_df,
-  aes(y = residuals, x = distance, color = flying_start_distance, group = group)
+  aes(
+    y = residuals,
+    x = distance,
+    color = flying_start_distance,
+    group = group)
 ) +
   theme_bw(8) +
   geom_line(alpha = 0.3) +
@@ -672,14 +734,18 @@ ggplot(
   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
   xlab("Distance (m)") +
   ylab("Predicted time - observed time (s)") +
-  theme(legend.position = "top") + 
+  theme(legend.position = "top") +
   labs(color = "Flying start distance")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 ggplot(
   model_df,
-  aes(y = residuals, x = distance, color = flying_start_distance, group = group)
+  aes(
+    y = residuals,
+    x = distance,
+    color = flying_start_distance,
+    group = group)
 ) +
   theme_bw(8) +
   geom_line(alpha = 0.3) +
@@ -687,11 +753,11 @@ ggplot(
   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
   xlab("Distance (m)") +
   ylab("Predicted time - observed time (s)") +
-  theme(legend.position = "top") + 
+  theme(legend.position = "top") +
   labs(color = "Flying start distance")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 jack_profile_fixed_time_short <- model_using_splits(
   distance = split_times$distance,
   time = split_times$jack_time,
@@ -710,11 +776,11 @@ jack_profile_time_estimated <- model_using_splits_with_time_correction(
 )
 
 jack_parameters <- rbind(
-  unlist(john_profile$parameters),
-  unlist(jack_profile$parameters),
-  unlist(jack_profile_fixed_time_short$parameters),
-  unlist(jack_profile_fixed_time_long$parameters),
-  unlist(jack_profile_time_estimated$parameters)
+  coef(john_profile),
+  coef(jack_profile),
+  coef(jack_profile_fixed_time_short),
+  coef(jack_profile_fixed_time_long),
+  coef(jack_profile_time_estimated)
 )
 
 rownames(jack_parameters) <- c(
@@ -728,19 +794,19 @@ rownames(jack_parameters) <- c(
 jack_parameters
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 jack_profile_distance_correction <- model_using_splits_with_corrections(
   distance = split_times$distance,
   time = split_times$jack_time
 )
 
 jack_parameters <- rbind(
-  unlist(john_profile$parameters),
-  unlist(jack_profile$parameters),
-  unlist(jack_profile_fixed_time_short$parameters),
-  unlist(jack_profile_fixed_time_long$parameters),
-  unlist(jack_profile_time_estimated$parameters),
-  unlist(jack_profile_distance_correction$parameters)
+  coef(john_profile),
+  coef(jack_profile),
+  coef(jack_profile_fixed_time_short),
+  coef(jack_profile_fixed_time_long),
+  coef(jack_profile_time_estimated),
+  coef(jack_profile_distance_correction)
 )
 
 rownames(jack_parameters) <- c(
@@ -755,7 +821,7 @@ rownames(jack_parameters) <- c(
 jack_parameters
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 pred_wrapper <- function(data) {
   no_correction <- model_using_splits(
     distance = data$distance,
@@ -790,23 +856,23 @@ pred_wrapper <- function(data) {
   params <- rbind(
     data.frame(
       model = "No correction",
-      t(unlist(no_correction$parameters))
+      t(coef(no_correction))
     ),
     data.frame(
       model = "Fixed correction +0.3s",
-      t(unlist(fixed_correction_short$parameters))
+      t(coef(fixed_correction_short))
     ),
     data.frame(
       model = "Fixed correction +0.5s",
-      t(unlist(fixed_correction_long$parameters))
+      t(coef(fixed_correction_long))
     ),
     data.frame(
       model = "Time correction",
-      t(unlist(time_correction$parameters))
+      t(coef(time_correction))
     ),
     data.frame(
       model = "Time and distance correction",
-      t(unlist(time_dist_correction$parameters))
+      t(coef(time_dist_correction))
     )
   )
 
@@ -839,7 +905,7 @@ model_df <- sim_df %>%
   ungroup()
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 model_df$model <- factor(
   model_df$model,
   levels = c(
@@ -876,7 +942,7 @@ ggplot(
     legend.position = "top")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # MAC
 ggplot(
   df,
@@ -892,7 +958,7 @@ ggplot(
     legend.position = "top")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # PMAX
 ggplot(
   df,
@@ -908,7 +974,7 @@ ggplot(
     legend.position = "top")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # time_correction
 ggplot(
   df,
@@ -925,7 +991,7 @@ ggplot(
     legend.position = "top")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # distance_correction
 ggplot(
   df,
@@ -942,7 +1008,7 @@ ggplot(
     legend.position = "top")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # Residuals
 model_df <- model_df %>%
   mutate(
@@ -955,7 +1021,11 @@ model_df <- model_df %>%
 
 ggplot(
   model_df,
-  aes(y = residuals, x = distance, color = flying_start_distance, group = group)
+  aes(
+    y = residuals,
+    x = distance,
+    color = flying_start_distance,
+    group = group)
 ) +
   theme_bw(8) +
   geom_line(alpha = 0.3) +
@@ -964,11 +1034,11 @@ ggplot(
   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
   xlab("Distance (m)") +
   ylab("Predicted time - observed time (s)") +
-  theme(legend.position = "top") + 
+  theme(legend.position = "top") +
   labs(color = "Flying start distance")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 sim_df <- expand.grid(
   MSS = c(6, 7, 8, 9),
   MAC = c(6, 7, 8, 9),
@@ -990,7 +1060,7 @@ rand_noise <- rnorm(nrow(sim_df), 0, 10^-4)
 sim_df$time <- sim_df$time + rand_noise
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # estimated parameters and predicted time
 model_df <- sim_df %>%
   group_by(MSS, TAU, time_lag) %>%
@@ -998,7 +1068,7 @@ model_df <- sim_df %>%
   ungroup()
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 model_df$model <- factor(
   model_df$model,
   levels = c(
@@ -1032,7 +1102,7 @@ ggplot(df, aes(x = time_lag, y = est_MSS, color = model)) +
     legend.position = "top")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # MAC
 ggplot(df, aes(x = time_lag, y = est_MAC, color = model)) +
   theme_bw(8) +
@@ -1045,7 +1115,7 @@ ggplot(df, aes(x = time_lag, y = est_MAC, color = model)) +
     legend.position = "top")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # time_correction
 ggplot(
   df,
@@ -1062,7 +1132,7 @@ ggplot(
     legend.position = "top")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # distance_correction
 ggplot(
   df,
@@ -1078,7 +1148,7 @@ ggplot(
     legend.position = "top")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # Residuals
 model_df <- model_df %>%
   mutate(
@@ -1100,11 +1170,66 @@ ggplot(
   scale_color_gradientn(colours = terrain.colors(5, rev = FALSE)) +
   xlab("Distance (m)") +
   ylab("Predicted time - observed time (s)")  +
-  theme(legend.position = "top") + 
+  theme(legend.position = "top") +
   labs(color = "Time lag")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
+# Create split times from known MSS and TAU
+df <- tibble(
+  distance = c(5, 10, 20, 30, 40),
+  time = predict_time_at_distance(
+    distance,
+    MSS = 9,
+    TAU = 1.3
+  )
+) %>%
+  mutate(
+    # Add random noise to time
+    time = time + rnorm(n(), 0, 10^-5),
+    gate_time = time - 0.1
+  )
+
+# Model without time correction
+m_no_correction <- model_using_splits(
+  distance = df$distance,
+  time = df$gate_time
+)
+
+# Model without time correction, but with zeros added
+m_no_correction_zero <- model_using_splits(
+  distance = c(0, df$distance),
+  time = c(0, df$gate_time)
+)
+
+# Model without adding zeros for the start
+m_no_zero <- model_using_splits_with_time_correction(
+  distance = df$distance,
+  time = df$gate_time
+)
+
+# Model with added zeros for the start (d=0 and t=0)
+m_with_zero <- model_using_splits_with_time_correction(
+  distance = c(0, df$distance),
+  time = c(0, df$gate_time)
+)
+
+# Print results
+data.frame(
+  model = c(
+    "Without time correction",
+    "Without time correction with zeros added",
+    "With time correction",
+    "With time correction with zeros added"),
+  rbind(
+    coef(m_no_correction),
+    coef(m_no_correction_zero),
+    coef(m_no_zero),
+    coef(m_with_zero))
+)
+
+
+## -------------------------------------------------------------------
 jack_LOOCV <- model_using_splits_with_time_correction(
   distance = split_times$distance,
   time = split_times$jack_time,
@@ -1114,7 +1239,7 @@ jack_LOOCV <- model_using_splits_with_time_correction(
 jack_LOOCV
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 df <- jack_LOOCV$LOOCV$parameters
 
 df <- pivot_longer(df, cols = 1:6, names_to = "parameter")
@@ -1143,7 +1268,7 @@ ggplot(df, aes(x = value)) +
   )
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 df <- data.frame(
   distance = jack_LOOCV$data$distance,
   time = jack_LOOCV$data$time,
@@ -1168,7 +1293,7 @@ ggplot(df, aes(x = distance, y = resid, color = name)) +
     legend.position = "top")
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 bolt_reaction_time <- 0.183
 
 bolt_distance <- c(10, 20, 30, 40, 50, 60)
@@ -1241,19 +1366,19 @@ bolt_model <- rbind(
 bolt_model
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 bolt_model <- bolt_model %>%
   group_by(model) %>%
   mutate(
-    dist_95_MSS = find_velocity_critical_distance(
-      MSS = MSS, TAU = TAU, 
-      #time_correction = time_correction, 
+    dist_99_MSS = find_velocity_critical_distance(
+      MSS = MSS, TAU = TAU,
+      #time_correction = time_correction,
       #distance_correction = distance_correction,
       percent = 0.99
     ),
-   time_95_MSS = find_velocity_critical_time(
-      MSS = MSS, TAU = TAU, 
-      time_correction = time_correction, 
+   time_99_MSS = find_velocity_critical_time(
+      MSS = MSS, TAU = TAU,
+      #time_correction = time_correction,
       percent = 0.99
     )
   )
@@ -1261,7 +1386,7 @@ bolt_model <- bolt_model %>%
 bolt_model[c(1, 8, 9)]
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 data("vescovi")
 
 # Convert data to long
@@ -1278,7 +1403,7 @@ df <- vescovi %>%
   )
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 no_corrections <- mixed_model_using_splits(
   df,
   distance = "distance",
@@ -1327,7 +1452,7 @@ time_distance_correction_random <- mixed_model_using_splits_with_corrections(
 )
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 model_fit <- rbind(
   data.frame(
     model = "No corrections",
@@ -1374,7 +1499,7 @@ ggplot(model_fit, aes(x = RSE, y = model)) +
   ylab(NULL)
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 est_params <- rbind(
   data.frame(
     model = "No corrections",
@@ -1437,7 +1562,7 @@ ggplot(est_params, aes(y = model, x = value)) +
   ylab(NULL)
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 model_resid <- rbind(
   data.frame(
     model = "No corrections",
@@ -1519,7 +1644,7 @@ ggplot(model_resid, aes(y = model)) +
   ylab(NULL)
 
 
-## -----------------------------------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 df <- model_SESOI %>%
   pivot_longer(cols = -(1:2), names_to = "estimator") %>%
   filter(estimator %in% c("bias", "variance", "MAD"))
@@ -1549,7 +1674,8 @@ ggplot(df, aes(x = value, y = model)) +
   ylab(NULL)
 
 
-## ----include=FALSE------------------------------------------------------------------------------------------
+## ----include=FALSE--------------------------------------------------
 # Return original options
 options(op)
 
+sessionInfo()

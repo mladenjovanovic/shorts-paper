@@ -46,17 +46,6 @@ require(knitr)
 require(shorts)
 require(tidyverse)
 require(bookdown)
-require(magick)
-
-pdf2png <- function(path) {
-  # only do the conversion for non-LaTeX output
-  if (knitr::is_latex_output()) 
-    return(path)
-  path2 <- xfun::with_ext(path, "png")
-  img <- magick::image_read_pdf(path)
-  magick::image_write(img, path2, format = "png")
-  path2
-}
 
 my_random_seed <- 1667
 set.seed(my_random_seed)
@@ -66,9 +55,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   cache = FALSE,
   fig.retina = 0.8, # figures are either vectors or 300 dpi diagrams
-  dpi = 600,
-  dev = "png",
-  fig.process = pdf2png,
+  dpi = 300,
   out.width = "100%",
   fig.align = "center",
   fig.width = 6,
