@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.4.14)  14 APR 2021 23:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.4.14)  14 APR 2021 23:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1495,7 +1495,7 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  18158 strings out of 480929
- 287983 string characters out of 5904679
+ 287980 string characters out of 5904679
  734994 words of memory out of 5000000
  34477 multiletter control sequences out of 15000+600000
  471423 words of font info for 362 fonts, out of 8000000 for 9000
@@ -1516,7 +1516,7 @@ elvetic/uhvr8a.pfb></Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/typ
 e1/urw/times/utmb8a.pfb></Users/mladenjovanovic/Library/TinyTeX/texmf-dist/font
 s/type1/urw/times/utmr8a.pfb></Users/mladenjovanovic/Library/TinyTeX/texmf-dist
 /fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (37 pages, 1214228 bytes).
+Output written on paper.pdf (37 pages, 1214250 bytes).
 PDF statistics:
  897 PDF objects out of 1000 (max. 8388607)
  772 compressed objects within 8 object streams
