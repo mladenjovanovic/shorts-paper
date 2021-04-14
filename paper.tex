@@ -94,6 +94,20 @@
 \usepackage{lipsum} \usepackage[htt]{hyphenat} \usepackage{booktabs} \usepackage{microtype}
 
 \usepackage{flafter}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 
 \title{shorts: An R Package for Modeling Short Sprints}
 
@@ -130,9 +144,11 @@ Short sprint performance is one of the most distinguishable and admired physical
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-Short sprint performance is one of the most distinguishable and admired physical trait in sports. Short sprints, commonly performed in most team sports (e.g., soccer, field hockey, handball, football, etc.), are defined as maximal running from a stand still position over a distance that doesn't result in deceleration at the end. Peak anaerobic power is achieved within the first few seconds (\textless5 s) of maximal efforts (\protect\hyperlink{ref-mangineSpeedForcePower2014}{Mangine et al. 2014}), whereas the ability to achieve maximal sprint speed varies based on the type of sport. For example, track and field sprinters are trained to achieve maximal speed later in a race (i.e., 50-60 m) (\protect\hyperlink{ref-ward-smithEnergyConversionStrategies2001}{Ward-Smith 2001}), but team sport athletes have sport-specific attributes and reach it much sooner (i.e., 30-40 m)(\protect\hyperlink{ref-brownAssessmentLinearSprinting2004}{Brown, Vescovi, and Vanheest 2004}). Regardless of the differences in kinematics between athletes, evaluating short sprint performance is routinely included within a battery of fitness tests for a wide range of sports
+Short sprint performance is one of the most distinguishable and admired physical traits in sports. Short sprints, commonly performed in most team sports (e.g., soccer, field hockey, handball, football, etc.), are defined as maximal running from a stand still position over a distance that doesn't result in deceleration at the end. Peak anaerobic power is achieved within the first few seconds (\textless5 s) of maximal efforts (\protect\hyperlink{ref-mangineSpeedForcePower2014}{Mangine et al. 2014}), whereas the ability to achieve maximal sprint speed varies based on the type of sport. For example, track and field sprinters are trained to achieve maximal speed later in a race (i.e., 50-60 m) (\protect\hyperlink{ref-ward-smithEnergyConversionStrategies2001}{Ward-Smith 2001}), but team sport athletes have sport-specific attributes and reach it much sooner (i.e., 30-40 m)(\protect\hyperlink{ref-brownAssessmentLinearSprinting2004}{Brown, Vescovi, and Vanheest 2004}). Regardless of the differences in kinematics between athletes, evaluating short sprint performance is routinely included within a battery of fitness tests for a wide range of sports
 
-The use of force plates is considered the gold standard for assessing mechanical properties of sprinting; however, there are logistical and financial challenges to capturing the profile of an entire sprint (\protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}). Radar and laser technology are frequently used laboratory-grade methods (\protect\hyperlink{ref-buchheitMechanicalDeterminantsAcceleration2014}{Buchheit et al. 2014}; \protect\hyperlink{ref-edwardsSprintAccelerationCharacteristics2020}{Edwards et al. 2020}; \protect\hyperlink{ref-jimenez-reyesRelationshipVerticalHorizontal2018}{Jiménez-Reyes et al. 2018}; \protect\hyperlink{ref-marcote-pequenoAssociationForceVelocity2019}{Marcote-Pequeño et al. 2019}) but not normally accessible to practitioners working in sports. Undoubtedly, the most common method available and used to evaluate sprint performance are timing gates. Often multiple gates are positioned at varying distances to capture split times (e.g., 5, 10, 20 m), which can now be incorporated into the method for determining sprint mechanical properties (\protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}). This approach presents an advantage to practitioners who can use the outcomes to describe individual differences, quantify the effects of training interventions, and better understanding the limiting factors of performance. The \textbf{shorts} package (\protect\hyperlink{ref-R-shorts}{Jovanovic 2020}), written in the R language (\protect\hyperlink{ref-R-base}{R Core Team 2020}), represents an open-source tool to help sport scientists translate raw timing data into detailed mechanical outcomes through mathematical modeling (\protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}).
+The use of force plates is considered the gold standard for assessing mechanical properties of sprinting; however, there are logistical and financial challenges to capturing the profile of an entire sprint (\protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}). Radar and laser technology are frequently used laboratory-grade methods (\protect\hyperlink{ref-buchheitMechanicalDeterminantsAcceleration2014}{Buchheit et al. 2014}; \protect\hyperlink{ref-edwardsSprintAccelerationCharacteristics2020}{Edwards et al. 2020}; \protect\hyperlink{ref-jimenez-reyesRelationshipVerticalHorizontal2018}{Jiménez-Reyes et al. 2018}; \protect\hyperlink{ref-marcote-pequenoAssociationForceVelocity2019}{Marcote-Pequeño et al. 2019}) but not normally accessible to practitioners working in sports. Undoubtedly, the most common method available and used to evaluate sprint performance are timing gates. Often multiple gates are positioned at varying distances to capture split times (e.g., 5, 10, 20 m), which can now be incorporated into the method for determining sprint mechanical properties (\protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}). This approach presents an advantage to practitioners who can use the outcomes to describe individual differences, quantify the effects of training interventions, and better understanding the limiting factors of performance.
+
+The \textbf{shorts} package (\protect\hyperlink{ref-R-shorts}{Jovanovic 2020}), written in the R language (\protect\hyperlink{ref-R-base}{R Core Team 2020}), represents an open-source tool to help sport scientists translate raw timing data into detailed mechanical outcomes through mathematical modeling (\protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}). To best of our knowledge, scientist, researchers, and coaches have been performing short sprints modeling using the built-in solver function of Excel (Microsoft Corporation, Redmond, Washington, United States) (\protect\hyperlink{ref-morinSpreadsheetSprintAcceleration2017}{J. B. Morin 2017}; \protect\hyperlink{ref-morinSpreadsheetSprintAcceleration2019}{Jean-Benoit Morin and Samozino 2019}; \protect\hyperlink{ref-stenrothForcevelocityProfilingIce2020}{Stenroth, Vartiainen, and Karjalainen 2020}; \protect\hyperlink{ref-stenrothSpreadsheetSprintAcceleration2020}{Stenroth and Vartiainen 2020}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}; \protect\hyperlink{ref-clarkNFLCombine40Yard2017}{Clark et al. 2017}; \protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}), which makes the \textbf{shorts} package major improvement in ease-of-use, speed, transparency, reproducibility, and more feature-rich model fitting.
 
 In the current paper, we will provide an explanation of one commonly used mathematical equation to model short sprints, modeling applications using the \textbf{shorts} package, issues that can arise during measurement and estimation, and potential solutions to those problems.
 
@@ -187,7 +203,7 @@ Figure \ref{fig:four-athletes-kinematics} depicts distance, velocity, and accele
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{paper_files/figure-latex/four-athletes-kinematics-1} 
+{\centering \includegraphics[width=0.9\linewidth]{paper_files/figure-latex/four-athletes-kinematics-1} 
 
 }
 
@@ -198,7 +214,7 @@ Plotting acceleration against velocity (Figure \ref{fig:four-athletes-profile}),
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{paper_files/figure-latex/four-athletes-profile-1} 
+{\centering \includegraphics[width=0.9\linewidth]{paper_files/figure-latex/four-athletes-profile-1} 
 
 }
 
@@ -253,40 +269,7 @@ Let's consider an example of an athlete with MSS equal to 9 \(ms^{-1}\), TAU equ
 
 Maximal relative power (PMAX) from the output is estimated using \(\frac{MSS \times MAC}{4}\), which disregards the air resistance. \texttt{time\_correction} and \texttt{distance\_corection} parameters will be covered later in the paper.
 
-Besides providing \emph{residual standard error} (RSE), \textbf{shorts} functions provide additional model fit estimators. Additional information can be gained by exploring the returned object, particularly object returned from the \texttt{nls()} function:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{summary}\NormalTok{(m1)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Formula: corrected\_time \textasciitilde{} TAU * I(LambertW::W({-}exp(1)\^{}({-}distance/(MSS * }
-\CommentTok{\#\textgreater{}     TAU) {-} 1))) + distance/MSS + TAU}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Parameters:}
-\CommentTok{\#\textgreater{}     Estimate Std. Error t value Pr(\textgreater{}|t|)    }
-\CommentTok{\#\textgreater{} MSS   9.0121     0.0155     581 0.000003 ***}
-\CommentTok{\#\textgreater{} TAU   1.3083     0.0066     198 0.000025 ***}
-\CommentTok{\#\textgreater{} {-}{-}{-}}
-\CommentTok{\#\textgreater{} Signif. codes:  0 \textquotesingle{}***\textquotesingle{} 0.001 \textquotesingle{}**\textquotesingle{} 0.01 \textquotesingle{}*\textquotesingle{} 0.05 \textquotesingle{}.\textquotesingle{} 0.1 \textquotesingle{} \textquotesingle{} 1}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Residual standard error: 0.00249 on 2 degrees of freedom}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Number of iterations to convergence: 4 }
-\CommentTok{\#\textgreater{} Achieved convergence tolerance: 0.00000311}
-\end{Highlighting}
-\end{Shaded}
-
-To extract estimated model parameters, use S3 \texttt{coef()} method:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{coef}\NormalTok{(m1)}
-\CommentTok{\#\textgreater{}                 MSS                 TAU                 MAC }
-\CommentTok{\#\textgreater{}                9.01                1.31                6.89 }
-\CommentTok{\#\textgreater{}                PMAX     time\_correction distance\_correction }
-\CommentTok{\#\textgreater{}               15.52                0.00                0.00}
-\end{Highlighting}
-\end{Shaded}
+Besides providing \emph{residual standard error} (RSE), \textbf{shorts} functions provide additional model fit estimators. Additional information can be gained by exploring the returned object, particularly object returned from the \texttt{nls()} function (i.e., by using the S3 \texttt{summary()} method). To extract estimated model parameters, use S3 \texttt{coef()} method.
 
 To create a simple plot of the model, use S3 \texttt{plot()} method, which returns \textbf{ggplot2} (\protect\hyperlink{ref-R-ggplot2}{Wickham, Chang, et al. 2020}) object:
 
@@ -296,7 +279,7 @@ To create a simple plot of the model, use S3 \texttt{plot()} method, which retur
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-4-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 Once we have estimated MSS and TAU, we can use \texttt{predict\_XXX()} family of functions to predict various relationships (i.e., time at distance, acceleration at distance, velocity at time, etc.):
 
@@ -309,14 +292,6 @@ Once we have estimated MSS and TAU, we can use \texttt{predict\_XXX()} family of
   \AttributeTok{TAU =}\NormalTok{ m1}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{TAU}
 \NormalTok{)}
 \CommentTok{\#\textgreater{} [1] 2.17 3.43 4.60 5.73}
-
-\CommentTok{\# Predict acceleration at time}
-\FunctionTok{predict\_acceleration\_at\_time}\NormalTok{(}
-  \AttributeTok{time =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{),}
-  \AttributeTok{MSS =}\NormalTok{ m1}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{MSS,}
-  \AttributeTok{TAU =}\NormalTok{ m1}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{TAU}
-\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 6.8884 3.2075 1.4935 0.6954 0.3238 0.1508 0.0702}
 \end{Highlighting}
 \end{Shaded}
 
@@ -357,21 +332,6 @@ When estimating force and power, the air resistance parameters can be set using 
   \AttributeTok{wind\_velocity =} \FloatTok{0.5}
 \NormalTok{)}
 \CommentTok{\#\textgreater{} [1] 119.0  58.6  36.9  28.2}
-
-\CommentTok{\# To calculate power produced}
-\FunctionTok{predict\_power\_at\_distance}\NormalTok{(}
-  \AttributeTok{distance =}\NormalTok{ split\_distance,}
-  \AttributeTok{MSS =}\NormalTok{ m1}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{MSS,}
-  \AttributeTok{TAU =}\NormalTok{ m1}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{TAU,}
-  \CommentTok{\# Additional parameters forwarded to get\_air\_resistance}
-  \CommentTok{\# Otherwise, defaults are used}
-  \AttributeTok{bodymass =} \DecValTok{80}\NormalTok{,}
-  \AttributeTok{bodyheight =} \FloatTok{1.85}\NormalTok{,}
-  \AttributeTok{barometric\_pressure =} \DecValTok{780}\NormalTok{,}
-  \AttributeTok{air\_temperature =} \DecValTok{20}\NormalTok{,}
-  \AttributeTok{wind\_velocity =} \FloatTok{0.5}
-\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] 868 490 323 251}
 \end{Highlighting}
 \end{Shaded}
 
@@ -391,43 +351,6 @@ The easiest way to get all kinematics and kinetics for short sprints is to use \
   \AttributeTok{air\_temperature =} \DecValTok{20}\NormalTok{,}
   \AttributeTok{wind\_velocity =} \FloatTok{0.5}
 \NormalTok{)}
-
-\FunctionTok{head}\NormalTok{(df)}
-\CommentTok{\#\textgreater{}   time distance velocity acceleration bodymass}
-\CommentTok{\#\textgreater{} 1 0.00 0.000000   0.0000         6.89       80}
-\CommentTok{\#\textgreater{} 2 0.01 0.000344   0.0686         6.84       80}
-\CommentTok{\#\textgreater{} 3 0.02 0.001371   0.1367         6.78       80}
-\CommentTok{\#\textgreater{} 4 0.03 0.003076   0.2043         6.73       80}
-\CommentTok{\#\textgreater{} 5 0.04 0.005455   0.2714         6.68       80}
-\CommentTok{\#\textgreater{} 6 0.05 0.008502   0.3379         6.63       80}
-\CommentTok{\#\textgreater{}   net\_horizontal\_force air\_resistance horizontal\_force}
-\CommentTok{\#\textgreater{} 1                  551        0.07536              551}
-\CommentTok{\#\textgreater{} 2                  547        0.05609              547}
-\CommentTok{\#\textgreater{} 3                  543        0.03978              543}
-\CommentTok{\#\textgreater{} 4                  539        0.02636              539}
-\CommentTok{\#\textgreater{} 5                  534        0.01576              534}
-\CommentTok{\#\textgreater{} 6                  530        0.00792              530}
-\CommentTok{\#\textgreater{}   horizontal\_force\_relative vertical\_force resultant\_force}
-\CommentTok{\#\textgreater{} 1                      6.89            785             959}
-\CommentTok{\#\textgreater{} 2                      6.84            785             957}
-\CommentTok{\#\textgreater{} 3                      6.78            785             954}
-\CommentTok{\#\textgreater{} 4                      6.73            785             952}
-\CommentTok{\#\textgreater{} 5                      6.68            785             950}
-\CommentTok{\#\textgreater{} 6                      6.63            785             947}
-\CommentTok{\#\textgreater{}   resultant\_force\_relative power relative\_power    RF}
-\CommentTok{\#\textgreater{} 1                     12.0   0.0          0.000 0.575}
-\CommentTok{\#\textgreater{} 2                     12.0  37.5          0.469 0.572}
-\CommentTok{\#\textgreater{} 3                     11.9  74.2          0.928 0.569}
-\CommentTok{\#\textgreater{} 4                     11.9 110.0          1.375 0.566}
-\CommentTok{\#\textgreater{} 5                     11.9 145.0          1.813 0.563}
-\CommentTok{\#\textgreater{} 6                     11.8 179.2          2.241 0.560}
-\CommentTok{\#\textgreater{}   force\_angle}
-\CommentTok{\#\textgreater{} 1        54.9}
-\CommentTok{\#\textgreater{} 2        55.1}
-\CommentTok{\#\textgreater{} 3        55.3}
-\CommentTok{\#\textgreater{} 4        55.5}
-\CommentTok{\#\textgreater{} 5        55.7}
-\CommentTok{\#\textgreater{} 6        55.9}
 \end{Highlighting}
 \end{Shaded}
 
@@ -451,7 +374,7 @@ Plotting the model predictions can be done once we convert data from wide to lon
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-9-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 These kinematic and kinetic variables are utilized in \protect\hyperlink{force-velocity-profile}{Force-Velocity profile} estimation, which is covered later in this paper.
 
@@ -561,71 +484,7 @@ Sprint performance is often evaluated with a group of athletes (e.g., soccer clu
 \end{Highlighting}
 \end{Shaded}
 
-Additional information about mixed-effects model performed using the \texttt{nlme} package (\protect\hyperlink{ref-R-nlme}{Pinheiro, Bates, and R-core 2020}) can be obtained using \texttt{summary()} function:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{summary}\NormalTok{(m2)}
-\CommentTok{\#\textgreater{} Nonlinear mixed{-}effects model fit by maximum likelihood}
-\CommentTok{\#\textgreater{}   Model: corrected\_time \textasciitilde{} TAU * I(LambertW::W({-}exp(1)\^{}({-}distance/(MSS *      TAU) {-} 1))) + distance/MSS + TAU }
-\CommentTok{\#\textgreater{}   Data: train }
-\CommentTok{\#\textgreater{}     AIC   BIC logLik}
-\CommentTok{\#\textgreater{}   {-}75.1 {-}66.7   43.5}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Random effects:}
-\CommentTok{\#\textgreater{}  Formula: list(MSS \textasciitilde{} 1, TAU \textasciitilde{} 1)}
-\CommentTok{\#\textgreater{}  Level: athlete}
-\CommentTok{\#\textgreater{}  Structure: General positive{-}definite, Log{-}Cholesky parametrization}
-\CommentTok{\#\textgreater{}          StdDev Corr }
-\CommentTok{\#\textgreater{} MSS      1.066  MSS  }
-\CommentTok{\#\textgreater{} TAU      0.178  0.877}
-\CommentTok{\#\textgreater{} Residual 0.026       }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Fixed effects:  MSS + TAU \textasciitilde{} 1 }
-\CommentTok{\#\textgreater{}     Value Std.Error DF t{-}value p{-}value}
-\CommentTok{\#\textgreater{} MSS  8.06     0.495 24   16.30       0}
-\CommentTok{\#\textgreater{} TAU  0.66     0.084 24    7.82       0}
-\CommentTok{\#\textgreater{}  Correlation: }
-\CommentTok{\#\textgreater{}     MSS  }
-\CommentTok{\#\textgreater{} TAU 0.874}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Standardized Within{-}Group Residuals:}
-\CommentTok{\#\textgreater{}    Min     Q1    Med     Q3    Max }
-\CommentTok{\#\textgreater{} {-}1.909 {-}0.605  0.154  0.523  1.129 }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Number of Observations: 30}
-\CommentTok{\#\textgreater{} Number of Groups: 5}
-\end{Highlighting}
-\end{Shaded}
-
-S3 method \texttt{coef()} when applied on mixed-model result will return both the fixed and random effects:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{coef}\NormalTok{(m2)}
-\CommentTok{\#\textgreater{} $fixed}
-\CommentTok{\#\textgreater{}                 MSS                 TAU                 MAC }
-\CommentTok{\#\textgreater{}               8.065               0.655              12.309 }
-\CommentTok{\#\textgreater{}                PMAX     time\_correction distance\_correction }
-\CommentTok{\#\textgreater{}              24.818               0.000               0.000 }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} $random}
-\CommentTok{\#\textgreater{}     athlete  MSS   TAU  MAC PMAX time\_correction}
-\CommentTok{\#\textgreater{} 1     James 9.69 0.847 11.4 27.7               0}
-\CommentTok{\#\textgreater{} 2       Jim 7.83 0.505 15.5 30.4               0}
-\CommentTok{\#\textgreater{} 3      John 7.78 0.727 10.7 20.8               0}
-\CommentTok{\#\textgreater{} 4 Kimberley 8.57 0.802 10.7 22.9               0}
-\CommentTok{\#\textgreater{} 5  Samantha 6.45 0.395 16.3 26.4               0}
-\CommentTok{\#\textgreater{}   distance\_correction}
-\CommentTok{\#\textgreater{} 1                   0}
-\CommentTok{\#\textgreater{} 2                   0}
-\CommentTok{\#\textgreater{} 3                   0}
-\CommentTok{\#\textgreater{} 4                   0}
-\CommentTok{\#\textgreater{} 5                   0}
-\end{Highlighting}
-\end{Shaded}
-
-To create a simple plot of the model, use S3 \texttt{plot()} method:
+Additional information about mixed-effects model performed using the \texttt{nlme} package (\protect\hyperlink{ref-R-nlme}{Pinheiro, Bates, and R-core 2020}) can be obtained using \texttt{summary()} function. S3 method \texttt{coef()} when applied on mixed-model result will return both the fixed and random effects. To create a simple plot of the model, use S3 \texttt{plot()} method.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -633,7 +492,7 @@ To create a simple plot of the model, use S3 \texttt{plot()} method:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 The following figure contains kinematics for all athletes in \texttt{split\_times} dataset. Please note that power calculation takes default parameters for each individual:
 
@@ -657,11 +516,12 @@ The following figure contains kinematics for all athletes in \texttt{split\_time
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Distance (m)"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}
     \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{,}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{())}
+    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{()}
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 \hypertarget{estimating-short-sprint-parameters-using-radar-gun}{%
 \subsection{Estimating short sprint parameters using radar gun}\label{estimating-short-sprint-parameters-using-radar-gun}}
@@ -680,31 +540,8 @@ Let's consider the same example of an athlete with MSS equal to 9 \(ms^{-1}\), T
   \AttributeTok{velocity =}\NormalTok{ sprint\_velocity,}
   \AttributeTok{time =}\NormalTok{ sprint\_time}
 \NormalTok{)}
-
-\NormalTok{m3}
-\CommentTok{\#\textgreater{} Estimated model parameters}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}                 MSS                 TAU                 MAC }
-\CommentTok{\#\textgreater{}                9.00                1.30                6.92 }
-\CommentTok{\#\textgreater{}                PMAX     time\_correction distance\_correction }
-\CommentTok{\#\textgreater{}               15.58                0.00                0.00 }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Model fit estimators}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}       RSE R\_squared    minErr    maxErr maxAbsErr      RMSE }
-\CommentTok{\#\textgreater{}   0.00327   1.00000  {-}0.00406   0.00532   0.00532   0.00276 }
-\CommentTok{\#\textgreater{}       MAE      MAPE }
-\CommentTok{\#\textgreater{}   0.00207       NaN}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(m3) }\SpecialCharTok{+} \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 Both split and radar gun models allow the use of \emph{weighted} non-linear regression. For example, we can give more weight to shorter distance or faster velocities. Weighted non-linear regression is performed by setting \texttt{weights} parameter:
 
@@ -715,21 +552,6 @@ Both split and radar gun models allow the use of \emph{weighted} non-linear regr
   \AttributeTok{time =}\NormalTok{ sprint\_time,}
   \AttributeTok{weights =} \DecValTok{1} \SpecialCharTok{/}\NormalTok{ (sprint\_velocity }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}
 \NormalTok{)}
-
-\NormalTok{m3\_weighted}
-\CommentTok{\#\textgreater{} Estimated model parameters}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}                 MSS                 TAU                 MAC }
-\CommentTok{\#\textgreater{}                9.00                1.30                6.92 }
-\CommentTok{\#\textgreater{}                PMAX     time\_correction distance\_correction }
-\CommentTok{\#\textgreater{}               15.58                0.00                0.00 }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Model fit estimators}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}       RSE R\_squared    minErr    maxErr maxAbsErr      RMSE }
-\CommentTok{\#\textgreater{}   0.00108   1.00000  {-}0.00406   0.00534   0.00534   0.00276 }
-\CommentTok{\#\textgreater{}       MAE      MAPE }
-\CommentTok{\#\textgreater{}   0.00206       NaN}
 \end{Highlighting}
 \end{Shaded}
 
@@ -748,51 +570,13 @@ Mixed-effects model using radar data is done using \texttt{mixed\_model\_using\_
   \AttributeTok{velocity =} \StringTok{"velocity"}\NormalTok{,}
   \AttributeTok{athlete =} \StringTok{"athlete"}
 \NormalTok{)}
-
-\NormalTok{m4}
-\CommentTok{\#\textgreater{} Estimated fixed model parameters}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}                 MSS                 TAU                 MAC }
-\CommentTok{\#\textgreater{}                8.30                1.01                8.24 }
-\CommentTok{\#\textgreater{}                PMAX     time\_correction distance\_correction }
-\CommentTok{\#\textgreater{}               17.09                0.00                0.00 }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Estimated random model parameters}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}     athlete   MSS   TAU  MAC PMAX time\_correction}
-\CommentTok{\#\textgreater{} 1     James 10.00 1.111 9.00 22.5               0}
-\CommentTok{\#\textgreater{} 2       Jim  8.00 0.889 9.00 18.0               0}
-\CommentTok{\#\textgreater{} 3      John  8.00 1.069 7.48 15.0               0}
-\CommentTok{\#\textgreater{} 4 Kimberley  9.01 1.286 7.01 15.8               0}
-\CommentTok{\#\textgreater{} 5  Samantha  6.50 0.685 9.50 15.4               0}
-\CommentTok{\#\textgreater{}   distance\_correction}
-\CommentTok{\#\textgreater{} 1                   0}
-\CommentTok{\#\textgreater{} 2                   0}
-\CommentTok{\#\textgreater{} 3                   0}
-\CommentTok{\#\textgreater{} 4                   0}
-\CommentTok{\#\textgreater{} 5                   0}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Model fit estimators}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}       RSE R\_squared    minErr    maxErr maxAbsErr      RMSE }
-\CommentTok{\#\textgreater{}    0.0516    0.9994   {-}0.2191    0.1983    0.2191    0.0516 }
-\CommentTok{\#\textgreater{}       MAE      MAPE }
-\CommentTok{\#\textgreater{}    0.0395       NaN}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(m4) }\SpecialCharTok{+} \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 \hypertarget{force-velocity-profile}{%
 \subsection{Force-Velocity profile}\label{force-velocity-profile}}
 
-To create \emph{Force-Velocity Profile} (FVP) using single athlete estimated sprint model parameters (i.e., TAU and MSS), you can use \texttt{get\_FV\_profile()} function. When estimating FVP, athlete body mass (kg) can be set using \texttt{bodymass} parameter, while the air resistance parameters can be set using \texttt{"..."}, which are forwarded to the \texttt{get\_air\_resistance()} function. Details of the FVP method implemented in the \textbf{shorts} package, as well as the interpretation from a sprint training perspective, are covered elsewhere (\protect\hyperlink{ref-haugenPowerForceVelocityProfilingSprinting2020}{Thomas A. Haugen, Breitschädel, and Samozino 2020}; \protect\hyperlink{ref-morinInterpretingPowerForceVelocityProfiles2016}{Jean-Benoît Morin and Samozino 2016}; \protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}).
+To create \emph{Force-Velocity Profile} (FVP) using single athlete estimated sprint model parameters (i.e., TAU and MSS), you can use \texttt{get\_FV\_profile()} function. When estimating FVP, athlete body mass (kg) can be set using \texttt{bodymass} parameter, while the air resistance parameters can be set using \texttt{"..."}, which are forwarded to the \texttt{get\_air\_resistance()} function. Details of the FVP method implemented in the \textbf{shorts} package, as well as the interpretation from a sprint training perspective, are covered elsewhere (\protect\hyperlink{ref-haugenPowerForceVelocityProfilingSprinting2020}{Thomas A. Haugen, Breitschädel, and Samozino 2020}; \protect\hyperlink{ref-morinInterpretingPowerForceVelocityProfiles2016}{Jean-Benoit Morin and Samozino 2016}; \protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -829,7 +613,7 @@ To plot FVP kinematics and kinetics (which are exactly the same as generated by 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-22-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 To plot FVP estimated kinetics against time, use \texttt{type\ =\ "time"} parameter:
 
@@ -838,8 +622,6 @@ To plot FVP estimated kinetics against time, use \texttt{type\ =\ "time"} parame
 \FunctionTok{plot}\NormalTok{(fvp, }\StringTok{"time"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 \hypertarget{problems-with-estimation}{%
 \section{Problems with estimation}\label{problems-with-estimation}}
@@ -871,17 +653,21 @@ One source of error in the modeled estimation using a radar gun is the time sync
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Time (s)"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ylab}\NormalTok{(}\FunctionTok{expression}\NormalTok{(}\StringTok{"Velocity ("} \SpecialCharTok{*}\NormalTok{ ms}\SpecialCharTok{\^{}{-}}\DecValTok{1} \SpecialCharTok{*} \StringTok{")"}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(), }
-    \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
+    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),}
+    \AttributeTok{legend.position =} \StringTok{"top"}
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-24-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
-The following three models estimate MSS and TAU from the three datasets:
+The following three models estimate MSS and TAU from the three datasets. Tables are created using the \texttt{kable()} function from the \textbf{knitr} package (\protect\hyperlink{ref-knitr2014}{Xie 2014}, \protect\hyperlink{ref-knitr2015}{2015}, \protect\hyperlink{ref-R-knitr}{2020}) and \texttt{kable\_styling()} function from the \textbf{kableExtra} package (\protect\hyperlink{ref-R-kableExtra}{Zhu 2021}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(knitr)}
+\FunctionTok{require}\NormalTok{(kableExtra)}
+
 \CommentTok{\# Without synchronization issues}
 \NormalTok{m5 }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_radar}\NormalTok{(}
   \AttributeTok{velocity =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{velocity,}
@@ -900,7 +686,7 @@ The following three models estimate MSS and TAU from the three datasets:
   \AttributeTok{time =}\NormalTok{ df}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{0.5s deducted}\StringTok{\textasciigrave{}}
 \NormalTok{)}
 
-\FunctionTok{rbind}\NormalTok{(}
+\NormalTok{model\_df }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(}
   \FunctionTok{data.frame}\NormalTok{(}
     \AttributeTok{model =} \StringTok{"True time"}\NormalTok{,}
     \FunctionTok{t}\NormalTok{(}\FunctionTok{coef}\NormalTok{(m5))}
@@ -914,16 +700,20 @@ The following three models estimate MSS and TAU from the three datasets:
     \FunctionTok{t}\NormalTok{(}\FunctionTok{coef}\NormalTok{(m7))}
 \NormalTok{  )}
 \NormalTok{)}
-\CommentTok{\#\textgreater{}                model   MSS  TAU  MAC PMAX time\_correction}
-\CommentTok{\#\textgreater{} 1          True time  9.00 1.30 6.92 15.6               0}
-\CommentTok{\#\textgreater{} 2    Added 0.5s time  9.91 2.34 4.23 10.5               0}
-\CommentTok{\#\textgreater{} 3 Deducted 0.5s time 10.08 1.86 5.43 13.7               0}
-\CommentTok{\#\textgreater{}   distance\_correction}
-\CommentTok{\#\textgreater{} 1                   0}
-\CommentTok{\#\textgreater{} 2                   0}
-\CommentTok{\#\textgreater{} 3                   0}
+
+\FunctionTok{kable}\NormalTok{(model\_df, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{, }\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{tabular}{lrrrrrr}
+\toprule
+model & MSS & TAU & MAC & PMAX & time\_correction & distance\_correction\\
+\midrule
+True time & 9.00 & 1.30 & 6.92 & 15.6 & 0 & 0\\
+Added 0.5s time & 9.91 & 2.34 & 4.23 & 10.5 & 0 & 0\\
+Deducted 0.5s time & 10.08 & 1.86 & 5.43 & 13.7 & 0 & 0\\
+\bottomrule
+\end{tabular}
 
 As can be seen from the example, all estimated parameters are affected by an error in synchronization of time with velocity (with MSS being the least affected in this example). The potential solution incorporated into the \textbf{shorts} package involves estimation of the \emph{time correction} parameter using the following equation:
 
@@ -1002,36 +792,6 @@ When it comes to mixed-model approach, time correction can be modeled as a fixed
   \AttributeTok{random =}\NormalTok{ MSS }\SpecialCharTok{+}\NormalTok{ TAU }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}
 \NormalTok{)}
 
-\NormalTok{m10}
-\CommentTok{\#\textgreater{} Estimated fixed model parameters}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}                 MSS                 TAU                 MAC }
-\CommentTok{\#\textgreater{}                8.30                1.01                8.24 }
-\CommentTok{\#\textgreater{}                PMAX     time\_correction distance\_correction }
-\CommentTok{\#\textgreater{}               17.10               {-}0.50                0.00 }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Estimated random model parameters}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}     athlete   MSS   TAU  MAC PMAX time\_correction}
-\CommentTok{\#\textgreater{} 1     James 10.00 1.111 9.00 22.5            {-}0.5}
-\CommentTok{\#\textgreater{} 2       Jim  8.00 0.889 9.00 18.0            {-}0.5}
-\CommentTok{\#\textgreater{} 3      John  8.00 1.069 7.48 15.0            {-}0.5}
-\CommentTok{\#\textgreater{} 4 Kimberley  9.01 1.285 7.01 15.8            {-}0.5}
-\CommentTok{\#\textgreater{} 5  Samantha  6.50 0.685 9.50 15.4            {-}0.5}
-\CommentTok{\#\textgreater{}   distance\_correction}
-\CommentTok{\#\textgreater{} 1                   0}
-\CommentTok{\#\textgreater{} 2                   0}
-\CommentTok{\#\textgreater{} 3                   0}
-\CommentTok{\#\textgreater{} 4                   0}
-\CommentTok{\#\textgreater{} 5                   0}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Model fit estimators}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}       RSE R\_squared    minErr    maxErr maxAbsErr      RMSE }
-\CommentTok{\#\textgreater{}    0.0516    0.9994   {-}0.2190    0.1983    0.2190    0.0516 }
-\CommentTok{\#\textgreater{}       MAE      MAPE }
-\CommentTok{\#\textgreater{}    0.0395       Inf}
-
 \CommentTok{\# Mixed model with time correction being random effect}
 \NormalTok{m11 }\OtherTok{\textless{}{-}} \FunctionTok{mixed\_model\_using\_radar\_with\_time\_correction}\NormalTok{(}
 \NormalTok{  radar\_gun\_data,}
@@ -1040,36 +800,6 @@ When it comes to mixed-model approach, time correction can be modeled as a fixed
   \AttributeTok{athlete =} \StringTok{"athlete"}\NormalTok{,}
   \AttributeTok{random =}\NormalTok{ MSS }\SpecialCharTok{+}\NormalTok{ TAU }\SpecialCharTok{+}\NormalTok{ time\_correction }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}
 \NormalTok{)}
-
-\NormalTok{m11}
-\CommentTok{\#\textgreater{} Estimated fixed model parameters}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}                 MSS                 TAU                 MAC }
-\CommentTok{\#\textgreater{}                8.30                1.01                8.24 }
-\CommentTok{\#\textgreater{}                PMAX     time\_correction distance\_correction }
-\CommentTok{\#\textgreater{}               17.10               {-}0.50                0.00 }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Estimated random model parameters}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}     athlete   MSS   TAU  MAC PMAX time\_correction}
-\CommentTok{\#\textgreater{} 1     James 10.00 1.110 9.00 22.5            {-}0.5}
-\CommentTok{\#\textgreater{} 2       Jim  8.00 0.889 9.00 18.0            {-}0.5}
-\CommentTok{\#\textgreater{} 3      John  8.00 1.069 7.48 15.0            {-}0.5}
-\CommentTok{\#\textgreater{} 4 Kimberley  9.01 1.285 7.01 15.8            {-}0.5}
-\CommentTok{\#\textgreater{} 5  Samantha  6.50 0.685 9.50 15.4            {-}0.5}
-\CommentTok{\#\textgreater{}   distance\_correction}
-\CommentTok{\#\textgreater{} 1                   0}
-\CommentTok{\#\textgreater{} 2                   0}
-\CommentTok{\#\textgreater{} 3                   0}
-\CommentTok{\#\textgreater{} 4                   0}
-\CommentTok{\#\textgreater{} 5                   0}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Model fit estimators}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}       RSE R\_squared    minErr    maxErr maxAbsErr      RMSE }
-\CommentTok{\#\textgreater{}    0.0516    0.9994   {-}0.2188    0.1982    0.2188    0.0516 }
-\CommentTok{\#\textgreater{}       MAE      MAPE }
-\CommentTok{\#\textgreater{}    0.0395       Inf}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1078,7 +808,7 @@ When it comes to mixed-model approach, time correction can be modeled as a fixed
 
 Let's imagine we have two twin brothers with same short sprint characteristics: MSS equal to 9 \(ms^{-1}\), TAU equal to 1.3, and MAC equal to 6.92 \(ms^{-2}\). Let's call them John and Jack. They both perform 40m sprint using timing gates set at 5, 10, 20, 30, and 40 m. The initial timing gate at the start (i.e., \(d=0\) m) serves to activate the timing system (i.e., when they cross the beam).
 
-John represents the \emph{theoretical model}, in which we assume that the initial force production and the timing initiation are perfectly synchronized. Jack, on the other hand, represents a \emph{practical model}, and decides to move slightly behind the initial timing gate (i.e.~for 0.5 m) and use body rocking to initiate the sprint start. In other words, Jack is using a \emph{flying start}, a common scenario when testing field sports athletes. Let's see how their sprint outcomes differ.
+John represents the \emph{theoretical model}, in which we assume that the initial force production and the timing initiation are perfectly synchronized. Jack, on the other hand, represents a \emph{practical model}, and decides to move slightly behind the initial timing gate (i.e.~for 0.5 m) and use body rocking to initiate the sprint start. In other words, Jack is using a \emph{flying start}, a common scenario when testing field sports athletes.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1096,46 +826,12 @@ John represents the \emph{theoretical model}, in which we assume that the initia
   \AttributeTok{time\_05m =} \FunctionTok{predict\_time\_at\_distance}\NormalTok{(}\FloatTok{0.5}\NormalTok{, MSS, TAU),}
   \AttributeTok{jack\_time =}\NormalTok{ jack\_true\_time }\SpecialCharTok{{-}}\NormalTok{ time\_05m}
 \NormalTok{)}
-
-\NormalTok{split\_times}
-\CommentTok{\#\textgreater{} \# A tibble: 5 x 6}
-\CommentTok{\#\textgreater{}   distance john\_time jack\_distance jack\_true\_time time\_05m}
-\CommentTok{\#\textgreater{}      \textless{}dbl\textgreater{}  \textless{}I\textless{}dbl\textgreater{}\textgreater{}         \textless{}dbl\textgreater{}       \textless{}I\textless{}dbl\textgreater{}\textgreater{} \textless{}I\textless{}dbl\textgreater{}\textgreater{}}
-\CommentTok{\#\textgreater{} 1        5      1.42           5.5           1.50    0.400}
-\CommentTok{\#\textgreater{} 2       10      2.17          10.5           2.23    0.400}
-\CommentTok{\#\textgreater{} 3       20      3.43          20.5           3.49    0.400}
-\CommentTok{\#\textgreater{} 4       30      4.60          30.5           4.65    0.400}
-\CommentTok{\#\textgreater{} 5       40      5.73          40.5           5.78    0.400}
-\CommentTok{\#\textgreater{} \# ... with 1 more variable: jack\_time \textless{}I\textless{}dbl\textgreater{}\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
-And here is a graphical representation of the sprint splits:
+Here is a graphical representation of the sprint splits (please refer to the Supplemental files for the R code):
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{plot\_df }\OtherTok{\textless{}{-}}\NormalTok{ split\_times }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(distance, john\_time, jack\_time) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{rename}\NormalTok{(}\AttributeTok{John =}\NormalTok{ john\_time, }\AttributeTok{Jack =}\NormalTok{ jack\_time) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{names\_to =} \StringTok{"athlete"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"time"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{distance =} \FunctionTok{factor}\NormalTok{(distance))}
-
-\FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  plot\_df,}
-  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ distance, }\AttributeTok{y =}\NormalTok{ time, }\AttributeTok{color =}\NormalTok{ athlete, }\AttributeTok{group =}\NormalTok{ athlete)}
-\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Distance (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Time (s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(), }
-    \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-30-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
 Using the following code, we can see the differences in estimated MSS and TAU parameters:
 
@@ -1165,232 +861,46 @@ Using the following code, we can see the differences in estimated MSS and TAU pa
 
 \FunctionTok{rownames}\NormalTok{(sprint\_parameters) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"John"}\NormalTok{, }\StringTok{"Jack"}\NormalTok{)}
 
-\NormalTok{sprint\_parameters}
-\CommentTok{\#\textgreater{}       MSS   TAU   MAC PMAX time\_correction distance\_correction}
-\CommentTok{\#\textgreater{} John 9.00 1.300  6.92 15.6               0                   0}
-\CommentTok{\#\textgreater{} Jack 8.49 0.704 12.06 25.6               0                   0}
+\FunctionTok{kable}\NormalTok{(sprint\_parameters, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{, }\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{tabular}{lrrrrrr}
+\toprule
+  & MSS & TAU & MAC & PMAX & time\_correction & distance\_correction\\
+\midrule
+John & 9.00 & 1.3 & 6.92 & 15.6 & 0 & 0\\
+Jack & 8.49 & 0.7 & 12.06 & 25.6 & 0 & 0\\
+\bottomrule
+\end{tabular}
 
 As can be seen from the results, a flying start yields biased estimates, particularly for the TAU, MAC and PMAX.
 
-Below is a simulation sprint with 5, 10, 20, 30, 40, and 50 m splits, with MSS and MAC varying from 6 to 9 (\(ms^{-1}\) and \(ms^{-2}\) respectively), and flying start distance varying from 0 to 1 m.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{sim\_df }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(}
-  \AttributeTok{MSS =} \FunctionTok{c}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{),}
-  \AttributeTok{MAC =} \FunctionTok{c}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{),}
-  \AttributeTok{flying\_start\_distance =} \FunctionTok{c}\NormalTok{(}
-    \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.001}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{20}\NormalTok{),}
-    \FunctionTok{seq}\NormalTok{(}\FloatTok{0.001}\NormalTok{, }\FloatTok{0.01}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{20}\NormalTok{),}
-    \FunctionTok{seq}\NormalTok{(}\FloatTok{0.01}\NormalTok{, }\FloatTok{0.1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{20}\NormalTok{),}
-    \FunctionTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{20}\NormalTok{)}
-\NormalTok{  ),}
-  \AttributeTok{distance =} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{50}\NormalTok{)}
-\NormalTok{)}
-
-\NormalTok{sim\_df }\OtherTok{\textless{}{-}}\NormalTok{ sim\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{TAU =}\NormalTok{ MSS }\SpecialCharTok{/}\NormalTok{ MAC,}
-    \AttributeTok{PMAX =}\NormalTok{ MSS }\SpecialCharTok{*}\NormalTok{ MAC }\SpecialCharTok{/} \DecValTok{4}\NormalTok{,}
-    \AttributeTok{true\_distance =}\NormalTok{ distance }\SpecialCharTok{+}\NormalTok{ flying\_start\_distance,}
-    \AttributeTok{true\_time =} \FunctionTok{predict\_time\_at\_distance}\NormalTok{(true\_distance, MSS, TAU),}
-    \AttributeTok{stolen\_time =} \FunctionTok{predict\_time\_at\_distance}\NormalTok{(}
-\NormalTok{      flying\_start\_distance, MSS, TAU),}
-    \AttributeTok{time =}\NormalTok{ true\_time }\SpecialCharTok{{-}}\NormalTok{ stolen\_time}
-\NormalTok{  )}
-
-\CommentTok{\# Add small noise to allow model fit}
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1667}\NormalTok{)}
-\NormalTok{rand\_noise }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(sim\_df), }\DecValTok{0}\NormalTok{, }\DecValTok{10}\SpecialCharTok{\^{}{-}}\DecValTok{5}\NormalTok{)}
-\NormalTok{sim\_df}\SpecialCharTok{$}\NormalTok{time }\OtherTok{\textless{}{-}}\NormalTok{ sim\_df}\SpecialCharTok{$}\NormalTok{time }\SpecialCharTok{+}\NormalTok{ rand\_noise}
-\end{Highlighting}
-\end{Shaded}
-
-Now when we have a simulation dataset, we can check the model estimates and predictions, given the flying start distance:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Prediction wrapper}
-\NormalTok{pred\_wrapper }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data) \{}
-\NormalTok{  model }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits}\NormalTok{(}
-    \AttributeTok{distance =}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{distance,}
-    \AttributeTok{time =}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{time}
-\NormalTok{  )}
-
-\NormalTok{  params }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{t}\NormalTok{(}\FunctionTok{coef}\NormalTok{(model)))}
-
-\NormalTok{  predicted\_time }\OtherTok{\textless{}{-}} \FunctionTok{predict\_time\_at\_distance}\NormalTok{(}
-    \AttributeTok{distance =}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{distance,}
-    \AttributeTok{MSS =}\NormalTok{ model}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{MSS,}
-    \AttributeTok{TAU =}\NormalTok{ model}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{TAU}
-\NormalTok{  )}
-
-  \FunctionTok{colnames}\NormalTok{(params) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
-    \StringTok{"est\_MSS"}\NormalTok{, }\StringTok{"est\_TAU"}\NormalTok{, }\StringTok{"est\_MAC"}\NormalTok{, }\StringTok{"est\_PMAX"}\NormalTok{,}
-    \StringTok{"est\_time\_correction"}\NormalTok{, }\StringTok{"est\_distance\_correction"}
-\NormalTok{  )}
-
-  \FunctionTok{cbind}\NormalTok{(}
-\NormalTok{    data,}
-\NormalTok{    params,}
-    \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{predicted\_time =} \FunctionTok{as.numeric}\NormalTok{(predicted\_time))}
-\NormalTok{  )}
-\NormalTok{\}}
-
-\CommentTok{\# estimated parameters and predicted time}
-\NormalTok{model\_df }\OtherTok{\textless{}{-}}\NormalTok{ sim\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(MSS, TAU, flying\_start\_distance) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{do}\NormalTok{(}\FunctionTok{pred\_wrapper}\NormalTok{(.)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ungroup}\NormalTok{()}
-
-\CommentTok{\# Prediction residuals}
-\NormalTok{model\_df}\SpecialCharTok{$}\NormalTok{residuals }\OtherTok{\textless{}{-}}\NormalTok{ model\_df}\SpecialCharTok{$}\NormalTok{predicted\_time }\SpecialCharTok{{-}}\NormalTok{ model\_df}\SpecialCharTok{$}\NormalTok{time}
-\end{Highlighting}
-\end{Shaded}
+To explore this further, we have run a simple simulation with 5, 10, 20, 30, 40, and 50 m splits, with MSS and MAC varying from 6 to 9 (\(ms^{-1}\) and \(ms^{-2}\) respectively), and flying start distance varying from 0 to 1 m (please refer to the Supplemental files for the R code). With a simulation dataset, we can check the model estimates and predictions, given the flying start distance.
 
 The following figure demonstrates the effect of flying start distance on estimated MSS:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Estimates plot}
-\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ model\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(MSS, TAU, flying\_start\_distance) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{MSS\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"MSS ="}\NormalTok{, MSS),}
-    \AttributeTok{TAU\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"TAU ="}\NormalTok{, TAU),}
-    \AttributeTok{MAC\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"MAC = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(MAC, }\DecValTok{2}\NormalTok{)),}
-    \AttributeTok{PMAX\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"PMAX = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(PMAX, }\DecValTok{2}\NormalTok{))}
-\NormalTok{  )}
-
-\CommentTok{\# MSS}
-\FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  df,}
-  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ flying\_start\_distance, }\AttributeTok{y =}\NormalTok{ est\_MSS, }\AttributeTok{color =}\NormalTok{ MAC\_string)}
-\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{MSS\_string, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Flying start distance (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"estimated MSS (m/s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(), }
-    \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-34-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
 As can be seen from the figure, MSS is underestimated as flying start distance increases. The following image demonstrates the effect of flying start distance on estimated MAC:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# MAC}
-\FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  df,}
-  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ flying\_start\_distance, }\AttributeTok{y =}\NormalTok{ est\_MAC, }\AttributeTok{color =}\NormalTok{ MSS\_string)}
-\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{MAC\_string, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Flying start distance (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"estimated MAC (m/s/s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(), }
-    \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-35-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 MAC (and also TAU) are highly affected by the flying start distance, and from the figure we can notice that MAC is overestimated as flying start distance increases.
 
 And finally, the following image demonstrates the effect of flying start distance on estimated PMAX:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# PMAX}
-\FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  df,}
-  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ flying\_start\_distance, }\AttributeTok{y =}\NormalTok{ est\_PMAX, }\AttributeTok{color =}\NormalTok{ MSS\_string)}
-\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{MAC\_string, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Flying start distance (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"estimated PMAX (W/kg)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(), }
-    \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-36-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-31-1} \end{center}
 
 Estimated PMAX is also overestimated as flying start distance increases.
 
 Model residuals are also affected by flying start distance. The shape of residuals distribution depends on number and splits utilized (e.g., 10, 20, 30, 40 m versus 5, 15, 30 m), but here we can see the effect of the flying start distance on the model residuals per split distance utilized in our simulation:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Residuals}
-\NormalTok{model\_df }\OtherTok{\textless{}{-}}\NormalTok{ model\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{MSS\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"MSS ="}\NormalTok{, MSS),}
-    \AttributeTok{TAU\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"TAU ="}\NormalTok{, TAU),}
-    \AttributeTok{MAC\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"MAC = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(MAC, }\DecValTok{2}\NormalTok{)),}
-    \AttributeTok{PMAX\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"PMAX = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(PMAX, }\DecValTok{2}\NormalTok{)),}
-    \AttributeTok{group =} \FunctionTok{paste}\NormalTok{(MSS, MAC, flying\_start\_distance)}
-\NormalTok{  )}
-
-\FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  model\_df,}
-  \FunctionTok{aes}\NormalTok{(}
-    \AttributeTok{y =}\NormalTok{ residuals,}
-    \AttributeTok{x =}\NormalTok{ distance,}
-    \AttributeTok{color =}\NormalTok{ flying\_start\_distance,}
-    \AttributeTok{group =}\NormalTok{ group)}
-\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_grid}\NormalTok{(MSS\_string }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MAC\_string) }\SpecialCharTok{+}
-  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{terrain.colors}\NormalTok{(}\DecValTok{5}\NormalTok{, }\AttributeTok{rev =} \ConstantTok{FALSE}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Distance (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Predicted time {-} observed time (s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{color =} \StringTok{"Flying start distance"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-37-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-32-1} \end{center}
 
 If we merge individual facets (i.e., combinations of MSS and MAC), we can get simpler figure conveying issues with residuals when there is a flying start:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  model\_df,}
-  \FunctionTok{aes}\NormalTok{(}
-    \AttributeTok{y =}\NormalTok{ residuals,}
-    \AttributeTok{x =}\NormalTok{ distance,}
-    \AttributeTok{color =}\NormalTok{ flying\_start\_distance,}
-    \AttributeTok{group =}\NormalTok{ group)}
-\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{terrain.colors}\NormalTok{(}\DecValTok{5}\NormalTok{, }\AttributeTok{rev =} \ConstantTok{FALSE}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Distance (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Predicted time {-} observed time (s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{color =} \StringTok{"Flying start distance"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-38-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-33-1} \end{center}
 
 Clearly, any type of flying start where there is a difference between initial force production and start time can result in biased parameters and predictions. Since maximal sprint speed is difficult to improve, the effects of start inconsistencies can mask effects of the training intervention. It is thus crucial to standardize the start when testing and implementing the following techniques when using the \textbf{shorts} package.
 
@@ -1444,27 +954,26 @@ To estimate time correction parameter, we use \texttt{model\_using\_splits\_with
   \StringTok{"Jack {-} Estimated time correction"}
 \NormalTok{)}
 
-\NormalTok{jack\_parameters}
-\CommentTok{\#\textgreater{}                                       MSS   TAU   MAC PMAX}
-\CommentTok{\#\textgreater{} John                                 9.00 1.300  6.92 15.6}
-\CommentTok{\#\textgreater{} Jack {-} No corrections                8.49 0.704 12.06 25.6}
-\CommentTok{\#\textgreater{} Jack {-} Fixed time correction (+0.3s) 9.00 1.251  7.19 16.2}
-\CommentTok{\#\textgreater{} Jack {-} Fixed time correction (+0.5s) 9.62 1.770  5.43 13.1}
-\CommentTok{\#\textgreater{} Jack {-} Estimated time correction     8.96 1.216  7.37 16.5}
-\CommentTok{\#\textgreater{}                                      time\_correction}
-\CommentTok{\#\textgreater{} John                                           0.000}
-\CommentTok{\#\textgreater{} Jack {-} No corrections                          0.000}
-\CommentTok{\#\textgreater{} Jack {-} Fixed time correction (+0.3s)           0.300}
-\CommentTok{\#\textgreater{} Jack {-} Fixed time correction (+0.5s)           0.500}
-\CommentTok{\#\textgreater{} Jack {-} Estimated time correction               0.284}
-\CommentTok{\#\textgreater{}                                      distance\_correction}
-\CommentTok{\#\textgreater{} John                                                   0}
-\CommentTok{\#\textgreater{} Jack {-} No corrections                                  0}
-\CommentTok{\#\textgreater{} Jack {-} Fixed time correction (+0.3s)                   0}
-\CommentTok{\#\textgreater{} Jack {-} Fixed time correction (+0.5s)                   0}
-\CommentTok{\#\textgreater{} Jack {-} Estimated time correction                       0}
+\FunctionTok{kable}\NormalTok{(jack\_parameters, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{, }\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \FunctionTok{c}\NormalTok{(}\StringTok{"scale\_down"}\NormalTok{, }\StringTok{"hold\_position"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{table}[!h]
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lrrrrrr}
+\toprule
+  & MSS & TAU & MAC & PMAX & time\_correction & distance\_correction\\
+\midrule
+John & 9.00 & 1.30 & 6.92 & 15.6 & 0.00 & 0\\
+Jack - No corrections & 8.49 & 0.70 & 12.06 & 25.6 & 0.00 & 0\\
+Jack - Fixed time correction (+0.3s) & 9.00 & 1.25 & 7.19 & 16.2 & 0.30 & 0\\
+Jack - Fixed time correction (+0.5s) & 9.62 & 1.77 & 5.43 & 13.1 & 0.50 & 0\\
+Jack - Estimated time correction & 8.96 & 1.22 & 7.37 & 16.5 & 0.28 & 0\\
+\bottomrule
+\end{tabular}}
+\end{table}
 
 In Jack's case, both +0.3 s fixed time correction and time correction estimation yield parameters closer to John's (i.e.~true parameters).
 
@@ -1501,294 +1010,56 @@ This model is implemented in \texttt{model\_using\_splits\_with\_corrections()} 
   \StringTok{"Jack {-} Estimated distance correction"}
 \NormalTok{)}
 
-\NormalTok{jack\_parameters}
-\CommentTok{\#\textgreater{}                                       MSS   TAU   MAC PMAX}
-\CommentTok{\#\textgreater{} John                                 9.00 1.300  6.92 15.6}
-\CommentTok{\#\textgreater{} Jack {-} No corrections                8.49 0.704 12.06 25.6}
-\CommentTok{\#\textgreater{} Jack {-} Fixed time correction (+0.3s) 9.00 1.251  7.19 16.2}
-\CommentTok{\#\textgreater{} Jack {-} Fixed time correction (+0.5s) 9.62 1.770  5.43 13.1}
-\CommentTok{\#\textgreater{} Jack {-} Estimated time correction     8.96 1.216  7.37 16.5}
-\CommentTok{\#\textgreater{} Jack {-} Estimated distance correction 9.00 1.301  6.92 15.6}
-\CommentTok{\#\textgreater{}                                      time\_correction}
-\CommentTok{\#\textgreater{} John                                           0.000}
-\CommentTok{\#\textgreater{} Jack {-} No corrections                          0.000}
-\CommentTok{\#\textgreater{} Jack {-} Fixed time correction (+0.3s)           0.300}
-\CommentTok{\#\textgreater{} Jack {-} Fixed time correction (+0.5s)           0.500}
-\CommentTok{\#\textgreater{} Jack {-} Estimated time correction               0.284}
-\CommentTok{\#\textgreater{} Jack {-} Estimated distance correction           0.400}
-\CommentTok{\#\textgreater{}                                      distance\_correction}
-\CommentTok{\#\textgreater{} John                                               0.000}
-\CommentTok{\#\textgreater{} Jack {-} No corrections                              0.000}
-\CommentTok{\#\textgreater{} Jack {-} Fixed time correction (+0.3s)               0.000}
-\CommentTok{\#\textgreater{} Jack {-} Fixed time correction (+0.5s)               0.000}
-\CommentTok{\#\textgreater{} Jack {-} Estimated time correction                   0.000}
-\CommentTok{\#\textgreater{} Jack {-} Estimated distance correction               0.503}
+\FunctionTok{kable}\NormalTok{(jack\_parameters, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{, }\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \FunctionTok{c}\NormalTok{(}\StringTok{"scale\_down"}\NormalTok{, }\StringTok{"hold\_position"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{table}[!h]
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lrrrrrr}
+\toprule
+  & MSS & TAU & MAC & PMAX & time\_correction & distance\_correction\\
+\midrule
+John & 9.00 & 1.30 & 6.92 & 15.6 & 0.00 & 0.0\\
+Jack - No corrections & 8.49 & 0.70 & 12.06 & 25.6 & 0.00 & 0.0\\
+Jack - Fixed time correction (+0.3s) & 9.00 & 1.25 & 7.19 & 16.2 & 0.30 & 0.0\\
+Jack - Fixed time correction (+0.5s) & 9.62 & 1.77 & 5.43 & 13.1 & 0.50 & 0.0\\
+Jack - Estimated time correction & 8.96 & 1.22 & 7.37 & 16.5 & 0.28 & 0.0\\
+\addlinespace
+Jack - Estimated distance correction & 9.00 & 1.30 & 6.92 & 15.6 & 0.40 & 0.5\\
+\bottomrule
+\end{tabular}}
+\end{table}
 
 As can be seen from the results, adding distance correction results in correctly estimating Jack's sprint parameters. There are a few issues with this model definition. Besides being novel and still not validated with actual data, distance correction model has four parameters to estimate, which implies that at least five sprint splits are needed. This imposes practical limitations, since acquiring six timing gate (one for the start and five for splits) might be practically troublesome. One strategy that is sometimes implemented is adding zeros to the sample (i.e., \(t=0\) and \(d=0\)), which increase the number of observations. Unfortunately, this strategy should not be implemented, as explained later in the \protect\hyperlink{should-we-add-zero-to-the-sample}{Should we add zero to the sample?} section of this paper.
 
-We will get back to these issues later, but we can examine how these models perform using simulated data with varying flying start distance. The following code contains the wrapper that performs all four models (no correction, fixed time correction, estimated time correction, and estimated time and distance correction):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{pred\_wrapper }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data) \{}
-\NormalTok{  no\_correction }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits}\NormalTok{(}
-    \AttributeTok{distance =}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{distance,}
-    \AttributeTok{time =}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{time}
-\NormalTok{  )}
-
-\NormalTok{  fixed\_correction\_short }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits}\NormalTok{(}
-    \AttributeTok{distance =}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{distance,}
-    \AttributeTok{time =}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{time,}
-    \AttributeTok{time\_correction =} \FloatTok{0.3}
-\NormalTok{  )}
-
-\NormalTok{  fixed\_correction\_long }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits}\NormalTok{(}
-    \AttributeTok{distance =}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{distance,}
-    \AttributeTok{time =}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{time,}
-    \AttributeTok{time\_correction =} \FloatTok{0.5}
-\NormalTok{  )}
-
-\NormalTok{  time\_correction }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits\_with\_time\_correction}\NormalTok{(}
-    \AttributeTok{distance =}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{distance,}
-    \AttributeTok{time =}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{time,}
-    \AttributeTok{control =} \FunctionTok{nls.control}\NormalTok{(}\AttributeTok{tol =} \DecValTok{1}\NormalTok{)}
-\NormalTok{  )}
-
-\NormalTok{  time\_dist\_correction }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits\_with\_corrections}\NormalTok{(}
-    \AttributeTok{distance =}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{distance,}
-    \AttributeTok{time =}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{time,}
-    \AttributeTok{control =} \FunctionTok{nls.control}\NormalTok{(}\AttributeTok{tol =} \DecValTok{1}\NormalTok{)}
-\NormalTok{  )}
-
-
-\NormalTok{  params }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(}
-    \FunctionTok{data.frame}\NormalTok{(}
-      \AttributeTok{model =} \StringTok{"No correction"}\NormalTok{,}
-      \FunctionTok{t}\NormalTok{(}\FunctionTok{coef}\NormalTok{(no\_correction))}
-\NormalTok{    ),}
-    \FunctionTok{data.frame}\NormalTok{(}
-      \AttributeTok{model =} \StringTok{"Fixed correction +0.3s"}\NormalTok{,}
-      \FunctionTok{t}\NormalTok{(}\FunctionTok{coef}\NormalTok{(fixed\_correction\_short))}
-\NormalTok{    ),}
-    \FunctionTok{data.frame}\NormalTok{(}
-      \AttributeTok{model =} \StringTok{"Fixed correction +0.5s"}\NormalTok{,}
-      \FunctionTok{t}\NormalTok{(}\FunctionTok{coef}\NormalTok{(fixed\_correction\_long))}
-\NormalTok{    ),}
-    \FunctionTok{data.frame}\NormalTok{(}
-      \AttributeTok{model =} \StringTok{"Time correction"}\NormalTok{,}
-      \FunctionTok{t}\NormalTok{(}\FunctionTok{coef}\NormalTok{(time\_correction))}
-\NormalTok{    ),}
-    \FunctionTok{data.frame}\NormalTok{(}
-      \AttributeTok{model =} \StringTok{"Time and distance correction"}\NormalTok{,}
-      \FunctionTok{t}\NormalTok{(}\FunctionTok{coef}\NormalTok{(time\_dist\_correction))}
-\NormalTok{    )}
-\NormalTok{  )}
-
-  \FunctionTok{colnames}\NormalTok{(params) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
-    \StringTok{"model"}\NormalTok{, }\StringTok{"est\_MSS"}\NormalTok{, }\StringTok{"est\_TAU"}\NormalTok{, }\StringTok{"est\_MAC"}\NormalTok{, }\StringTok{"est\_PMAX"}\NormalTok{,}
-    \StringTok{"est\_time\_correction"}\NormalTok{, }\StringTok{"est\_distance\_correction"}
-\NormalTok{  )}
-
-\NormalTok{  df }\OtherTok{\textless{}{-}} \FunctionTok{expand\_grid}\NormalTok{(}
-\NormalTok{    data,}
-\NormalTok{    params}
-\NormalTok{  )}
-
-\NormalTok{  df}\SpecialCharTok{$}\NormalTok{predicted\_time }\OtherTok{\textless{}{-}} \FunctionTok{predict\_time\_at\_distance}\NormalTok{(}
-    \AttributeTok{distance =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{distance,}
-    \AttributeTok{MSS =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{est\_MSS,}
-    \AttributeTok{TAU =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{est\_TAU,}
-    \AttributeTok{time\_correction =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{est\_time\_correction,}
-    \AttributeTok{distance\_correction =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{est\_distance\_correction}
-\NormalTok{  )}
-
-\NormalTok{  df}\SpecialCharTok{$}\NormalTok{residuals }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{predicted\_time }\SpecialCharTok{{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{time}
-  \FunctionTok{return}\NormalTok{(df)}
-\NormalTok{\}}
-
-\CommentTok{\# estimated parameters and predicted time}
-\NormalTok{model\_df }\OtherTok{\textless{}{-}}\NormalTok{ sim\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(MSS, TAU, flying\_start\_distance) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{do}\NormalTok{(}\FunctionTok{pred\_wrapper}\NormalTok{(.)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ungroup}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
+We will get back to these issues later, but we can examine how these models (no correction, fixed time correction, estimated time correction, and estimated time and distance correction) perform using simulated data with varying flying start distance (please refer to the Supplemental files for the R code).
 
 As can be seen from the next figure, the estimated time correction model estimates MSS almost perfectly, while the estimated time and distance correction model estimates MSS perfectly.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{model\_df}\SpecialCharTok{$}\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}
-\NormalTok{  model\_df}\SpecialCharTok{$}\NormalTok{model,}
-  \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}
-    \StringTok{"No correction"}\NormalTok{,}
-    \StringTok{"Fixed correction +0.3s"}\NormalTok{,}
-    \StringTok{"Fixed correction +0.5s"}\NormalTok{,}
-    \StringTok{"Time correction"}\NormalTok{,}
-    \StringTok{"Time and distance correction"}
-\NormalTok{  )}
-\NormalTok{)}
-\CommentTok{\# Estimates plot}
-\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ model\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(MSS, TAU, flying\_start\_distance, model) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{MSS\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"MSS ="}\NormalTok{, MSS),}
-    \AttributeTok{TAU\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"TAU ="}\NormalTok{, TAU),}
-    \AttributeTok{MAC\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"MAC = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(MAC, }\DecValTok{2}\NormalTok{)),}
-    \AttributeTok{PMAX\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"PMAX = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(PMAX, }\DecValTok{2}\NormalTok{))}
-\NormalTok{  )}
-
-\CommentTok{\# MSS}
-\FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  df,}
-  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ flying\_start\_distance, }\AttributeTok{y =}\NormalTok{ est\_MSS, }\AttributeTok{color =}\NormalTok{ model)}
-\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_grid}\NormalTok{(MSS\_string }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MAC\_string, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Flying start distance (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"estimated MSS (m/s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),}
-    \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-42-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-37-1} \end{center}
 
 Similar outcomes are observed for the MAC parameter. The time and distance corrections model performs perfectly, while the time correction model performs almost as good.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# MAC}
-\FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  df,}
-  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ flying\_start\_distance, }\AttributeTok{y =}\NormalTok{ est\_MAC, }\AttributeTok{color =}\NormalTok{ model)}
-\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_grid}\NormalTok{(MAC\_string }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MSS\_string, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Flying start distance (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"estimated MAC (m/s/s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),}
-    \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-43-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-38-1} \end{center}
 
 PMAX demonstrates the same properties as MSS and MAC.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# PMAX}
-\FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  df,}
-  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ flying\_start\_distance, }\AttributeTok{y =}\NormalTok{ est\_PMAX, }\AttributeTok{color =}\NormalTok{ model)}
-\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_grid}\NormalTok{(MAC\_string }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MSS\_string, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Flying start distance (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"estimated PMAX (W/kg)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),}
-    \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-44-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-39-1} \end{center}
 
 The following figure depicts estimated time correction, and as can be seen, only the time and distance correction model estimated the time correction correctly (i.e., the \emph{stolen time}; indicated by the dashed line on the figure).
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# time\_correction}
-\FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  df,}
-  \FunctionTok{aes}\NormalTok{(}
-    \AttributeTok{x =}\NormalTok{ flying\_start\_distance,}
-    \AttributeTok{y =}\NormalTok{ est\_time\_correction,}
-    \AttributeTok{color =}\NormalTok{ model)) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ stolen\_time), }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_grid}\NormalTok{(MAC\_string }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MSS\_string, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Flying start distance (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"estimated time correction (s)"}\NormalTok{)  }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),}
-    \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-40-1} \end{center}
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-45-1} \end{center}
+The next figure depicts estimated distance correction, and same as with the time correction, only the time and distance correction model estimated the distance correction correctly (i.e., flying start distance; indicated by the dashed line on the figure, which represents \emph{identity line} since flying start distance is already on the x-axis).
 
-The following figure depicts estimated distance correction, and same as with the time correction, only the time and distance correction model estimated the distance correction correctly (i.e., flying start distance; indicated by the dashed line on the figure, which represents \emph{identity line} since flying start distance is already on the x-axis).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# distance\_correction}
-\FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  df,}
-  \FunctionTok{aes}\NormalTok{(}
-    \AttributeTok{x =}\NormalTok{ flying\_start\_distance,}
-    \AttributeTok{y =}\NormalTok{ est\_distance\_correction, }
-    \AttributeTok{color =}\NormalTok{ model)) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{slope =} \DecValTok{1}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_grid}\NormalTok{(MAC\_string }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MSS\_string, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Flying start distance (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"estimated distance correction (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),}
-    \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-46-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-41-1} \end{center}
 
 The following figure depicts model residuals against the distance, and as can be seen, time correction and time and distance correction models performs much better than no correction and fixed correction models:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Residuals}
-\NormalTok{model\_df }\OtherTok{\textless{}{-}}\NormalTok{ model\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{MSS\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"MSS ="}\NormalTok{, MSS),}
-    \AttributeTok{TAU\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"TAU ="}\NormalTok{, TAU),}
-    \AttributeTok{MAC\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"MAC = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(MAC, }\DecValTok{2}\NormalTok{)),}
-    \AttributeTok{PMAX\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"PMAX = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(PMAX, }\DecValTok{2}\NormalTok{)),}
-    \AttributeTok{group =} \FunctionTok{paste}\NormalTok{(MSS, MAC, flying\_start\_distance)}
-\NormalTok{  )}
-
-\FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  model\_df,}
-  \FunctionTok{aes}\NormalTok{(}
-    \AttributeTok{y =}\NormalTok{ residuals,}
-    \AttributeTok{x =}\NormalTok{ distance,}
-    \AttributeTok{color =}\NormalTok{ flying\_start\_distance,}
-    \AttributeTok{group =}\NormalTok{ group)}
-\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{model) }\SpecialCharTok{+}
-  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{terrain.colors}\NormalTok{(}\DecValTok{5}\NormalTok{, }\AttributeTok{rev =} \ConstantTok{FALSE}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Distance (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Predicted time {-} observed time (s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{color =} \StringTok{"Flying start distance"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-47-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-42-1} \end{center}
 
 The outcomes from the simulation data clearly demonstrates that the time correction and time and distance correction models represent sound improvements in parameter estimation and model fit compared to no corrections model and fixed correction model when attempting to overcome the flying start issues. Since the time correction model is simpler and requires three parameters to be estimated, it might be practically more useful than the time and distance correction model, which requires four parameters estimation and thus more than five timing gates and sprint splits.
 
@@ -1799,177 +1070,27 @@ Time correction and time and distance corrections are also implemented in the mi
 
 Starting behind the initial timing gate represent only one issue (i.e., flying start). In this section, we simulate one more issue to check the sensitivity of the presented models to other (less common) perturbations when performing field testing.
 
-One issue that might happen with timing gates is triggering the timing system before the sprint is initiated (e.g., by cutting the beam with an arm swing prematurely). This is very similar to the situation when timing starts on a signal (i.e., gun during 100 m sprint race) and there is \emph{reaction time} (RT) involved. Both of these scenarios represent \emph{time lag} that is added to the split times. Below we simulate the effect of this time lag on model estimates and predictions.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{sim\_df }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(}
-  \AttributeTok{MSS =} \FunctionTok{c}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{),}
-  \AttributeTok{MAC =} \FunctionTok{c}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{),}
-  \AttributeTok{time\_lag =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{50}\NormalTok{),}
-  \AttributeTok{distance =} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{50}\NormalTok{)}
-\NormalTok{)}
-
-\NormalTok{sim\_df }\OtherTok{\textless{}{-}}\NormalTok{ sim\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{TAU =}\NormalTok{ MSS }\SpecialCharTok{/}\NormalTok{ MAC,}
-    \AttributeTok{PMAX =}\NormalTok{ MSS }\SpecialCharTok{*}\NormalTok{ MAC }\SpecialCharTok{/} \DecValTok{4}\NormalTok{,}
-    \AttributeTok{true\_time =} \FunctionTok{predict\_time\_at\_distance}\NormalTok{(distance, MSS, TAU),}
-    \AttributeTok{time =}\NormalTok{ true\_time }\SpecialCharTok{+}\NormalTok{ time\_lag}
-\NormalTok{  )}
-
-\CommentTok{\# Add small noise to allow model fit}
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1667}\NormalTok{)}
-\NormalTok{rand\_noise }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(sim\_df), }\DecValTok{0}\NormalTok{, }\DecValTok{10}\SpecialCharTok{\^{}{-}}\DecValTok{4}\NormalTok{)}
-\NormalTok{sim\_df}\SpecialCharTok{$}\NormalTok{time }\OtherTok{\textless{}{-}}\NormalTok{ sim\_df}\SpecialCharTok{$}\NormalTok{time }\SpecialCharTok{+}\NormalTok{ rand\_noise}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# estimated parameters and predicted time}
-\NormalTok{model\_df }\OtherTok{\textless{}{-}}\NormalTok{ sim\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(MSS, TAU, time\_lag) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{do}\NormalTok{(}\FunctionTok{pred\_wrapper}\NormalTok{(.)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ungroup}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
+One issue that might happen with timing gates is triggering the timing system before the sprint is initiated (e.g., by cutting the beam with an arm swing prematurely). This is very similar to the situation when timing starts on a signal (i.e., gun during 100 m sprint race) and there is \emph{reaction time} (RT) involved. Both of these scenarios represent \emph{time lag} that is added to the split times. We have simulated the effect of this time lag on model estimates and predictions (please refer to the Supplemental files for the R code).
 
 From the figure below it can be seen that time lag affects estimated MSS for the the model without correction and fixed correction model. Time correction and time and distance corrections models correctly estimated MSS.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{model\_df}\SpecialCharTok{$}\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}
-\NormalTok{  model\_df}\SpecialCharTok{$}\NormalTok{model,}
-  \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}
-    \StringTok{"No correction"}\NormalTok{,}
-    \StringTok{"Fixed correction +0.3s"}\NormalTok{,}
-    \StringTok{"Fixed correction +0.5s"}\NormalTok{,}
-    \StringTok{"Time correction"}\NormalTok{,}
-    \StringTok{"Time and distance correction"}
-\NormalTok{  )}
-\NormalTok{)}
-\CommentTok{\# Estimates plot}
-\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ model\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(MSS, TAU, time\_lag, model) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{MSS\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"MSS ="}\NormalTok{, MSS),}
-    \AttributeTok{TAU\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"TAU ="}\NormalTok{, TAU),}
-    \AttributeTok{MAC\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"MAC = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(MAC, }\DecValTok{2}\NormalTok{)),}
-    \AttributeTok{PMAX\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"PMAX = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(PMAX, }\DecValTok{2}\NormalTok{))}
-\NormalTok{  )}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
-\CommentTok{\# MSS}
-\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ time\_lag, }\AttributeTok{y =}\NormalTok{ est\_MSS, }\AttributeTok{color =}\NormalTok{ model)) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_grid}\NormalTok{(MSS\_string }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MAC\_string, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Time lag (s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"estimated MSS (m/s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),}
-    \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+From the next figure it can be seen that time lag affects estimated MAC for the the model without correction and fixed correction models. Time correction and time and distance corrections model correctly estimated MAC.
 
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-50-1} \end{center}
-
-From the figure below it can be seen that time lag affects estimated MAC for the the model without correction and fixed correction models. Time correction and time and distance corrections model correctly estimated MAC.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# MAC}
-\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ time\_lag, }\AttributeTok{y =}\NormalTok{ est\_MAC, }\AttributeTok{color =}\NormalTok{ model)) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_grid}\NormalTok{(MAC\_string }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MSS\_string, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Time lag (s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"estimated MAC (m/s/s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),}
-    \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-51-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-45-1} \end{center}
 
 The figure below depicts correctly identified time lag (i.e.~using time correction parameter) using time correction and time and distance corrections models.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# time\_correction}
-\FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  df,}
-  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ time\_lag, }\AttributeTok{y =}\NormalTok{ est\_time\_correction, }\AttributeTok{color =}\NormalTok{ model)}
-\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{slope =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_grid}\NormalTok{(MAC\_string }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MSS\_string, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Time lag (s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"estimated time correction (s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),}
-    \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-52-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-46-1} \end{center}
 
 The next figure depicts estimated distance correction for the time and distance correction model. The estimated distance correction parameters looks jumpy due to random noise that we have to added to allow model fit, as well as the model estimation error.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# distance\_correction}
-\FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  df,}
-  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ time\_lag, }\AttributeTok{y =}\NormalTok{ est\_distance\_correction, }\AttributeTok{color =}\NormalTok{ model)}
-\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_grid}\NormalTok{(MAC\_string }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MSS\_string, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Time lag (s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"estimated distance correction (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),}
-    \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-53-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-47-1} \end{center}
 
 The following figure depicts residuals (i.e., predicted time minus observed time).
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Residuals}
-\NormalTok{model\_df }\OtherTok{\textless{}{-}}\NormalTok{ model\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{MSS\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"MSS ="}\NormalTok{, MSS),}
-    \AttributeTok{TAU\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"TAU ="}\NormalTok{, TAU),}
-    \AttributeTok{MAC\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"MAC = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(MAC, }\DecValTok{2}\NormalTok{)),}
-    \AttributeTok{PMAX\_string =} \FunctionTok{paste}\NormalTok{(}\StringTok{"PMAX = "}\NormalTok{, }\FunctionTok{round}\NormalTok{(PMAX, }\DecValTok{2}\NormalTok{)),}
-    \AttributeTok{group =} \FunctionTok{paste}\NormalTok{(MSS, MAC, time\_lag)}
-\NormalTok{  )}
-
-\FunctionTok{ggplot}\NormalTok{(}
-\NormalTok{  model\_df,}
-  \FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ residuals, }\AttributeTok{x =}\NormalTok{ distance, }\AttributeTok{color =}\NormalTok{ time\_lag, }\AttributeTok{group =}\NormalTok{ group)}
-\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{model) }\SpecialCharTok{+}
-  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{terrain.colors}\NormalTok{(}\DecValTok{5}\NormalTok{, }\AttributeTok{rev =} \ConstantTok{FALSE}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Distance (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Predicted time {-} observed time (s)"}\NormalTok{)  }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{) }\SpecialCharTok{+} 
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{color =} \StringTok{"Time lag"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-54-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-48-1} \end{center}
 
 There are few other starting issues worth mentioning. For example, if the initial timing gate has a time delay (i.e., once triggered, there is a time delay before the timing starts). In this case, time lag is a negative number since it reduces the split times. Another common issue with timing gates in the practical field settings is the bad measurement of the distance and thus bad positions of the timing gates.
 
@@ -2001,53 +1122,63 @@ Fellow sports scientists are often considering adding \(t=0\) s at \(d=0\) m to 
 
 \CommentTok{\# Model without time correction}
 \NormalTok{m\_no\_correction }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits}\NormalTok{(}
-  \AttributeTok{distance =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{distance, }
+  \AttributeTok{distance =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{distance,}
   \AttributeTok{time =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{gate\_time}
 \NormalTok{)}
 
 \CommentTok{\# Model without time correction, but with zeros added}
 \NormalTok{m\_no\_correction\_zero }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits}\NormalTok{(}
-  \AttributeTok{distance =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, df}\SpecialCharTok{$}\NormalTok{distance), }
+  \AttributeTok{distance =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, df}\SpecialCharTok{$}\NormalTok{distance),}
   \AttributeTok{time =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, df}\SpecialCharTok{$}\NormalTok{gate\_time)}
 \NormalTok{)}
 
 \CommentTok{\# Model without adding zeros for the start}
 \NormalTok{m\_no\_zero }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits\_with\_time\_correction}\NormalTok{(}
-  \AttributeTok{distance =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{distance, }
+  \AttributeTok{distance =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{distance,}
   \AttributeTok{time =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{gate\_time}
 \NormalTok{)}
 
 \CommentTok{\# Model with added zeros for the start (d=0 and t=0)}
 \NormalTok{m\_with\_zero }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits\_with\_time\_correction}\NormalTok{(}
-  \AttributeTok{distance =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, df}\SpecialCharTok{$}\NormalTok{distance), }
+  \AttributeTok{distance =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, df}\SpecialCharTok{$}\NormalTok{distance),}
   \AttributeTok{time =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, df}\SpecialCharTok{$}\NormalTok{gate\_time)}
 \NormalTok{)}
 
 \CommentTok{\# Print results}
-\FunctionTok{data.frame}\NormalTok{(}
+\NormalTok{res\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
   \AttributeTok{model =} \FunctionTok{c}\NormalTok{(}
     \StringTok{"Without time correction"}\NormalTok{,}
-    \StringTok{"Without time correction with zeros added"}\NormalTok{, }
+    \StringTok{"Without time correction with zeros added"}\NormalTok{,}
     \StringTok{"With time correction"}\NormalTok{,}
-    \StringTok{"With time correction with zeros added"}\NormalTok{),}
+    \StringTok{"With time correction with zeros added"}
+\NormalTok{  ),}
   \FunctionTok{rbind}\NormalTok{(}
     \FunctionTok{coef}\NormalTok{(m\_no\_correction),}
     \FunctionTok{coef}\NormalTok{(m\_no\_correction\_zero),}
     \FunctionTok{coef}\NormalTok{(m\_no\_zero),}
-    \FunctionTok{coef}\NormalTok{(m\_with\_zero))}
+    \FunctionTok{coef}\NormalTok{(m\_with\_zero)}
+\NormalTok{  )}
 \NormalTok{)}
-\CommentTok{\#\textgreater{}                                      model  MSS  TAU  MAC PMAX}
-\CommentTok{\#\textgreater{} 1                  Without time correction 8.78 1.09 8.06 17.7}
-\CommentTok{\#\textgreater{} 2 Without time correction with zeros added 8.78 1.09 8.06 17.7}
-\CommentTok{\#\textgreater{} 3                     With time correction 9.00 1.30 6.92 15.6}
-\CommentTok{\#\textgreater{} 4    With time correction with zeros added 8.79 1.10 7.97 17.5}
-\CommentTok{\#\textgreater{}   time\_correction distance\_correction}
-\CommentTok{\#\textgreater{} 1         0.00000                   0}
-\CommentTok{\#\textgreater{} 2         0.00000                   0}
-\CommentTok{\#\textgreater{} 3         0.09994                   0}
-\CommentTok{\#\textgreater{} 4         0.00739                   0}
+
+\FunctionTok{kable}\NormalTok{(res\_df, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{, }\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \FunctionTok{c}\NormalTok{(}\StringTok{"scale\_down"}\NormalTok{, }\StringTok{"hold\_position"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{table}[!h]
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lrrrrrr}
+\toprule
+model & MSS & TAU & MAC & PMAX & time\_correction & distance\_correction\\
+\midrule
+Without time correction & 8.78 & 1.09 & 8.06 & 17.7 & 0.00 & 0\\
+Without time correction with zeros added & 8.78 & 1.09 & 8.06 & 17.7 & 0.00 & 0\\
+With time correction & 9.00 & 1.30 & 6.92 & 15.6 & 0.10 & 0\\
+With time correction with zeros added & 8.79 & 1.10 & 7.97 & 17.5 & 0.01 & 0\\
+\bottomrule
+\end{tabular}}
+\end{table}
 
 As can be seen from the output, only the model with time correction is able to correctly recover true sprint parameters, but adding zeros to the sample in this case, results in MSS and TAU estimates very close to the estimates of the model without time corrections. Thus, adding zeros to the sample nullifies the potential benefits of using time correction model and should be avoided in practice.
 
@@ -2065,108 +1196,18 @@ Let's perform LOOCV using Jack's data and the time correction model:
   \AttributeTok{time =}\NormalTok{ split\_times}\SpecialCharTok{$}\NormalTok{jack\_time,}
   \AttributeTok{LOOCV =} \ConstantTok{TRUE}
 \NormalTok{)}
-
-\NormalTok{jack\_LOOCV}
-\CommentTok{\#\textgreater{} Estimated model parameters}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}                 MSS                 TAU                 MAC }
-\CommentTok{\#\textgreater{}               8.958               1.216               7.367 }
-\CommentTok{\#\textgreater{}                PMAX     time\_correction distance\_correction }
-\CommentTok{\#\textgreater{}              16.499               0.284               0.000 }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Model fit estimators}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}       RSE R\_squared    minErr    maxErr maxAbsErr      RMSE }
-\CommentTok{\#\textgreater{}   0.00181   1.00000  {-}0.00109   0.00189   0.00189   0.00114 }
-\CommentTok{\#\textgreater{}       MAE      MAPE }
-\CommentTok{\#\textgreater{}   0.00104   0.04981 }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Leave{-}One{-}Out Cross{-}Validation}
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{} Parameters:}
-\CommentTok{\#\textgreater{}    MSS  TAU  MAC PMAX time\_correction distance\_correction}
-\CommentTok{\#\textgreater{} 1 8.98 1.25 7.21 16.2           0.300                   0}
-\CommentTok{\#\textgreater{} 2 8.97 1.22 7.35 16.5           0.284                   0}
-\CommentTok{\#\textgreater{} 3 8.95 1.21 7.40 16.5           0.282                   0}
-\CommentTok{\#\textgreater{} 4 8.96 1.21 7.39 16.5           0.282                   0}
-\CommentTok{\#\textgreater{} 5 8.93 1.20 7.45 16.6           0.278                   0}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Model fit:}
-\CommentTok{\#\textgreater{}       RSE R\_squared    minErr    maxErr maxAbsErr      RMSE }
-\CommentTok{\#\textgreater{}        NA   1.00000  {-}0.00639   0.00510   0.00639   0.00401 }
-\CommentTok{\#\textgreater{}       MAE      MAPE }
-\CommentTok{\#\textgreater{}   0.00349   0.18387}
 \end{Highlighting}
 \end{Shaded}
 
 The model print output provides training dataset estimates and model performance, as well as LOOCV estimates and model performance.
 
-Next we plot estimated parameters across LOOCV folds:
+Next we plot estimated parameters across LOOCV folds (please refer to the Supplemental files for the R code):
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ jack\_LOOCV}\SpecialCharTok{$}\NormalTok{LOOCV}\SpecialCharTok{$}\NormalTok{parameters}
-
-\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{pivot\_longer}\NormalTok{(df, }\AttributeTok{cols =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{, }\AttributeTok{names\_to =} \StringTok{"parameter"}\NormalTok{)}
-
-\NormalTok{df}\SpecialCharTok{$}\NormalTok{parameter }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}
-\NormalTok{  df}\SpecialCharTok{$}\NormalTok{parameter,}
-  \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}
-    \StringTok{"MSS"}\NormalTok{,}
-    \StringTok{"TAU"}\NormalTok{,}
-    \StringTok{"MAC"}\NormalTok{,}
-    \StringTok{"PMAX"}\NormalTok{,}
-    \StringTok{"time\_correction"}\NormalTok{,}
-    \StringTok{"distance\_correction"}
-\NormalTok{  )}
-\NormalTok{)}
-
-\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ value)) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{parameter, }\AttributeTok{scales =} \StringTok{"free\_x"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{(),}
-    \AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{()}
-\NormalTok{  )}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-57-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-51-1} \end{center}
 
 Here is the plot of the training and LOOCV residuals:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
-  \AttributeTok{distance =}\NormalTok{ jack\_LOOCV}\SpecialCharTok{$}\NormalTok{data}\SpecialCharTok{$}\NormalTok{distance,}
-  \AttributeTok{time =}\NormalTok{ jack\_LOOCV}\SpecialCharTok{$}\NormalTok{data}\SpecialCharTok{$}\NormalTok{time,}
-  \AttributeTok{pred\_time =}\NormalTok{ jack\_LOOCV}\SpecialCharTok{$}\NormalTok{data}\SpecialCharTok{$}\NormalTok{pred\_time,}
-  \AttributeTok{LOOCV\_time =}\NormalTok{ jack\_LOOCV}\SpecialCharTok{$}\NormalTok{LOOCV}\SpecialCharTok{$}\NormalTok{data}\SpecialCharTok{$}\NormalTok{pred\_time}
-\NormalTok{)}
-
-\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{c}\NormalTok{(}\StringTok{"pred\_time"}\NormalTok{, }\StringTok{"LOOCV\_time"}\NormalTok{))}
-
-\NormalTok{df}\SpecialCharTok{$}\NormalTok{resid }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{value }\SpecialCharTok{{-}}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{time}
-
-\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ distance, }\AttributeTok{y =}\NormalTok{ resid, }\AttributeTok{color =}\NormalTok{ name)) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Distance (m)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Predicted {-} observed time (s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}
-    \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),}
-    \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-58-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-52-1} \end{center}
 
 As expected, the model has more issues predicting unseen split times for both short or long distances. Please note, that since LOOCV removes one observation, if the model estimates three parameters, then at least five observations are needed, since we need to make sure the model can be estimated once a single observation is removed. LOOCV can also be implemented with the mixed-effects models in the \textbf{shorts} package.
 
@@ -2254,23 +1295,28 @@ For the sake of this analysis, only 10 m splits over 60 m race distance are used
 \NormalTok{  )}
 \NormalTok{)}
 
-\NormalTok{bolt\_model}
-\CommentTok{\#\textgreater{}                      model  MSS   TAU   MAC PMAX time\_correction}
-\CommentTok{\#\textgreater{} 1            No correction 12.1 1.564  7.77 23.6         0.00000}
-\CommentTok{\#\textgreater{} 2       No correction {-} RT 11.7 1.205  9.74 28.6        {-}0.18300}
-\CommentTok{\#\textgreater{} 3          Time correction 11.7 1.202  9.76 28.6        {-}0.18483}
-\CommentTok{\#\textgreater{} 4     Time correction {-} RT 11.7 1.202  9.76 28.6        {-}0.00183}
-\CommentTok{\#\textgreater{} 5      Distance correction 11.6 0.855 13.56 39.3        {-}0.81151}
-\CommentTok{\#\textgreater{} 6 Distance correction {-} RT 11.6 0.855 13.56 39.3        {-}0.62851}
-\CommentTok{\#\textgreater{}   distance\_correction}
-\CommentTok{\#\textgreater{} 1                0.00}
-\CommentTok{\#\textgreater{} 2                0.00}
-\CommentTok{\#\textgreater{} 3                0.00}
-\CommentTok{\#\textgreater{} 4                0.00}
-\CommentTok{\#\textgreater{} 5               {-}3.98}
-\CommentTok{\#\textgreater{} 6               {-}3.98}
+\FunctionTok{kable}\NormalTok{(bolt\_model, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{, }\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \FunctionTok{c}\NormalTok{(}\StringTok{"scale\_down"}\NormalTok{, }\StringTok{"hold\_position"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{table}[!h]
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lrrrrrr}
+\toprule
+model & MSS & TAU & MAC & PMAX & time\_correction & distance\_correction\\
+\midrule
+No correction & 12.1 & 1.56 & 7.77 & 23.6 & 0.00 & 0.00\\
+No correction - RT & 11.7 & 1.21 & 9.74 & 28.6 & -0.18 & 0.00\\
+Time correction & 11.7 & 1.20 & 9.76 & 28.6 & -0.18 & 0.00\\
+Time correction - RT & 11.7 & 1.20 & 9.76 & 28.6 & 0.00 & 0.00\\
+Distance correction & 11.6 & 0.85 & 13.56 & 39.3 & -0.81 & -3.98\\
+\addlinespace
+Distance correction - RT & 11.6 & 0.85 & 13.56 & 39.3 & -0.63 & -3.98\\
+\bottomrule
+\end{tabular}}
+\end{table}
 
 Here is the model estimate of the time and distance it takes for Bolt to reach 99\% of MSS. Please note that we are not using distance and time correction parameters, since we want these estimates to be on the time/distance scale aligned with the actual sprint start, not the measurement scale.
 
@@ -2280,31 +1326,35 @@ Here is the model estimate of the time and distance it takes for Bolt to reach 9
   \FunctionTok{group\_by}\NormalTok{(model) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}
     \AttributeTok{dist\_99\_MSS =} \FunctionTok{find\_velocity\_critical\_distance}\NormalTok{(}
-      \AttributeTok{MSS =}\NormalTok{ MSS, }\AttributeTok{TAU =}\NormalTok{ TAU, }
-      \CommentTok{\#time\_correction = time\_correction, }
-      \CommentTok{\#distance\_correction = distance\_correction,}
+      \AttributeTok{MSS =}\NormalTok{ MSS, }\AttributeTok{TAU =}\NormalTok{ TAU,}
+      \CommentTok{\# time\_correction = time\_correction,}
+      \CommentTok{\# distance\_correction = distance\_correction,}
       \AttributeTok{percent =} \FloatTok{0.99}
 \NormalTok{    ),}
-   \AttributeTok{time\_99\_MSS =} \FunctionTok{find\_velocity\_critical\_time}\NormalTok{(}
-      \AttributeTok{MSS =}\NormalTok{ MSS, }\AttributeTok{TAU =}\NormalTok{ TAU, }
-      \CommentTok{\#time\_correction = time\_correction, }
+    \AttributeTok{time\_99\_MSS =} \FunctionTok{find\_velocity\_critical\_time}\NormalTok{(}
+      \AttributeTok{MSS =}\NormalTok{ MSS, }\AttributeTok{TAU =}\NormalTok{ TAU,}
+      \CommentTok{\# time\_correction = time\_correction,}
       \AttributeTok{percent =} \FloatTok{0.99}
 \NormalTok{    )}
 \NormalTok{  )}
 
-\NormalTok{bolt\_model[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{)]}
-\CommentTok{\#\textgreater{} \# A tibble: 6 x 3}
-\CommentTok{\#\textgreater{} \# Groups:   model [6]}
-\CommentTok{\#\textgreater{}   model                    dist\_99\_MSS time\_99\_MSS}
-\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}                          \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{}}
-\CommentTok{\#\textgreater{} 1 No correction                   68.7        7.20}
-\CommentTok{\#\textgreater{} 2 No correction {-} RT              51.1        5.55}
-\CommentTok{\#\textgreater{} 3 Time correction                 51.0        5.54}
-\CommentTok{\#\textgreater{} 4 Time correction {-} RT            51.0        5.54}
-\CommentTok{\#\textgreater{} 5 Distance correction             35.8        3.94}
-\CommentTok{\#\textgreater{} 6 Distance correction {-} RT        35.8        3.94}
+\FunctionTok{kable}\NormalTok{(bolt\_model[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{)], }\AttributeTok{digits =} \DecValTok{2}\NormalTok{, }\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{tabular}{lrr}
+\toprule
+model & dist\_99\_MSS & time\_99\_MSS\\
+\midrule
+No correction & 68.7 & 7.20\\
+No correction - RT & 51.1 & 5.55\\
+Time correction & 51.0 & 5.54\\
+Time correction - RT & 51.0 & 5.54\\
+Distance correction & 35.8 & 3.94\\
+\addlinespace
+Distance correction - RT & 35.8 & 3.94\\
+\bottomrule
+\end{tabular}
 
 \hypertarget{vescovi-data}{%
 \subsection{Vescovi data}\label{vescovi-data}}
@@ -2334,310 +1384,23 @@ Below is the mixed-effects models analysis of the dataset.
 \end{Highlighting}
 \end{Shaded}
 
-The following models were used: (1) no corrections model, (2) fixed time correction model (using 0.3s heuristic rule of thumb), (3) estimated time correction as a fixed effect model, (4) estimated time correction as a random effect model, (5) estimated distance correction as fixed effect model (and time correction as random effect), and (6) estimated distance correction as random effect model.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{no\_corrections }\OtherTok{\textless{}{-}} \FunctionTok{mixed\_model\_using\_splits}\NormalTok{(}
-\NormalTok{  df,}
-  \AttributeTok{distance =} \StringTok{"distance"}\NormalTok{,}
-  \AttributeTok{time =} \StringTok{"time"}\NormalTok{,}
-  \AttributeTok{athlete =} \StringTok{"Athlete"}
-\NormalTok{)}
-
-\NormalTok{fixed\_correction }\OtherTok{\textless{}{-}} \FunctionTok{mixed\_model\_using\_splits}\NormalTok{(}
-\NormalTok{  df,}
-  \AttributeTok{distance =} \StringTok{"distance"}\NormalTok{,}
-  \AttributeTok{time =} \StringTok{"time"}\NormalTok{,}
-  \AttributeTok{athlete =} \StringTok{"Athlete"}\NormalTok{,}
-  \AttributeTok{time\_correction =} \FloatTok{0.3}
-\NormalTok{)}
-
-\NormalTok{time\_correction\_fixed }\OtherTok{\textless{}{-}} 
-  \FunctionTok{mixed\_model\_using\_splits\_with\_time\_correction}\NormalTok{(}
-\NormalTok{    df,}
-    \AttributeTok{distance =} \StringTok{"distance"}\NormalTok{,}
-    \AttributeTok{time =} \StringTok{"time"}\NormalTok{,}
-    \AttributeTok{athlete =} \StringTok{"Athlete"}\NormalTok{,}
-    \AttributeTok{random =}\NormalTok{ MSS }\SpecialCharTok{+}\NormalTok{ TAU }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}
-\NormalTok{  )}
-
-\NormalTok{time\_correction\_random }\OtherTok{\textless{}{-}} 
-  \FunctionTok{mixed\_model\_using\_splits\_with\_time\_correction}\NormalTok{(}
-\NormalTok{    df,}
-    \AttributeTok{distance =} \StringTok{"distance"}\NormalTok{,}
-    \AttributeTok{time =} \StringTok{"time"}\NormalTok{,}
-    \AttributeTok{athlete =} \StringTok{"Athlete"}\NormalTok{,}
-    \AttributeTok{random =}\NormalTok{ MSS }\SpecialCharTok{+}\NormalTok{ TAU }\SpecialCharTok{+}\NormalTok{ time\_correction }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}
-\NormalTok{  )}
-
-\NormalTok{time\_distance\_correction\_fixed }\OtherTok{\textless{}{-}} 
-  \FunctionTok{mixed\_model\_using\_splits\_with\_corrections}\NormalTok{(}
-\NormalTok{    df,}
-    \AttributeTok{distance =} \StringTok{"distance"}\NormalTok{,}
-    \AttributeTok{time =} \StringTok{"time"}\NormalTok{,}
-    \AttributeTok{athlete =} \StringTok{"Athlete"}\NormalTok{,}
-    \AttributeTok{random =}\NormalTok{ MSS }\SpecialCharTok{+}\NormalTok{ TAU }\SpecialCharTok{+}\NormalTok{ time\_correction }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}
-\NormalTok{  )}
-
-\NormalTok{time\_distance\_correction\_random }\OtherTok{\textless{}{-}} 
-  \FunctionTok{mixed\_model\_using\_splits\_with\_corrections}\NormalTok{(}
-\NormalTok{    df,}
-    \AttributeTok{distance =} \StringTok{"distance"}\NormalTok{,}
-    \AttributeTok{time =} \StringTok{"time"}\NormalTok{,}
-    \AttributeTok{athlete =} \StringTok{"Athlete"}\NormalTok{,}
-    \AttributeTok{random =}\NormalTok{ MSS }\SpecialCharTok{+}\NormalTok{ TAU }\SpecialCharTok{+}\NormalTok{ time\_correction }\SpecialCharTok{+}\NormalTok{ distance\_correction }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}
-\NormalTok{  )}
-\end{Highlighting}
-\end{Shaded}
+The following models were used: (1) no corrections model, (2) fixed time correction model (using 0.3s heuristic rule of thumb), (3) estimated time correction as a fixed effect model, (4) estimated time correction as a random effect model, (5) estimated distance correction as fixed effect model (and time correction as random effect), and (6) estimated distance correction as random effect model (please refer to the Supplemental files for the R code).
 
 The following image represents model fit estimator RSE for each model. As can be seen, RSE is reduced the more flexible the model.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{model\_fit }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"No corrections"}\NormalTok{,}
-    \FunctionTok{t}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(no\_corrections}\SpecialCharTok{$}\NormalTok{model\_fit))}
-\NormalTok{  ),}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"Fixed correction +0.3s"}\NormalTok{,}
-    \FunctionTok{t}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(fixed\_correction}\SpecialCharTok{$}\NormalTok{model\_fit))}
-\NormalTok{  ),}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"Time correction fixed"}\NormalTok{,}
-    \FunctionTok{t}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(time\_correction\_fixed}\SpecialCharTok{$}\NormalTok{model\_fit))}
-\NormalTok{  ),}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"Time correction random"}\NormalTok{,}
-    \FunctionTok{t}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(time\_correction\_random}\SpecialCharTok{$}\NormalTok{model\_fit))}
-\NormalTok{  ),}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"Time and distance correction fixed"}\NormalTok{,}
-    \FunctionTok{t}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(time\_distance\_correction\_fixed}\SpecialCharTok{$}\NormalTok{model\_fit))}
-\NormalTok{  ),}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"Time and distance correction random"}\NormalTok{,}
-    \FunctionTok{t}\NormalTok{(}\FunctionTok{unlist}\NormalTok{(time\_distance\_correction\_random}\SpecialCharTok{$}\NormalTok{model\_fit))}
-\NormalTok{  )}
-\NormalTok{)}
-
-\NormalTok{model\_fit}\SpecialCharTok{$}\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}
-\NormalTok{  model\_fit}\SpecialCharTok{$}\NormalTok{model,}
-  \AttributeTok{levels =} \FunctionTok{rev}\NormalTok{(}\FunctionTok{c}\NormalTok{(}
-    \StringTok{"No corrections"}\NormalTok{,}
-    \StringTok{"Fixed correction +0.3s"}\NormalTok{,}
-    \StringTok{"Time correction fixed"}\NormalTok{,}
-    \StringTok{"Time correction random"}\NormalTok{,}
-    \StringTok{"Time and distance correction fixed"}\NormalTok{,}
-    \StringTok{"Time and distance correction random"}
-\NormalTok{  ))}
-\NormalTok{)}
-
-\FunctionTok{ggplot}\NormalTok{(model\_fit, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ RSE, }\AttributeTok{y =}\NormalTok{ model)) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"RSE (s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-63-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-57-1} \end{center}
 
 The following image depicts estimated parameters for each model:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{est\_params }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"No corrections"}\NormalTok{,}
-\NormalTok{    no\_corrections}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{random}
-\NormalTok{  ),}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"Fixed correction +0.3s"}\NormalTok{,}
-\NormalTok{    fixed\_correction}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{random}
-\NormalTok{  ),}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"Time correction fixed"}\NormalTok{,}
-\NormalTok{    time\_correction\_fixed}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{random}
-\NormalTok{  ),}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"Time correction random"}\NormalTok{,}
-\NormalTok{    time\_correction\_random}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{random}
-\NormalTok{  ),}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"Time and distance correction fixed"}\NormalTok{,}
-\NormalTok{    time\_distance\_correction\_fixed}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{random}
-\NormalTok{  ),}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"Time and distance correction random"}\NormalTok{,}
-\NormalTok{    time\_distance\_correction\_random}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{random}
-\NormalTok{  )}
-\NormalTok{)}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-58-1} \end{center}
 
-\NormalTok{est\_params}\SpecialCharTok{$}\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}
-\NormalTok{  est\_params}\SpecialCharTok{$}\NormalTok{model,}
-  \AttributeTok{levels =} \FunctionTok{rev}\NormalTok{(}\FunctionTok{c}\NormalTok{(}
-    \StringTok{"No corrections"}\NormalTok{,}
-    \StringTok{"Fixed correction +0.3s"}\NormalTok{,}
-    \StringTok{"Time correction fixed"}\NormalTok{,}
-    \StringTok{"Time correction random"}\NormalTok{,}
-    \StringTok{"Time and distance correction fixed"}\NormalTok{,}
-    \StringTok{"Time and distance correction random"}
-\NormalTok{  ))}
-\NormalTok{)}
+The following image depicts model residuals across distance splits. To provide practical magnitude of the residuals, we have used between subject observed time SD multiplied with 0.2 and -0.2. This provides practical anchor for the residual magnitude, often referred to as \emph{smallest worthwhile change} (SWC) or \emph{smallest effect size of interest} (SESOI) (\protect\hyperlink{ref-jovanovicBmbstatsBootstrapMagnitudebased2020}{Jovanović 2020}). If the residuals are within this magnitude band, then the model is good in making practically useful predictions. Error bars represent residual bias \(\pm\) 1 SD.
 
-\NormalTok{est\_params }\OtherTok{\textless{}{-}}\NormalTok{ est\_params }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \SpecialCharTok{{-}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{), }\AttributeTok{names\_to =} \StringTok{"parameter"}\NormalTok{)}
-
-\NormalTok{est\_params}\SpecialCharTok{$}\NormalTok{parameter }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}
-\NormalTok{  est\_params}\SpecialCharTok{$}\NormalTok{parameter,}
-  \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}
-    \StringTok{"MSS"}\NormalTok{,}
-    \StringTok{"TAU"}\NormalTok{,}
-    \StringTok{"MAC"}\NormalTok{,}
-    \StringTok{"PMAX"}\NormalTok{,}
-    \StringTok{"time\_correction"}\NormalTok{,}
-    \StringTok{"distance\_correction"}
-\NormalTok{  )}
-\NormalTok{)}
-
-\FunctionTok{ggplot}\NormalTok{(est\_params, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ model, }\AttributeTok{x =}\NormalTok{ value)) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{parameter, }\AttributeTok{scales =} \StringTok{"free\_x"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-64-1} \end{center}
-
-The following image depicts model residuals across distance splits. To provide practical magnitude of the residuals, we have used between subject observed time SD multiplied with 0.2 and -0.2. This provides practical anchor for the residual magnitude, often referred to as \emph{smallest worthwhile change} (SWC) or \emph{smallest effect size of interest} (SESOI) (\protect\hyperlink{ref-jovanovicBmbstatsBootstrapMagnitudebased2020}{Jovanović 2020}). If the residuals are within this magnitude band, then the model is good in making practically useful predictions.
-
-Error bars represent residual bias \(\pm\) 1 SD.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{model\_resid }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"No corrections"}\NormalTok{,}
-\NormalTok{    no\_corrections}\SpecialCharTok{$}\NormalTok{data}
-\NormalTok{  ),}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"Fixed correction +0.3s"}\NormalTok{,}
-\NormalTok{    fixed\_correction}\SpecialCharTok{$}\NormalTok{data}
-\NormalTok{  ),}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"Time correction fixed"}\NormalTok{,}
-\NormalTok{    time\_correction\_fixed}\SpecialCharTok{$}\NormalTok{data}
-\NormalTok{  ),}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"Time correction random"}\NormalTok{,}
-\NormalTok{    time\_correction\_random}\SpecialCharTok{$}\NormalTok{data}
-\NormalTok{  ),}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"Time and distance correction fixed"}\NormalTok{,}
-\NormalTok{    time\_distance\_correction\_fixed}\SpecialCharTok{$}\NormalTok{data}
-\NormalTok{  ),}
-  \FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{model =} \StringTok{"Time and distance correction random"}\NormalTok{,}
-\NormalTok{    time\_distance\_correction\_random}\SpecialCharTok{$}\NormalTok{data}
-\NormalTok{  )}
-\NormalTok{)}
-
-
-\NormalTok{model\_resid}\SpecialCharTok{$}\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}
-\NormalTok{  model\_resid}\SpecialCharTok{$}\NormalTok{model,}
-  \AttributeTok{levels =} \FunctionTok{rev}\NormalTok{(}\FunctionTok{c}\NormalTok{(}
-    \StringTok{"No corrections"}\NormalTok{,}
-    \StringTok{"Fixed correction +0.3s"}\NormalTok{,}
-    \StringTok{"Time correction fixed"}\NormalTok{,}
-    \StringTok{"Time correction random"}\NormalTok{,}
-    \StringTok{"Time and distance correction fixed"}\NormalTok{,}
-    \StringTok{"Time and distance correction random"}
-\NormalTok{  ))}
-\NormalTok{)}
-
-\NormalTok{model\_resid}\SpecialCharTok{$}\NormalTok{resid }\OtherTok{\textless{}{-}}\NormalTok{ model\_resid}\SpecialCharTok{$}\NormalTok{pred\_time }\SpecialCharTok{{-}}\NormalTok{ model\_resid}\SpecialCharTok{$}\NormalTok{time}
-
-\CommentTok{\# Create SWC / SESOI band}
-\NormalTok{model\_SESOI }\OtherTok{\textless{}{-}}\NormalTok{ model\_resid }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(model, distance) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarise}\NormalTok{(}
-    \AttributeTok{bias =} \FunctionTok{mean}\NormalTok{(resid),}
-    \AttributeTok{variance =} \FunctionTok{sd}\NormalTok{(resid),}
-    \AttributeTok{upper =}\NormalTok{ bias }\SpecialCharTok{+}\NormalTok{ variance,}
-    \AttributeTok{lower =}\NormalTok{ bias }\SpecialCharTok{{-}}\NormalTok{ variance,}
-    \AttributeTok{MAD =} \FunctionTok{mean}\NormalTok{(}\FunctionTok{abs}\NormalTok{(resid)),}
-    \AttributeTok{SESOI\_upper =} \FunctionTok{sd}\NormalTok{(time) }\SpecialCharTok{*} \FloatTok{0.2}\NormalTok{,}
-    \AttributeTok{SESOI\_lower =} \SpecialCharTok{{-}}\FunctionTok{sd}\NormalTok{(time) }\SpecialCharTok{*} \FloatTok{0.2}
-\NormalTok{  )}
-
-\CommentTok{\# Plot}
-\FunctionTok{ggplot}\NormalTok{(model\_resid, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ model)) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_vline}\NormalTok{(}
-    \AttributeTok{data =}\NormalTok{ model\_SESOI,}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept =}\NormalTok{ SESOI\_lower),}
-    \AttributeTok{color =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_vline}\NormalTok{(}
-    \AttributeTok{data =}\NormalTok{ model\_SESOI,}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept =}\NormalTok{ SESOI\_upper),}
-    \AttributeTok{color =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_jitter}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ resid), }\AttributeTok{alpha =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{height =} \FloatTok{0.25}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_errorbarh}\NormalTok{(}
-    \AttributeTok{data =}\NormalTok{ model\_SESOI,}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{xmin =}\NormalTok{ lower, }\AttributeTok{xmax =}\NormalTok{ upper),}
-    \AttributeTok{height =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ model\_SESOI, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bias), }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{distance, }\AttributeTok{scales =} \StringTok{"free\_x"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Predicted time {-} observed time (s)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-65-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-59-1} \end{center}
 
 The following figure depicts model residuals estimators (bias, or mean residual; variance, or SD of the residuals, and MAD, or mean absolute difference).
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ model\_SESOI }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \SpecialCharTok{{-}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{), }\AttributeTok{names\_to =} \StringTok{"estimator"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(estimator }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"bias"}\NormalTok{, }\StringTok{"variance"}\NormalTok{, }\StringTok{"MAD"}\NormalTok{))}
-
-\NormalTok{df}\SpecialCharTok{$}\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}
-\NormalTok{  df}\SpecialCharTok{$}\NormalTok{model,}
-  \AttributeTok{levels =} \FunctionTok{rev}\NormalTok{(}\FunctionTok{c}\NormalTok{(}
-    \StringTok{"No corrections"}\NormalTok{,}
-    \StringTok{"Fixed correction +0.3s"}\NormalTok{,}
-    \StringTok{"Time correction fixed"}\NormalTok{,}
-    \StringTok{"Time correction random"}\NormalTok{,}
-    \StringTok{"Time and distance correction fixed"}\NormalTok{,}
-    \StringTok{"Time and distance correction random"}
-\NormalTok{  ))}
-\NormalTok{)}
-
-\NormalTok{df}\SpecialCharTok{$}\NormalTok{estimator }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}
-\NormalTok{  df}\SpecialCharTok{$}\NormalTok{estimator,}
-  \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"bias"}\NormalTok{, }\StringTok{"variance"}\NormalTok{, }\StringTok{"MAD"}\NormalTok{)}
-\NormalTok{)}
-
-\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ value, }\AttributeTok{y =}\NormalTok{ model)) }\SpecialCharTok{+}
-  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{facet\_grid}\NormalTok{(distance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ estimator, }\AttributeTok{scales =} \StringTok{"free\_x"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{paper_files/figure-latex/unnamed-chunk-66-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-60-1} \end{center}
 
 Which model should should be used? Although providing a better fit (using RSE as an estimator of model fit), the time and distance correction models often estimate these parameters that are harder to interpret (e.g., negative distance correction). Although providing novel theoretical models in this paper, we acknowledge the need for validating them in practice, against gold-standard methods, assessing their agreement, as well as their power in detecting and adjusting for timing inconsistencies.
 
@@ -2703,11 +1466,17 @@ Mangine, Gerald T., Jay R. Hoffman, Adam M. Gonzalez, Adam J. Wells, Jeremy R. T
 \leavevmode\hypertarget{ref-marcote-pequenoAssociationForceVelocity2019}{}%
 Marcote-Pequeño, Ramón, Amador García-Ramos, Víctor Cuadrado-Peñafiel, Jorge M. González-Hernández, Miguel Ángel Gómez, and Pedro Jiménez-Reyes. 2019. {``Association {Between} the {Force}{{Velocity Profile}} and {Performance Variables Obtained} in {Jumping} and {Sprinting} in {Elite Female Soccer Players}.''} \emph{International Journal of Sports Physiology and Performance} 14 (2): 209--15. \url{https://doi.org/10.1123/ijspp.2018-0233}.
 
-\leavevmode\hypertarget{ref-morinSimpleMethodComputing2019}{}%
-Morin, Jean-Benoit, Pierre Samozino, Munenori Murata, Matt R Cross, and Ryu Nagahara. 2019. {``A Simple Method for Computing Sprint Acceleration Kinetics from Running Velocity Data: {Replication} Study with Improved Design.''} \emph{Journal of Biomechanics} 94 (September): 82--87. \url{https://doi.org/10.1016/j.jbiomech.2019.07.020}.
+\leavevmode\hypertarget{ref-morinSpreadsheetSprintAcceleration2017}{}%
+Morin, J. B. 2017. {``A Spreadsheet for {Sprint} Acceleration {Force}-{Velocity}-{Power} Profiling.''} {JB Morin, PhD - Sport Science}. December 13, 2017. \url{https://jbmorin.net/2017/12/13/a-spreadsheet-for-sprint-acceleration-force-velocity-power-profiling/}.
 
 \leavevmode\hypertarget{ref-morinInterpretingPowerForceVelocityProfiles2016}{}%
-Morin, Jean-Benoît, and Pierre Samozino. 2016. {``Interpreting {Power}-{Force}-{Velocity Profiles} for {Individualized} and {Specific Training}.''} \emph{International Journal of Sports Physiology and Performance} 11 (2): 267--72. \url{https://doi.org/10.1123/ijspp.2015-0638}.
+Morin, Jean-Benoit, and Pierre Samozino. 2016. {``Interpreting {Power}-{Force}-{Velocity Profiles} for {Individualized} and {Specific Training}.''} \emph{International Journal of Sports Physiology and Performance} 11 (2): 267--72. \url{https://doi.org/10.1123/ijspp.2015-0638}.
+
+\leavevmode\hypertarget{ref-morinSpreadsheetSprintAcceleration2019}{}%
+---------. 2019. {``Spreadsheet for {Sprint} Acceleration Force-Velocity-Power Profiling.''}
+
+\leavevmode\hypertarget{ref-morinSimpleMethodComputing2019}{}%
+Morin, Jean-Benoit, Pierre Samozino, Munenori Murata, Matt R Cross, and Ryu Nagahara. 2019. {``A Simple Method for Computing Sprint Acceleration Kinetics from Running Velocity Data: {Replication} Study with Improved Design.''} \emph{Journal of Biomechanics} 94 (September): 82--87. \url{https://doi.org/10.1016/j.jbiomech.2019.07.020}.
 
 \leavevmode\hypertarget{ref-R-nlme}{}%
 Pinheiro, José, Douglas Bates, and R-core. 2020. \emph{Nlme: Linear and Nonlinear Mixed Effects Models}. \url{https://svn.r-project.org/R-packages/trunk/nlme/}.
@@ -2717,6 +1486,9 @@ R Core Team. 2020. \emph{R: A Language and Environment for Statistical Computing
 
 \leavevmode\hypertarget{ref-samozinoSimpleMethodMeasuring2016}{}%
 Samozino, P., G. Rabita, S. Dorel, J. Slawinski, N. Peyrot, E. Saez de Villarreal, and J.-B. Morin. 2016. {``A Simple Method for Measuring Power, Force, Velocity Properties, and Mechanical Effectiveness in Sprint Running: {Simple} Method to Compute Sprint Mechanics.''} \emph{Scandinavian Journal of Medicine \& Science in Sports} 26 (6): 648--58. \url{https://doi.org/10.1111/sms.12490}.
+
+\leavevmode\hypertarget{ref-stenrothSpreadsheetSprintAcceleration2020}{}%
+Stenroth, Lauri, and Paavo Vartiainen. 2020. {``Spreadsheet for Sprint Acceleration Force-Velocity-Power Profiling with Optimization to Correct Start Time.''} \url{https://doi.org/10.13140/RG.2.2.12841.83045}.
 
 \leavevmode\hypertarget{ref-stenrothForcevelocityProfilingIce2020}{}%
 Stenroth, Lauri, Paavo Vartiainen, and Pasi A. Karjalainen. 2020. {``Force-Velocity Profiling in Ice Hockey Skating: Reliability and Validity of a Simple, Low-Cost Field Method.''} \emph{Sports Biomechanics}, June, 1--16. \url{https://doi.org/10.1080/14763141.2020.1770321}.
@@ -2747,6 +1519,18 @@ Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takaha
 
 \leavevmode\hypertarget{ref-R-dplyr}{}%
 Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2020. \emph{Dplyr: A Grammar of Data Manipulation}. \url{https://CRAN.R-project.org/package=dplyr}.
+
+\leavevmode\hypertarget{ref-knitr2014}{}%
+Xie, Yihui. 2014. {``Knitr: A Comprehensive Tool for Reproducible Research in {R}.''} In \emph{Implementing Reproducible Computational Research}, edited by Victoria Stodden, Friedrich Leisch, and Roger D. Peng. Chapman; Hall/CRC. \url{http://www.crcpress.com/product/isbn/9781466561595}.
+
+\leavevmode\hypertarget{ref-knitr2015}{}%
+---------. 2015. \emph{Dynamic Documents with {R} and Knitr}. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. \url{https://yihui.org/knitr/}.
+
+\leavevmode\hypertarget{ref-R-knitr}{}%
+---------. 2020. \emph{Knitr: A General-Purpose Package for Dynamic Report Generation in r}. \url{https://yihui.org/knitr/}.
+
+\leavevmode\hypertarget{ref-R-kableExtra}{}%
+Zhu, Hao. 2021. \emph{kableExtra: Construct Complex Table with 'Kable' and Pipe Syntax}. \url{https://CRAN.R-project.org/package=kableExtra}.
 
 \end{CSLReferences}
 
