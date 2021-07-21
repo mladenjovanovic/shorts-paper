@@ -1,73 +1,82 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.4.14)  14 APR 2021 23:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2021.7.17)  21 JUL 2021 16:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **paper.tex
 (./paper.tex
-LaTeX2e <2020-10-01> patch level 4
-L3 programming layer <2021-02-18> (./wlpeerj.cls
+LaTeX2e <2021-06-01> patch level 1
+L3 programming layer <2021-07-12> (./wlpeerj.cls
 Document Class: wlpeerj 18/08/2016, v1.2
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2020/08/01 v1.3d Input encoding file
-\inpenc@prehook=\toks15
-\inpenc@posthook=\toks16
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks16
+\inpenc@posthook=\toks17
 ) (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/generic/babel/babel.st
 y
-Package: babel 2021/04/07 3.57 The Babel package
+Package: babel 2021/06/28 3.61 The Babel package
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2021/04/07 3.57 Babel common definitions
-\babel@savecnt=\count179
+File: babel.def 2021/06/28 3.61 Babel common definitions
+\babel@savecnt=\count182
 \U@D=\dimen138
-\l@babelnohyphens=\language5
+\l@unhyphenated=\language5
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/generic/babel/txtbabel.d
 ef)
 \bbl@readstream=\read2
 )
-\bbl@dirlevel=\count180
+\bbl@dirlevel=\count183
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/generic/babel-english/en
 glish.ldf
 Language: english 2017/06/06 v3.3r English support from the babel system
-Package babel Info: \l@british = using hyphenrules for english
-(babel)             (\language0) on input line 82.
-Package babel Info: \l@UKenglish = using hyphenrules for english
-(babel)             (\language0) on input line 83.
-Package babel Info: \l@canadian = using hyphenrules for english
-(babel)             (\language0) on input line 102.
-Package babel Info: \l@australian = using hyphenrules for english
-(babel)             (\language0) on input line 105.
-Package babel Info: \l@newzealand = using hyphenrules for english
-(babel)             (\language0) on input line 108.
+Package babel Info: Hyphen rules for 'british' set to \l@english
+(babel)             (\language0). Reported on input line 82.
+Package babel Info: Hyphen rules for 'UKenglish' set to \l@english
+(babel)             (\language0). Reported on input line 83.
+Package babel Info: Hyphen rules for 'canadian' set to \l@english
+(babel)             (\language0). Reported on input line 102.
+Package babel Info: Hyphen rules for 'australian' set to \l@english
+(babel)             (\language0). Reported on input line 105.
+Package babel Info: Hyphen rules for 'newzealand' set to \l@english
+(babel)             (\language0). Reported on input line 108.
 )) (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
-Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
 ) (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count181
-\calc@Bcount=\count182
+\calc@Acount=\count184
+\calc@Bcount=\count185
 \calc@Adimen=\dimen139
 \calc@Bdimen=\dimen140
 \calc@Askip=\skip47
 \calc@Bskip=\skip48
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count183
+\calc@Ccount=\count186
 \calc@Cskip=\skip49
 ) (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
-(/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
+Document Class: article 2021/02/12 v1.4n Standard LaTeX document class
+(/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/base/fleqn.clo
+File: fleqn.clo 2016/12/29 v1.2b Standard LaTeX option (flush left equations)
+\mathindent=\skip50
+Applying: [2015/01/01] Make \[ robust on input line 50.
+LaTeX Info: Redefining \[ on input line 51.
+Already applied: [0000/00/00] Make \[ robust on input line 62.
+Applying: [2015/01/01] Make \] robust on input line 74.
+LaTeX Info: Redefining \] on input line 75.
+Already applied: [0000/00/00] Make \] robust on input line 83.
+) (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2021/02/12 v1.4n Standard LaTeX file (size option)
 )
-\c@part=\count184
-\c@section=\count185
-\c@subsection=\count186
-\c@subsubsection=\count187
-\c@paragraph=\count188
-\c@subparagraph=\count189
-\c@figure=\count190
-\c@table=\count191
-\abovecaptionskip=\skip50
-\belowcaptionskip=\skip51
+\c@part=\count187
+\c@section=\count188
+\c@subsection=\count189
+\c@subsubsection=\count190
+\c@paragraph=\count191
+\c@subparagraph=\count192
+\c@figure=\count193
+\c@table=\count194
+\abovecaptionskip=\skip51
+\belowcaptionskip=\skip52
 \bibindent=\dimen141
 ) (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty
 Package: times 2020/03/25 PSNFSS-v9.3 (SPQR) 
@@ -111,20 +120,20 @@ LaTeX Info: Redefining \hbar on input line 50.
 ) (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/lineno/lineno.st
 y
 Package: lineno 2005/11/02 line numbers on paragraphs v4.41
-\linenopenalty=\count192
-\output=\toks17
-\linenoprevgraf=\count193
+\linenopenalty=\count195
+\output=\toks18
+\linenoprevgraf=\count196
 \linenumbersep=\dimen142
 \linenumberwidth=\dimen143
-\c@linenumber=\count194
-\c@pagewiselinenumber=\count195
-\c@LN@truepage=\count196
-\c@internallinenumber=\count197
-\c@internallinenumbers=\count198
+\c@linenumber=\count197
+\c@pagewiselinenumber=\count198
+\c@LN@truepage=\count199
+\c@internallinenumber=\count266
+\c@internallinenumbers=\count267
 \quotelinenumbersep=\dimen144
 \bframerule=\dimen145
 \bframesep=\dimen146
-\bframebox=\box47
+\bframebox=\box50
 LaTeX Info: Redefining \\ on input line 3056.
 ) (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifpdf.st
 y
@@ -134,8 +143,8 @@ Package: iftex 2020/03/06 v1.0d TeX engine tests
 ))
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.st
 y
-Package: amsmath 2020/09/23 v2.17i AMS math features
-\@mathmargin=\skip52
+Package: amsmath 2021/04/20 v2.17j AMS math features
+\@mathmargin=\skip53
 For additional information on amsmath, use the `?' option.
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.st
@@ -144,7 +153,7 @@ Package: amstext 2000/06/29 v2.01 AMS text
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks18
+\@emptytoks=\toks19
 \ex@=\dimen147
 ))
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
@@ -154,41 +163,41 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count199
+\inf@bad=\count268
 LaTeX Info: Redefining \frac on input line 234.
-\uproot@=\count266
-\leftroot@=\count267
+\uproot@=\count269
+\leftroot@=\count270
 LaTeX Info: Redefining \overline on input line 399.
-\classnum@=\count268
-\DOTSCASE@=\count269
+\classnum@=\count271
+\DOTSCASE@=\count272
 LaTeX Info: Redefining \ldots on input line 496.
 LaTeX Info: Redefining \dots on input line 499.
 LaTeX Info: Redefining \cdots on input line 620.
-\Mathstrutbox@=\box48
-\strutbox@=\box49
+\Mathstrutbox@=\box51
+\strutbox@=\box52
 \big@size=\dimen149
 LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
-\macc@depth=\count270
-\c@MaxMatrixCols=\count271
+\macc@depth=\count273
+\c@MaxMatrixCols=\count274
 \dotsspace@=\muskip16
-\c@parentequation=\count272
-\dspbrk@lvl=\count273
-\tag@help=\toks19
-\row@=\count274
-\column@=\count275
-\maxfields@=\count276
-\andhelp@=\toks20
+\c@parentequation=\count275
+\dspbrk@lvl=\count276
+\tag@help=\toks20
+\row@=\count277
+\column@=\count278
+\maxfields@=\count279
+\andhelp@=\toks21
 \eqnshift@=\dimen150
 \alignsep@=\dimen151
 \tagshift@=\dimen152
 \tagwidth@=\dimen153
 \totwidth@=\dimen154
 \lineht@=\dimen155
-\@envbody=\toks21
-\multlinegap=\skip53
-\multlinetaggap=\skip54
-\mathdisplay@stack=\toks22
+\@envbody=\toks22
+\multlinegap=\skip54
+\multlinetaggap=\skip55
+\mathdisplay@stack=\toks23
 LaTeX Info: Redefining \[ on input line 2923.
 LaTeX Info: Redefining \] on input line 2924.
 )
@@ -206,16 +215,16 @@ Package: amssymb 2013/01/14 v3.01 AMS font symbols
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.
 sty
-Package: graphicx 2020/09/09 v1.2b Enhanced LaTeX Graphics (DPC,SPQR)
+Package: graphicx 2020/12/05 v1.2c Enhanced LaTeX Graphics (DPC,SPQR)
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval.st
 y
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks23
+\KV@toks@=\toks24
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphics.
 sty
-Package: graphics 2020/08/30 v1.4c Standard LaTeX Graphics (DPC,SPQR)
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
@@ -223,7 +232,7 @@ Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 ics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
-Package graphics Info: Driver file: pdftex.def on input line 105.
+Package graphics Info: Driver file: pdftex.def on input line 107.
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdfte
 x.def
@@ -263,22 +272,22 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \cmidrulesep=\dimen165
 \cmidrulekern=\dimen166
 \defaultaddspace=\dimen167
-\@cmidla=\count277
-\@cmidlb=\count278
+\@cmidla=\count280
+\@cmidlb=\count281
 \@aboverulesep=\dimen168
 \@belowrulesep=\dimen169
-\@thisruleclass=\count279
-\@lastruleclass=\count280
+\@thisruleclass=\count282
+\@lastruleclass=\count283
 \@thisrulewidth=\dimen170
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/preprint/authblk.s
 ty
 Package: authblk 2001/02/27 1.3 (PWD)
-\affilsep=\skip55
-\@affilsep=\skip56
-\c@Maxaffil=\count281
-\c@authors=\count282
-\c@affil=\count283
+\affilsep=\skip56
+\@affilsep=\skip57
+\c@Maxaffil=\count284
+\c@authors=\count285
+\c@affil=\count286
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.
 sty
@@ -287,9 +296,9 @@ Package: geometry 2020/01/02 v5.9 Page Geometry
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count284
-\Gm@cntv=\count285
-\c@Gm@tempcnt=\count286
+\Gm@cnth=\count287
+\Gm@cntv=\count288
+\c@Gm@tempcnt=\count289
 \Gm@bindingoffset=\dimen171
 \Gm@wd@mp=\dimen172
 \Gm@odd@mp=\dimen173
@@ -298,7 +307,7 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@layoutheight=\dimen176
 \Gm@layouthoffset=\dimen177
 \Gm@layoutvoffset=\dimen178
-\Gm@dimlist=\toks24
+\Gm@dimlist=\toks25
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/caption/caption.st
 y
@@ -316,22 +325,22 @@ Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
 \caption@hangindent=\dimen185
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count287
-\c@continuedfloat=\count288
+\c@caption@flags=\count290
+\c@continuedfloat=\count291
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/fancyhdr/fancyhdr.
 sty
 Package: fancyhdr 2021/01/28 v4.0.1 Extensive control of page headers and foote
 rs
-\f@nch@headwidth=\skip57
-\f@nch@O@elh=\skip58
-\f@nch@O@erh=\skip59
-\f@nch@O@olh=\skip60
-\f@nch@O@orh=\skip61
-\f@nch@O@elf=\skip62
-\f@nch@O@erf=\skip63
-\f@nch@O@olf=\skip64
-\f@nch@O@orf=\skip65
+\f@nch@headwidth=\skip58
+\f@nch@O@elh=\skip59
+\f@nch@O@erh=\skip60
+\f@nch@O@olh=\skip61
+\f@nch@O@orh=\skip62
+\f@nch@O@elf=\skip63
+\f@nch@O@erf=\skip64
+\f@nch@O@olf=\skip65
+\f@nch@O@orf=\skip66
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/lastpage/lastpage.
 sty
@@ -339,49 +348,47 @@ Package: lastpage 2015/03/29 v1.2m Refers to last page's name (HMM; JPG)
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/titlesec/titlesec.
 sty
-Package: titlesec 2019/10/16 v2.13 Sectioning titles
-\ttl@box=\box50
-\beforetitleunit=\skip66
-\aftertitleunit=\skip67
+Package: titlesec 2021/07/05 v2.14 Sectioning titles
+\ttl@box=\box53
+\beforetitleunit=\skip67
+\aftertitleunit=\skip68
 \ttl@plus=\dimen186
 \ttl@minus=\dimen187
-\ttl@toksa=\toks25
+\ttl@toksa=\toks26
 \titlewidth=\dimen188
 \titlewidthlast=\dimen189
 \titlewidthfirst=\dimen190
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/titlesec/titletoc.
 sty
-Package: titletoc 2019/10/16 v2.13 TOC entries
+Package: titletoc 2021/07/05 v2.14 TOC entries
 \ttl@leftsep=\dimen191
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/enumitem/enumitem.
 sty
 Package: enumitem 2019/06/20 v3.9 Customized lists
-\labelindent=\skip68
+\labelindent=\skip69
 \enit@outerparindent=\dimen192
-\enit@toks=\toks26
-\enit@inbox=\box51
-\enit@count@id=\count289
-\enitdp@description=\count290
+\enit@toks=\toks27
+\enit@inbox=\box54
+\enit@count@id=\count292
+\enitdp@description=\count293
 )
-\tocsep=\skip69
+\tocsep=\skip70
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/lipsum/lipsum.sty
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2021-02-18 L3 programming layer (loader) 
+Package: expl3 2021-07-12 L3 programming layer (loader) 
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backen
 d-pdftex.def
-File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count291
-\l__pdf_internal_box=\box52
+File: l3backend-pdftex.def 2021-07-12 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count294
+\l__pdf_internal_box=\box55
 ))
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/
 xparse.sty
-(/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/
-xparse-2020-10-01.sty
-(/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/
-xparse-generic.tex)))
+Package: xparse 2021-06-18 L3 Experimental document command parser
+)
 Package: lipsum 2021-03-03 v2.3 150 paragraphs of Lorem Ipsum dummy text
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/lipsum/lipsum.ltd.
@@ -391,12 +398,12 @@ File: lipsum.ltd.tex 2021-03-03 v2.3 The Lorem ipsum dummy text
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/microtype/microtyp
 e.sty
 Package: microtype 2021/03/14 v2.8c Micro-typographical refinements (RS)
-\MT@toks=\toks27
-\MT@count=\count292
+\MT@toks=\toks28
+\MT@count=\count295
 LaTeX Info: Redefining \textls on input line 790.
 \MT@outer@kern=\dimen193
 LaTeX Info: Redefining \textmicrotypecontext on input line 1374.
-\MT@listname@count=\count293
+\MT@listname@count=\count296
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/microtype/microtyp
 e-pdftex.def
@@ -404,7 +411,7 @@ File: microtype-pdftex.def 2021/03/14 v2.8c Definitions specific to pdftex (RS)
 
 LaTeX Info: Redefining \lsstyle on input line 915.
 LaTeX Info: Redefining \lslig on input line 915.
-\MT@outer@space=\skip70
+\MT@outer@space=\skip71
 )
 Package microtype Info: Loading configuration file microtype.cfg.
 
@@ -414,7 +421,7 @@ File: microtype.cfg 2021/03/14 v2.8c microtype main configuration file (RS)
 ))
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.
 sty
-Package: hyperref 2021-02-27 v7.00k Hypertext links for LaTeX
+Package: hyperref 2021-06-07 v7.00m Hypertext links for LaTeX
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.
 sty
@@ -462,18 +469,18 @@ s.sty
 Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
 )
 \@linkdim=\dimen194
-\Hy@linkcounter=\count294
-\Hy@pagecounter=\count295
+\Hy@linkcounter=\count297
+\Hy@pagecounter=\count298
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.de
 f
-File: pd1enc.def 2021-02-27 v7.00k Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2021-06-07 v7.00m Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref-
 langpatches.def
-File: hyperref-langpatches.def 2021-02-27 v7.00k Hyperref: patches for babel la
+File: hyperref-langpatches.def 2021-06-07 v7.00m Hyperref: patches for babel la
 nguages
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.
@@ -484,10 +491,10 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 s.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count296
+\Hy@SavedSpaceFactor=\count299
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2021-02-27 v7.00k Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
@@ -499,7 +506,7 @@ Package hyperref Info: Plain pages OFF on input line 4207.
 Package hyperref Info: Backreferencing OFF on input line 4212.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4445.
-\c@Hy@tempcnt=\count297
+\c@Hy@tempcnt=\count300
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
@@ -516,34 +523,33 @@ tcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count298
+\Fld@menulength=\count301
 \Field@Width=\dimen196
 \Fld@charsize=\dimen197
-Package hyperref Info: Hyper figures OFF on input line 6075.
-Package hyperref Info: Link nesting OFF on input line 6080.
-Package hyperref Info: Hyper index ON on input line 6083.
-Package hyperref Info: backreferencing OFF on input line 6090.
-Package hyperref Info: Link coloring OFF on input line 6095.
-Package hyperref Info: Link coloring with OCG OFF on input line 6100.
-Package hyperref Info: PDF/A mode OFF on input line 6105.
-LaTeX Info: Redefining \ref on input line 6145.
-LaTeX Info: Redefining \pageref on input line 6149.
+Package hyperref Info: Hyper figures OFF on input line 6076.
+Package hyperref Info: Link nesting OFF on input line 6081.
+Package hyperref Info: Hyper index ON on input line 6084.
+Package hyperref Info: backreferencing OFF on input line 6091.
+Package hyperref Info: Link coloring OFF on input line 6096.
+Package hyperref Info: Link coloring with OCG OFF on input line 6101.
+Package hyperref Info: PDF/A mode OFF on input line 6106.
+LaTeX Info: Redefining \ref on input line 6146.
+LaTeX Info: Redefining \pageref on input line 6150.
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.
 sty
-Package: atbegshi-ltx 2020/08/17 v1.0a Emulation of the original atbegshi packa
-ge
-with kernel methods
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
 )
-\Hy@abspage=\count299
-\c@Item=\count300
-\c@Hfootnote=\count301
+\Hy@abspage=\count302
+\c@Item=\count303
+\c@Hfootnote=\count304
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.d
 ef
-File: hpdftex.def 2021-02-27 v7.00k Hyperref driver for pdfTeX
+File: hpdftex.def 2021-06-07 v7.00m Hyperref driver for pdfTeX
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx
 .sty
@@ -551,8 +557,8 @@ Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
 e
 with kernel methods
 )
-\Fld@listcount=\count302
-\c@bookmark@seq@number=\count303
+\Fld@listcount=\count305
+\c@bookmark@seq@number=\count306
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rer
 unfilecheck.sty
@@ -565,47 +571,48 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 86.
 )
-\Hy@SectionHShift=\skip71
+\Hy@SectionHShift=\skip72
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.st
 y
-Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
-\LTleft=\skip72
-\LTright=\skip73
-\LTpre=\skip74
-\LTpost=\skip75
-\LTchunksize=\count304
+Package: longtable 2021-05-07 v4.16 Multi-page Table package (DPC)
+\LTleft=\skip73
+\LTright=\skip74
+\LTpre=\skip75
+\LTpost=\skip76
+\LTchunksize=\count307
 \LTcapwidth=\dimen198
-\LT@head=\box53
-\LT@firsthead=\box54
-\LT@foot=\box55
-\LT@lastfoot=\box56
-\LT@cols=\count305
-\LT@rows=\count306
-\c@LT@tables=\count307
-\c@LT@chunks=\count308
-\LT@p@ftn=\toks28
+\LT@head=\box56
+\LT@firsthead=\box57
+\LT@foot=\box58
+\LT@lastfoot=\box59
+\LT@gbox=\box60
+\LT@cols=\count308
+\LT@rows=\count309
+\c@LT@tables=\count310
+\c@LT@chunks=\count311
+\LT@p@ftn=\toks29
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.
 sty
 Package: fancyvrb 2021/01/20 v3.7 verbatim text (tvz,hv)
-\FV@CodeLineNo=\count309
+\FV@CodeLineNo=\count312
 \FV@InFile=\read3
-\FV@TabBox=\box57
-\c@FancyVerbLine=\count310
-\FV@StepNumber=\count311
+\FV@TabBox=\box61
+\c@FancyVerbLine=\count313
+\FV@StepNumber=\count314
 \FV@OutFile=\write3
 ) (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/framed/framed.st
 y
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip76
+\OuterFrameSep=\skip77
 \fb@frw=\dimen199
 \fb@frh=\dimen256
 \FrameRule=\dimen257
 \FrameSep=\dimen258
 )
-\csllabelwidth=\skip77
-\cslhangindent=\skip78
+\csllabelwidth=\skip78
+\cslhangindent=\skip79
 
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/hyphenat/hyphenat.
 sty
@@ -624,44 +631,44 @@ Package: flafter 2018/11/28 v1.4d Standard LaTeX floats after reference (FMi)
 Applying: [2015/01/01] float order in 2-column on input line 49.
 Already applied: [0000/00/00] float order in 2-column on input line 151.
 ) (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/tools/array.sty
-Package: array 2020/10/01 v2.5c Tabular extension package (FMi)
+Package: array 2021/04/20 v2.5e Tabular extension package (FMi)
 \col@sep=\dimen259
-\ar@mcellbox=\box58
+\ar@mcellbox=\box62
 \extrarowheight=\dimen260
-\NC@list=\toks29
-\extratabsurround=\skip79
-\backup@length=\skip80
-\ar@cellbox=\box59
+\NC@list=\toks30
+\extratabsurround=\skip80
+\backup@length=\skip81
+\ar@cellbox=\box63
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/multirow/multirow.
 sty
 Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
-\multirow@colwidth=\skip81
-\multirow@cntb=\count312
-\multirow@dima=\skip82
+\multirow@colwidth=\skip82
+\multirow@cntb=\count315
+\multirow@dima=\skip83
 \bigstrutjot=\dimen261
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.st
 y
 \wrapoverhang=\dimen262
 \WF@size=\dimen263
-\c@WF@wrappedlines=\count313
-\WF@box=\box60
-\WF@everypar=\toks30
+\c@WF@wrappedlines=\count316
+\WF@box=\box64
+\WF@everypar=\toks31
 Package: wrapfig 2003/01/31  v 3.6
 ) (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count314
-\float@exts=\toks31
-\float@box=\box61
-\@float@everytoks=\toks32
-\@floatcapt=\box62
+\c@float@type=\count317
+\float@exts=\toks32
+\float@box=\box65
+\@float@everytoks=\toks33
+\@floatcapt=\box66
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.
 sty
 Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
-\everycr=\toks33
-\minrowclearance=\skip83
+\everycr=\toks34
+\minrowclearance=\skip84
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscap
 e.sty
@@ -678,17 +685,17 @@ Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/varwidth/varwidth.
 sty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
-\@vwid@box=\box63
-\sift@deathcycles=\count315
+\@vwid@box=\box67
+\sift@deathcycles=\count318
 \@vwid@loff=\dimen264
 \@vwid@roff=\dimen265
 )
-\c@taburow=\count316
-\tabu@nbcols=\count317
-\tabu@cnt=\count318
-\tabu@Xcol=\count319
-\tabu@alloc=\count320
-\tabu@nested=\count321
+\c@taburow=\count319
+\tabu@nbcols=\count320
+\tabu@cnt=\count321
+\tabu@Xcol=\count322
+\tabu@alloc=\count323
+\tabu@nested=\count324
 \tabu@target=\dimen266
 \tabu@spreadtarget=\dimen267
 \tabu@naturalX=\dimen268
@@ -698,18 +705,18 @@ Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \abovetabulinesep=\dimen272
 \belowtabulinesep=\dimen273
 \tabustrutrule=\dimen274
-\tabu@thebody=\toks34
-\tabu@footnotes=\toks35
-\tabu@box=\box64
-\tabu@arstrutbox=\box65
-\tabu@hleads=\box66
-\tabu@vleads=\box67
-\tabu@cellskip=\skip84
+\tabu@thebody=\toks35
+\tabu@footnotes=\toks36
+\tabu@box=\box68
+\tabu@arstrutbox=\box69
+\tabu@hleads=\box70
+\tabu@vleads=\box71
+\tabu@cellskip=\skip85
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/threeparttable/thr
 eeparttable.sty
 Package: threeparttable 2003/06/13  v 3.0
-\@tempboxb=\box68
+\@tempboxb=\box72
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/threeparttablex/th
 reeparttablex.sty
@@ -723,16 +730,16 @@ Package: environ 2014/05/04 v0.3 A new way to define environments
 ces.sty
 Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 ))
-\TPTL@width=\skip85
+\TPTL@width=\skip86
 ) (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/generic/ulem/ulem.sty
-\UL@box=\box69
-\UL@hyphenbox=\box70
-\UL@skip=\skip86
-\UL@hook=\toks36
+\UL@box=\box73
+\UL@hyphenbox=\box74
+\UL@skip=\skip87
+\UL@hook=\toks37
 \UL@height=\dimen275
-\UL@pe=\count322
+\UL@pe=\count325
 \UL@pixel=\dimen276
-\ULC@box=\box71
+\ULC@box=\box75
 Package: ulem 2019/11/18
 \ULdepth=\dimen277
 )
@@ -740,8 +747,8 @@ Package: ulem 2019/11/18
 sty
 Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
 \rotheadsize=\dimen278
-\c@nlinenum=\count323
-\TeXr@lab=\toks37
+\c@nlinenum=\count326
+\TeXr@lab=\toks38
 )
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 1
 38.
@@ -772,17 +779,17 @@ LaTeX Font Info:    ... okay on input line 138.
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/context/base/mkii/supp-p
 df.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count324
+\scratchcounter=\count327
 \scratchdimen=\dimen279
-\scratchbox=\box72
-\nofMPsegments=\count325
-\nofMParguments=\count326
-\everyMPshowfont=\toks38
-\MPscratchCnt=\count327
+\scratchbox=\box76
+\nofMPsegments=\count328
+\nofMParguments=\count329
+\everyMPshowfont=\toks39
+\MPscratchCnt=\count330
 \MPscratchDim=\dimen280
-\MPnumerator=\count328
-\makeMPintoPDFobject=\count329
-\everyMPtoPDFconversion=\toks39
+\MPnumerator=\count331
+\makeMPintoPDFobject=\count332
+\everyMPtoPDFconversion=\toks40
 )
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epsto
 pdf-base.sty
@@ -874,7 +881,7 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count330
+\c@section@level=\count333
 )
 LaTeX Info: Redefining \ref on input line 138.
 LaTeX Info: Redefining \pageref on input line 138.
@@ -1071,91 +1078,90 @@ LaTeX Font Info:    Font shape `OML/ptm/m/n' in size <10> not available
 
 {/Users/mladenjovanovic/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
 x.map}]
-<paper_files/figure-latex/four-athletes-kinematics-1.pdf, id=164, 361.35pt x 22
+<paper_files/figure-latex/four-athletes-kinematics-1.pdf, id=156, 361.35pt x 22
 2.8325pt>
 File: paper_files/figure-latex/four-athletes-kinematics-1.pdf Graphic file (typ
 e pdf)
 <use paper_files/figure-latex/four-athletes-kinematics-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/four-athletes-kinematics-1.pd
-f  used on input line 206.
+f  used on input line 212.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-<paper_files/figure-latex/four-athletes-profile-1.pdf, id=168, 361.35pt x 222.8
+<paper_files/figure-latex/four-athletes-profile-1.pdf, id=160, 361.35pt x 222.8
 325pt>
 File: paper_files/figure-latex/four-athletes-profile-1.pdf Graphic file (type p
 df)
 <use paper_files/figure-latex/four-athletes-profile-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/four-athletes-profile-1.pdf  
-used on input line 217.
+used on input line 227.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
 [2] [3 <./paper_files/figure-latex/four-athletes-kinematics-1.pdf> <./paper_fil
 es/figure-latex/four-athletes-profile-1.pdf>]
 LaTeX Font Info:    Trying to load font information for OML+pcr on input line 2
-44.
+60.
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omlpcr.fd
 File: omlpcr.fd 
 )
-LaTeX Font Info:    Font shape `OML/pcr/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 244.
-LaTeX Font Info:    Font shape `OML/pcr/m/it' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 254.
+LaTeX Font Info:    Font shape `OML/pcr/m/n' in size <9> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 260.
+LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 270.
+LaTeX Font Info:    Font shape `OML/pcr/m/it' in size <9> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 270.
 [4]
-<paper_files/figure-latex/unnamed-chunk-2-1.pdf, id=241, 361.35pt x 222.8325pt>
+<paper_files/figure-latex/unnamed-chunk-2-1.pdf, id=244, 361.35pt x 222.8325pt>
 
 File: paper_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-2-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-2-1.pdf  used o
-n input line 282.
+n input line 302.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
 LaTeX Font Info:    Font shape `OT1/phv/b/it' in size <9> not available
-(Font)              Font shape `OT1/phv/b/sl' tried instead on input line 299.
+(Font)              Font shape `OT1/phv/b/sl' tried instead on input line 325.
 [5 <./paper_files/figure-latex/unnamed-chunk-2-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-7-1.pdf, id=268, 361.35pt x 222.8325pt>
+<paper_files/figure-latex/unnamed-chunk-7-1.pdf, id=271, 361.35pt x 222.8325pt>
 
 File: paper_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-7-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-7-1.pdf  used o
-n input line 377.
+n input line 417.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [6] [7 <./paper_files/figure-latex/unnamed-chunk-7-1.pdf>] [8]
-<paper_files/figure-latex/unnamed-chunk-11-1.pdf, id=301, 361.35pt x 222.8325pt
+<paper_files/figure-latex/unnamed-chunk-11-1.pdf, id=304, 361.35pt x 222.8325pt
 >
 File: paper_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-11-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-11-1.pdf  used 
-on input line 495.
+on input line 549.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-[9 <./paper_files/figure-latex/unnamed-chunk-11-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-12-1.pdf, id=317, 361.35pt x 222.8325pt
+<paper_files/figure-latex/unnamed-chunk-12-1.pdf, id=305, 361.35pt x 222.8325pt
 >
 File: paper_files/figure-latex/unnamed-chunk-12-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-12-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-12-1.pdf  used 
-on input line 524.
+on input line 582.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-[10 <./paper_files/figure-latex/unnamed-chunk-12-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-17-1.pdf, id=338, 361.35pt x 222.8325pt
+[9 <./paper_files/figure-latex/unnamed-chunk-11-1.pdf>] [10 <./paper_files/figu
+re-latex/unnamed-chunk-12-1.pdf>]
+<paper_files/figure-latex/unnamed-chunk-17-1.pdf, id=340, 361.35pt x 222.8325pt
 >
 File: paper_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-17-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-17-1.pdf  used 
-on input line 616.
+on input line 694.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-
-Underfull \vbox (badness 7504) has occurred while \output is active []
-
-[11]
+[11 <./paper_files/figure-latex/unnamed-chunk-17-1.pdf>]
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 639.
+            Default family used instead on input line 725.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 
-639.
+725.
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmtt.fd
 File: ts1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
@@ -1165,361 +1171,275 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 639.
+            Default family used instead on input line 725.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 641.
+            Default family used instead on input line 727.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 641.
+            Default family used instead on input line 727.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 641.
+            Default family used instead on input line 727.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 641.
+            Default family used instead on input line 727.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 642.
+            Default family used instead on input line 728.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 642.
+            Default family used instead on input line 728.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 642.
+            Default family used instead on input line 728.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 642.
+            Default family used instead on input line 728.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 649.
+            Default family used instead on input line 735.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 649.
-[12 <./paper_files/figure-latex/unnamed-chunk-17-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-19-1.pdf, id=366, 361.35pt x 222.8325pt
+            Default family used instead on input line 735.
+<paper_files/figure-latex/unnamed-chunk-19-1.pdf, id=356, 361.35pt x 222.8325pt
 >
 File: paper_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-19-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-19-1.pdf  used 
-on input line 662.
+on input line 748.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[12]
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 674.
+            Default family used instead on input line 764.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 674.
+            Default family used instead on input line 764.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 680.
+            Default family used instead on input line 770.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 680.
+            Default family used instead on input line 770.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 686.
+            Default family used instead on input line 776.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 686.
+            Default family used instead on input line 776.
 [13 <./paper_files/figure-latex/unnamed-chunk-19-1.pdf>]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 798.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 731.
+            Default family used instead on input line 825.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 731.
+            Default family used instead on input line 825.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 742.
+            Default family used instead on input line 836.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 742.
+            Default family used instead on input line 836.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 758.
+            Default family used instead on input line 856.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 758.
+            Default family used instead on input line 856.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 766.
+            Default family used instead on input line 864.
 LaTeX Info: Symbol \textasciigrave not provided by
             font family pcr in TS1 encoding.
-            Default family used instead on input line 766.
+            Default family used instead on input line 864.
 [14]
-LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 8
-23.
+LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 9
+30.
 (/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1pcr.fd
 File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
 )
-LaTeX Font Info:    Font shape `TS1/pcr/m/it' in size <10> not available
-(Font)              Font shape `TS1/pcr/m/sl' tried instead on input line 823.
+LaTeX Font Info:    Font shape `TS1/pcr/m/it' in size <9> not available
+(Font)              Font shape `TS1/pcr/m/sl' tried instead on input line 930.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `pcr' (encoding: TS1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-[15]
 <paper_files/figure-latex/unnamed-chunk-25-1.pdf, id=403, 361.35pt x 222.8325pt
 >
 File: paper_files/figure-latex/unnamed-chunk-25-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-25-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-25-1.pdf  used 
-on input line 834.
+on input line 945.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-[16 <./paper_files/figure-latex/unnamed-chunk-25-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-29-1.pdf, id=414, 361.35pt x 222.8325pt
+
+Underfull \vbox (badness 2512) has occurred while \output is active []
+
+[15]
+<paper_files/figure-latex/unnamed-chunk-29-1.pdf, id=417, 361.35pt x 222.8325pt
 >
 File: paper_files/figure-latex/unnamed-chunk-29-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-29-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-29-1.pdf  used 
-on input line 883.
+on input line 1000.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-<paper_files/figure-latex/unnamed-chunk-30-1.pdf, id=415, 361.35pt x 222.8325pt
+[16 <./paper_files/figure-latex/unnamed-chunk-25-1.pdf>]
+<paper_files/figure-latex/unnamed-chunk-30-1.pdf, id=429, 361.35pt x 222.8325pt
 >
 File: paper_files/figure-latex/unnamed-chunk-30-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-30-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-30-1.pdf  used 
-on input line 887.
+on input line 1010.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[17 <./paper_files/figure-latex/unnamed-chunk-29-1.pdf>]
 <paper_files/figure-latex/unnamed-chunk-31-1.pdf, id=430, 361.35pt x 222.8325pt
 >
 File: paper_files/figure-latex/unnamed-chunk-31-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-31-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-31-1.pdf  used 
-on input line 893.
-(pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-<paper_files/figure-latex/unnamed-chunk-32-1.pdf, id=431, 361.35pt x 222.8325pt
->
-File: paper_files/figure-latex/unnamed-chunk-32-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-32-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-32-1.pdf  used 
-on input line 899.
+on input line 1018.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[18 <./paper_files/figure-latex/unnamed-chunk-30-1.pdf> <./paper_files/figure-l
-atex/unnamed-chunk-31-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-33-1.pdf, id=453, 361.35pt x 222.8325pt
->
-File: paper_files/figure-latex/unnamed-chunk-33-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-33-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-33-1.pdf  used 
-on input line 903.
-(pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-[19 <./paper_files/figure-latex/unnamed-chunk-32-1.pdf> <./paper_files/figure-l
-atex/unnamed-chunk-33-1.pdf>]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[20] [21]
-<paper_files/figure-latex/unnamed-chunk-37-1.pdf, id=508, 361.35pt x 222.8325pt
->
-File: paper_files/figure-latex/unnamed-chunk-37-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-37-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-37-1.pdf  used 
-on input line 1042.
-(pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-<paper_files/figure-latex/unnamed-chunk-38-1.pdf, id=509, 361.35pt x 222.8325pt
+[17 <./paper_files/figure-latex/unnamed-chunk-29-1.pdf> <./paper_files/figure-l
+atex/unnamed-chunk-30-1.pdf>] [18 <./paper_files/figure-latex/unnamed-chunk-31-
+1.pdf>] [19] [20] [21]
+<paper_files/figure-latex/unnamed-chunk-38-1.pdf, id=510, 361.35pt x 222.8325pt
 >
 File: paper_files/figure-latex/unnamed-chunk-38-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-38-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-38-1.pdf  used 
-on input line 1046.
+on input line 1322.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-<paper_files/figure-latex/unnamed-chunk-39-1.pdf, id=510, 361.35pt x 222.8325pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[22]
+<paper_files/figure-latex/unnamed-chunk-39-1.pdf, id=516, 361.35pt x 222.8325pt
 >
 File: paper_files/figure-latex/unnamed-chunk-39-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-39-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-39-1.pdf  used 
-on input line 1050.
+on input line 1356.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-[22 <./paper_files/figure-latex/unnamed-chunk-37-1.pdf> <./paper_files/figure-l
-atex/unnamed-chunk-38-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-40-1.pdf, id=533, 361.35pt x 222.8325pt
->
-File: paper_files/figure-latex/unnamed-chunk-40-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-40-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-40-1.pdf  used 
-on input line 1054.
-(pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[23 <./paper_files/figure-latex/unnamed-chunk-38-1.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 1362--1363
+\OT1/ptm/m/n/10 (+20) in the mixed-models us-ing \OT1/pcr/l/it/10 mixed[]-model
+[]-us-ing[]-splits[]-with[]-time[]-cor-rec-tion()\OT1/ptm/m/n/10 (+20) ,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1362--1363
+\OT1/pcr/l/it/10 mixed[]-model[]-us-ing[]-splits[]-with[]-dis-tance[]-cor-rec-t
+ion()\OT1/ptm/m/n/10 (+20) , and \OT1/pcr/l/it/10 mixed[]-model[]-us-
+ []
+
 <paper_files/figure-latex/unnamed-chunk-41-1.pdf, id=534, 361.35pt x 222.8325pt
 >
 File: paper_files/figure-latex/unnamed-chunk-41-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-41-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-41-1.pdf  used 
-on input line 1058.
+on input line 1391.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[23 <./paper_files/figure-latex/unnamed-chunk-39-1.pdf> <./paper_files/figure-l
-atex/unnamed-chunk-40-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-42-1.pdf, id=557, 361.35pt x 222.8325pt
+[24 <./paper_files/figure-latex/unnamed-chunk-39-1.pdf>]
+<paper_files/figure-latex/unnamed-chunk-42-1.pdf, id=555, 361.35pt x 222.8325pt
 >
 File: paper_files/figure-latex/unnamed-chunk-42-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-42-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-42-1.pdf  used 
-on input line 1062.
+on input line 1399.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-[24 <./paper_files/figure-latex/unnamed-chunk-41-1.pdf> <./paper_files/figure-l
-atex/unnamed-chunk-42-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-44-1.pdf, id=581, 361.35pt x 222.8325pt
->
-File: paper_files/figure-latex/unnamed-chunk-44-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-44-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-44-1.pdf  used 
-on input line 1077.
-(pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-<paper_files/figure-latex/unnamed-chunk-45-1.pdf, id=582, 361.35pt x 222.8325pt
->
-File: paper_files/figure-latex/unnamed-chunk-45-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-45-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-45-1.pdf  used 
-on input line 1081.
-(pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-<paper_files/figure-latex/unnamed-chunk-46-1.pdf, id=583, 361.35pt x 222.8325pt
->
-File: paper_files/figure-latex/unnamed-chunk-46-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-46-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-46-1.pdf  used 
-on input line 1085.
-(pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-[25 <./paper_files/figure-latex/unnamed-chunk-44-1.pdf> <./paper_files/figure-l
-atex/unnamed-chunk-45-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-47-1.pdf, id=606, 361.35pt x 222.8325pt
+[25 <./paper_files/figure-latex/unnamed-chunk-41-1.pdf> <./paper_files/figure-l
+atex/unnamed-chunk-42-1.pdf>] [26] [27]
+<paper_files/figure-latex/unnamed-chunk-47-1.pdf, id=591, 361.35pt x 222.8325pt
 >
 File: paper_files/figure-latex/unnamed-chunk-47-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-47-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-47-1.pdf  used 
-on input line 1089.
+on input line 1600.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-<paper_files/figure-latex/unnamed-chunk-48-1.pdf, id=607, 361.35pt x 222.8325pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[28]
+<paper_files/figure-latex/unnamed-chunk-48-1.pdf, id=600, 361.35pt x 222.8325pt
 >
 File: paper_files/figure-latex/unnamed-chunk-48-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-48-1.pdf>
 Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-48-1.pdf  used 
-on input line 1093.
+on input line 1608.
+(pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
+<paper_files/figure-latex/unnamed-chunk-49-1.pdf, id=602, 361.35pt x 222.8325pt
+>
+File: paper_files/figure-latex/unnamed-chunk-49-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/unnamed-chunk-49-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-49-1.pdf  used 
+on input line 1616.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[26 <./paper_files/figure-latex/unnamed-chunk-46-1.pdf> <./paper_files/figure-l
-atex/unnamed-chunk-47-1.pdf>] [27 <./paper_files/figure-latex/unnamed-chunk-48-
-1.pdf>]
-Underfull \vbox (badness 1337) has occurred while \output is active []
-
-[28]
-<paper_files/figure-latex/unnamed-chunk-51-1.pdf, id=657, 361.35pt x 222.8325pt
+[29 <./paper_files/figure-latex/unnamed-chunk-47-1.pdf> <./paper_files/figure-l
+atex/unnamed-chunk-48-1.pdf>]
+<paper_files/figure-latex/unnamed-chunk-50-1.pdf, id=618, 361.35pt x 222.8325pt
 >
-File: paper_files/figure-latex/unnamed-chunk-51-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-51-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-51-1.pdf  used 
-on input line 1206.
+File: paper_files/figure-latex/unnamed-chunk-50-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/unnamed-chunk-50-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-50-1.pdf  used 
+on input line 1624.
 (pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-<paper_files/figure-latex/unnamed-chunk-52-1.pdf, id=658, 361.35pt x 222.8325pt
->
-File: paper_files/figure-latex/unnamed-chunk-52-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-52-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-52-1.pdf  used 
-on input line 1210.
-(pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[29 <./paper_files/figure-latex/unnamed-chunk-51-1.pdf>] [30 <./paper_files/fig
-ure-latex/unnamed-chunk-52-1.pdf>]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[31] [32]
-<paper_files/figure-latex/unnamed-chunk-57-1.pdf, id=706, 361.35pt x 222.8325pt
->
-File: paper_files/figure-latex/unnamed-chunk-57-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-57-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-57-1.pdf  used 
-on input line 1391.
-(pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-<paper_files/figure-latex/unnamed-chunk-58-1.pdf, id=707, 361.35pt x 222.8325pt
->
-File: paper_files/figure-latex/unnamed-chunk-58-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-58-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-58-1.pdf  used 
-on input line 1395.
-(pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[33 <./paper_files/figure-latex/unnamed-chunk-57-1.pdf>]
-<paper_files/figure-latex/unnamed-chunk-59-1.pdf, id=719, 361.35pt x 222.8325pt
->
-File: paper_files/figure-latex/unnamed-chunk-59-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-59-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-59-1.pdf  used 
-on input line 1399.
-(pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-<paper_files/figure-latex/unnamed-chunk-60-1.pdf, id=720, 361.35pt x 222.8325pt
->
-File: paper_files/figure-latex/unnamed-chunk-60-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-60-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-60-1.pdf  used 
-on input line 1403.
-(pdftex.def)             Requested size: 373.61061pt x 230.39388pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[34 <./paper_files/figure-latex/unnamed-chunk-58-1.pdf> <./paper_files/figure-l
-atex/unnamed-chunk-59-1.pdf>] [35 <./paper_files/figure-latex/unnamed-chunk-60-
-1.pdf>]
-Overfull \hbox (18.5743pt too wide) in paragraph at lines 1469--1471
+[30 <./paper_files/figure-latex/unnamed-chunk-49-1.pdf> <./paper_files/figure-l
+atex/unnamed-chunk-50-1.pdf>] [31]
+Overfull \hbox (18.5743pt too wide) in paragraph at lines 1718--1720
 \OT1/pcr/l/it/10 a-[]spreadsheet-[]for-[]sprint-[]acceleration-[]force-[]veloci
 ty-[]power-[]profiling/$[]\OT1/ptm/m/n/10 (-20) . 
  []
 
-[36] 
+[32] 
 AED: lastpage setting LastPage
-[37] (./paper.aux)
+[33] (./paper.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 054FE8D2FE79AE2629C16A7853752C5B;4871.
+(rerunfilecheck)             Checksum: F719DA459FC36EC5983D7CB5B710BF44;4573.
  ) 
 Here is how much of TeX's memory you used:
- 18158 strings out of 480929
- 287980 string characters out of 5904679
- 734994 words of memory out of 5000000
- 34477 multiletter control sequences out of 15000+600000
- 471423 words of font info for 362 fonts, out of 8000000 for 9000
+ 18370 strings out of 480477
+ 291948 string characters out of 5896912
+ 744075 words of memory out of 5000000
+ 35148 multiletter control sequences out of 15000+600000
+ 473219 words of font info for 370 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 86i,12n,89p,1618b,446s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 72i,12n,81p,1618b,436s stack positions out of 5000i,500n,10000p,200000b,80000s
  </Users/mladenjovanovic/Library/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/e
-c/tctt1000.600pk>{/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/enc/d
+c/tctt0900.600pk>{/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/enc/d
 vips/base/8r.enc}</Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmmi10.pfb></Users/mladenjovanovic/Library/TinyTeX/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/mladenjovanovic/Library/Tin
-yTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/mladenjovanov
-ic/Library/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></Users/mladen
-jovanovic/Library/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></User
-s/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pf
-b></Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/type1/urw/helvetic/u
-hvbo8a.pfb></Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/type1/urw/h
-elvetic/uhvr8a.pfb></Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/typ
-e1/urw/times/utmb8a.pfb></Users/mladenjovanovic/Library/TinyTeX/texmf-dist/font
-s/type1/urw/times/utmr8a.pfb></Users/mladenjovanovic/Library/TinyTeX/texmf-dist
-/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (37 pages, 1214250 bytes).
+st/fonts/type1/public/amsfonts/cm/cmmi9.pfb></Users/mladenjovanovic/Library/Tin
+yTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/mladenjovanovi
+c/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/
+mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><
+/Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrro
+8a.pfb></Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/type1/urw/helve
+tic/uhvb8a.pfb></Users/mladenjovanovic/Library/TinyTeX/texmf-dist/fonts/type1/u
+rw/helvetic/uhvbo8a.pfb></Users/mladenjovanovic/Library/TinyTeX/texmf-dist/font
+s/type1/urw/helvetic/uhvr8a.pfb></Users/mladenjovanovic/Library/TinyTeX/texmf-d
+ist/fonts/type1/urw/times/utmb8a.pfb></Users/mladenjovanovic/Library/TinyTeX/te
+xmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/mladenjovanovic/Library/TinyT
+eX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on paper.pdf (33 pages, 1003875 bytes).
 PDF statistics:
- 897 PDF objects out of 1000 (max. 8388607)
- 772 compressed objects within 8 object streams
- 137 named destinations out of 1000 (max. 500000)
- 91980 words of extra memory for PDF output out of 106986 (max. 10000000)
+ 819 PDF objects out of 1000 (max. 8388607)
+ 709 compressed objects within 8 object streams
+ 145 named destinations out of 1000 (max. 500000)
+ 89357 words of extra memory for PDF output out of 106986 (max. 10000000)
 

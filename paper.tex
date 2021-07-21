@@ -8,7 +8,7 @@
 %% version 1.1 or newer of the wlpeerj.cls file, and
 %% the corresponding author info requires v1.2
 
-\documentclass[fleqn,10pt,lineno]{wlpeerj} % for journal submissions
+\documentclass[fleqn,10pt]{wlpeerj} % for preprint submissions
 
 % ZNK -- Adding headers for pandoc
 
@@ -73,7 +73,7 @@
   {}%
   {\par}
 % For Pandoc 2.11+
-\newenvironment{CSLReferences}[3] % #1 hanging-ident, #2 entry spacing
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
  {% don't indent paragraphs
   \setlength{\parindent}{0pt}
   % turn on hanging indent if param 1 is 1
@@ -87,7 +87,7 @@
 \usepackage{calc} % for calculating minipage widths
 \newcommand{\CSLBlock}[1]{#1\hfill\break}
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 % Pandoc Header
@@ -148,7 +148,7 @@ Short sprint performance is one of the most distinguishable and admired physical
 
 The use of force plates is considered the gold standard for assessing mechanical properties of sprinting; however, there are logistical and financial challenges to capturing the profile of an entire sprint (\protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}). Radar and laser technology are frequently used laboratory-grade methods (\protect\hyperlink{ref-buchheitMechanicalDeterminantsAcceleration2014}{Buchheit et al. 2014}; \protect\hyperlink{ref-edwardsSprintAccelerationCharacteristics2020}{Edwards et al. 2020}; \protect\hyperlink{ref-jimenez-reyesRelationshipVerticalHorizontal2018}{Jiménez-Reyes et al. 2018}; \protect\hyperlink{ref-marcote-pequenoAssociationForceVelocity2019}{Marcote-Pequeño et al. 2019}) but not normally accessible to practitioners working in sports. Undoubtedly, the most common method available and used to evaluate sprint performance are timing gates. Often multiple gates are positioned at varying distances to capture split times (e.g., 5, 10, 20 m), which can now be incorporated into the method for determining sprint mechanical properties (\protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}). This approach presents an advantage to practitioners who can use the outcomes to describe individual differences, quantify the effects of training interventions, and better understanding the limiting factors of performance.
 
-The \textbf{shorts} package (\protect\hyperlink{ref-R-shorts}{Jovanovic 2020}), written in the R language (\protect\hyperlink{ref-R-base}{R Core Team 2020}), represents an open-source tool to help sports scientists translate raw timing data into detailed mechanical outcomes through mathematical modeling (\protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}). To best of our knowledge, scientist, researchers, and coaches have been performing short sprints modeling using the built-in solver function of Excel (Microsoft Corporation, Redmond, Washington, United States) (\protect\hyperlink{ref-morinSpreadsheetSprintAcceleration2017}{J. B. Morin 2017}; \protect\hyperlink{ref-morinSpreadsheetSprintAcceleration2019}{Jean-Benoit Morin and Samozino 2019}; \protect\hyperlink{ref-stenrothForcevelocityProfilingIce2020}{Stenroth, Vartiainen, and Karjalainen 2020}; \protect\hyperlink{ref-stenrothSpreadsheetSprintAcceleration2020}{Stenroth and Vartiainen 2020}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}; \protect\hyperlink{ref-clarkNFLCombine40Yard2017}{Clark et al. 2017}; \protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}), which makes the \textbf{shorts} package a major improvement in ease-of-use, speed, transparency, reproducibility, and more feature-rich model fitting.
+The \textbf{shorts} package (\protect\hyperlink{ref-R-shorts}{Jovanović 2021}), written in the R language (\protect\hyperlink{ref-R-base}{R Core Team 2020}), represents an open-source tool to help sports scientists translate raw timing data into detailed mechanical outcomes through mathematical modeling (\protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}). To best of our knowledge, scientist, researchers, and coaches have been performing short sprints modeling using the built-in solver function of Excel (Microsoft Corporation, Redmond, Washington, United States) (\protect\hyperlink{ref-morinSpreadsheetSprintAcceleration2017}{J. B. Morin 2017}; \protect\hyperlink{ref-morinSpreadsheetSprintAcceleration2019}{Jean-Benoit Morin and Samozino 2019}; \protect\hyperlink{ref-stenrothForcevelocityProfilingIce2020}{Stenroth, Vartiainen, and Karjalainen 2020}; \protect\hyperlink{ref-stenrothSpreadsheetSprintAcceleration2020}{Stenroth and Vartiainen 2020}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}; \protect\hyperlink{ref-clarkNFLCombine40Yard2017}{Clark et al. 2017}; \protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}), which makes the \textbf{shorts} package a major improvement in ease-of-use, speed, transparency, reproducibility, and more feature-rich model fitting.
 
 In the current paper, we will provide an explanation of one commonly used mathematical equation to model short sprints, modeling applications using the \textbf{shorts} package, issues that can arise during measurement and estimation, and potential solutions to those problems.
 
@@ -167,7 +167,7 @@ The parameters of the equation \eqref{eq:velocity-time} are \emph{maximum sprint
   MAC = \frac{MSS}{TAU}\label{eq:maximal-acceleration}
 \end{equation}
 
-Although TAU is used in the equations, and later estimated, it is preferred to use MAC instead since it is easier to grasp, particularly for less math inclined coaches.
+Although TAU is used in the equations, and later estimated, we prefer to use MAC instead since it is easier to grasp, particularly for less math inclined coaches.
 
 By derivating equation \eqref{eq:velocity-time}, we can get equation for horizontal acceleration \eqref{eq:acceleration-time}.
 
@@ -182,6 +182,8 @@ By integrating equation \eqref{eq:velocity-time}, we can get equation for distan
 \end{equation}
 
 Let's consider four athletes with different levels of MSS (high versus low maximal sprinting speed) and MAC (high versus low maximal acceleration; as mentioned previously, using MAC is preferred over using TAU) (Table \ref{tab:four-athletes-table}).
+
+\small
 
 \begin{table}
 
@@ -199,7 +201,11 @@ Athlete D & 8 & 6 & 1.33\\
 \end{tabular}
 \end{table}
 
+\normalsize
+
 Figure \ref{fig:four-athletes-kinematics} depicts distance, velocity, and acceleration over time (from 0 to 6 s).
+
+\small
 
 \begin{figure}
 
@@ -210,7 +216,11 @@ Figure \ref{fig:four-athletes-kinematics} depicts distance, velocity, and accele
 \caption{Kinematic characteristic of four athletes with different MSS and MAC parameters over a period of 0 to 6 seconds.}\label{fig:four-athletes-kinematics}
 \end{figure}
 
+\normalsize
+
 Plotting acceleration against velocity (Figure \ref{fig:four-athletes-profile}), we will get \emph{Acceleration-Velocity Profile}, which is linear, according to the mathematical model. If the athlete's body mass (kg) is known, as well as additional air resistance parameters (see \protect\hyperlink{air-resistance-and-the-calculation-of-force-and-mechanical-power}{Air resistance and the calculation of force and mechanical power} section of this paper), \emph{Force-Velocity Profile} can be estimated (see \protect\hyperlink{force-velocity-profile}{Force-Velocity profile} section of this paper).
+
+\small
 
 \begin{figure}
 
@@ -221,21 +231,27 @@ Plotting acceleration against velocity (Figure \ref{fig:four-athletes-profile}),
 \caption{Acceleration-Velocity profile of four athletes with different MSS and MAC parameters.}\label{fig:four-athletes-profile}
 \end{figure}
 
+\normalsize
+
 \hypertarget{estimation-using-shorts-package}{%
 \section{Estimation using shorts package}\label{estimation-using-shorts-package}}
 
-Short sprints profiling is usually performed by: (1) measuring split times using timing gates (i.e., positioned at various distances, e.g., 5, 10, 20, 30, 40 m), (2) getting a velocity trace using a radar gun. Estimation of MSS and TAU parameters from equation \eqref{eq:velocity-time} is performed in \textbf{shorts} package using non-linear least squares regression implemented in the \texttt{nls()} function in the \textbf{base R} (\protect\hyperlink{ref-R-base}{R Core Team 2020}) and \texttt{nlme()} function in the \textbf{nlme} package (\protect\hyperlink{ref-R-nlme}{Pinheiro, Bates, and R-core 2020}) for the mixed-effect models.
+Short sprints profiling is usually performed by: (1) measuring split times using timing gates (i.e., positioned at various distances, e.g., 5, 10, 20, 30, 40 m), (2) getting a velocity trace using a radar gun. Estimation of MSS and TAU parameters from equation \eqref{eq:velocity-time} is performed in \textbf{shorts} package using non-linear least squares regression implemented in the \texttt{nls()} function (\protect\hyperlink{ref-batesNonlinearModels1992}{D. M. Bates and Chambers 1992}; \protect\hyperlink{ref-batesNonlinearRegressionAnalysis2007}{Douglas M. Bates and Watts 2007}) in the \textbf{base R} (\protect\hyperlink{ref-R-base}{R Core Team 2020}) and \texttt{nlme()} function in the \textbf{nlme} package (\protect\hyperlink{ref-R-nlme}{Pinheiro, Bates, and R-core 2021}) for the mixed-effect models.
 
-\hypertarget{estimating-short-sprint-parameters-using-split-times}{%
-\subsection{Estimating short sprint parameters using split times}\label{estimating-short-sprint-parameters-using-split-times}}
+\hypertarget{estimating-short-sprint-parameters-using-timing-gates-split-times}{%
+\subsection{Estimating short sprint parameters using timing gates split times}\label{estimating-short-sprint-parameters-using-timing-gates-split-times}}
 
-Let's consider an example of an athlete with MSS equal to 9 \(ms^{-1}\), TAU equal to 1.3, and MAC equal to 6.92 \(ms^{-2}\) performing 40m sprint with timing gates positioned at each 10m split. For split times, distance is a predictor, and time is the outcome variable, thus the equation \eqref{eq:velocity-time} becomes:
+Let's consider an example of an athlete with MSS equal to 9 \(ms^{-1}\), TAU equal to 1.3, and MAC equal to 6.92 \(ms^{-2}\) performing 40m sprint with timing gates positioned at each 10m split. For split times, distance is a predictor, and time is the outcome variable, thus the equation \eqref{eq:distance-time} becomes:
 
 \begin{equation}
   t(d) = TAU \times W(-e^{\frac{-d}{MSS \times TAU}} - 1) + \frac{d}{MSS} + TAU \label{eq:time-distance}
 \end{equation}
 
-\(W\) in equation \eqref{eq:time-distance} represents Lambert's W function (\protect\hyperlink{ref-R-LambertW}{Goerg 2020}). MSS and TAU parameters are estimated using \texttt{model\_using\_splits()} function:
+\(W\) in equation \eqref{eq:time-distance} represents Lambert's W function (\protect\hyperlink{ref-R-LambertW}{Goerg 2020}). Researchers often incorrectly use the equation \eqref{eq:distance-time} (\protect\hyperlink{ref-morinSpreadsheetSprintAcceleration2017}{J. B. Morin 2017}; \protect\hyperlink{ref-morinSpreadsheetSprintAcceleration2019}{Jean-Benoit Morin and Samozino 2019}; \protect\hyperlink{ref-stenrothSpreadsheetSprintAcceleration2020}{Stenroth and Vartiainen 2020}), in which the time is the predictor and distance is the outcome variable, instead of statistically correct equation \eqref{eq:time-distance} (\protect\hyperlink{ref-motulskyIntuitiveBiostatisticsNonmathematical2018}{Motulsky 2018, 341}).
+
+MSS and TAU parameters are estimated using \texttt{model\_using\_splits()} function:
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -261,17 +277,21 @@ Let's consider an example of an athlete with MSS equal to 9 \(ms^{-1}\), TAU equ
 \CommentTok{\#\textgreater{} Model fit estimators}
 \CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \CommentTok{\#\textgreater{}       RSE R\_squared    minErr    maxErr maxAbsErr      RMSE }
-\CommentTok{\#\textgreater{}   0.00249   1.00000  {-}0.00178   0.00265   0.00265   0.00176 }
+\CommentTok{\#\textgreater{}   0.00249   1.00000  {-}0.00265   0.00178   0.00265   0.00176 }
 \CommentTok{\#\textgreater{}       MAE      MAPE }
 \CommentTok{\#\textgreater{}   0.00157   0.04742}
 \end{Highlighting}
 \end{Shaded}
 
+\normalsize
+
 Maximal relative power (PMAX) from the output is estimated using \(\frac{MSS \times MAC}{4}\), which disregards the air resistance. \texttt{time\_correction} and \texttt{distance\_corection} parameters will be covered later in the paper.
 
 Besides providing \emph{residual standard error} (RSE), \textbf{shorts} functions provide additional model fit estimators. Additional information can be gained by exploring the returned object, particularly object returned from the \texttt{nls()} function (i.e., by using the S3 \texttt{summary()} method). To extract estimated model parameters, use S3 \texttt{coef()} method.
 
-To create a simple plot of the model, use S3 \texttt{plot()} method, which returns \textbf{ggplot2} (\protect\hyperlink{ref-R-ggplot2}{Wickham, Chang, et al. 2020}) object:
+To create a simple plot of the model, use S3 \texttt{plot()} method, which returns \textbf{ggplot2} (\protect\hyperlink{ref-R-ggplot2}{Wickham, Chang, et al. 2021}) object:
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -281,7 +301,11 @@ To create a simple plot of the model, use S3 \texttt{plot()} method, which retur
 
 \begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
+\normalsize
+
 Once we have estimated MSS and TAU, we can use \texttt{predict\_XXX()} family of functions to predict various relationships (i.e., time at distance, acceleration at distance, velocity at time, etc.):
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -295,10 +319,14 @@ Once we have estimated MSS and TAU, we can use \texttt{predict\_XXX()} family of
 \end{Highlighting}
 \end{Shaded}
 
+\normalsize
+
 \hypertarget{air-resistance-and-the-calculation-of-force-and-mechanical-power}{%
 \subsubsection{Air resistance and the calculation of force and mechanical power}\label{air-resistance-and-the-calculation-of-force-and-mechanical-power}}
 
 To estimate force production at distance or time (using \texttt{predict\_force\_at\_distance()} and \texttt{predict\_force\_at\_time()} functions), as well as power production (using \texttt{predict\_power\_at\_distance()} and \texttt{predict\_power\_at\_time()} functions), one needs to take into account the air resistance. Air resistance (N) is estimated using \texttt{get\_air\_resistance()} function, which takes velocity, body mass (kg), body height (m), barometric pressure (Torr), air temperature (\(C^\circ\)), and wind velocity (\(ms^-1\)) as parameters (please refer to \protect\hyperlink{ref-arsacModelingEnergetics100m2002}{Arsac and Locatelli} (\protect\hyperlink{ref-arsacModelingEnergetics100m2002}{2002}), \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al.} (\protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{2016}), and \protect\hyperlink{ref-vaningenschenauCanCyclePower1991}{van Ingen Schenau, Jacobs, and de Koning} (\protect\hyperlink{ref-vaningenschenauCanCyclePower1991}{1991}) for more information):
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -314,7 +342,11 @@ To estimate force production at distance or time (using \texttt{predict\_force\_
 \end{Highlighting}
 \end{Shaded}
 
+\normalsize
+
 When estimating force and power, the air resistance parameters can be set using \texttt{"..."}, which are forwarded to the \texttt{get\_air\_resistance()}:
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -335,7 +367,11 @@ When estimating force and power, the air resistance parameters can be set using 
 \end{Highlighting}
 \end{Shaded}
 
+\normalsize
+
 The easiest way to get all kinematics and kinetics for short sprints is to use \texttt{predict\_kinematics()} function:
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -354,7 +390,11 @@ The easiest way to get all kinematics and kinetics for short sprints is to use \
 \end{Highlighting}
 \end{Shaded}
 
-Plotting the model predictions can be done once we convert data from wide to long with the help of \textbf{ggplot2} (\protect\hyperlink{ref-R-ggplot2}{Wickham, Chang, et al. 2020}), \textbf{dplyr} (\protect\hyperlink{ref-R-dplyr}{Wickham, François, et al. 2020}), \textbf{tidyr} (\protect\hyperlink{ref-R-tidyr}{Wickham 2020}), and \textbf{tidyverse} (\protect\hyperlink{ref-R-tidyverse}{Wickham 2019}) packages:
+\normalsize
+
+Plotting the model predictions can be done once we convert data from wide to long with the help of \textbf{ggplot2} (\protect\hyperlink{ref-R-ggplot2}{Wickham, Chang, et al. 2021}), \textbf{dplyr} (\protect\hyperlink{ref-R-dplyr}{Wickham, François, et al. 2021}), \textbf{tidyr} (\protect\hyperlink{ref-R-tidyr}{Wickham 2021a}), and \textbf{tidyverse} (\protect\hyperlink{ref-R-tidyverse}{Wickham 2021b}) packages:
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -376,12 +416,16 @@ Plotting the model predictions can be done once we convert data from wide to lon
 
 \begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
+\normalsize
+
 These kinematic and kinetic variables are utilized in \protect\hyperlink{force-velocity-profile}{Force-Velocity profile} estimation, which is covered later in this paper.
 
 \hypertarget{utility-functions}{%
 \subsubsection{Utility functions}\label{utility-functions}}
 
 Another valuable addition for sport scientists and coaches is the ability to determine the distances and times where 90\% of maximum sprinting speed is reached, or where peak power is within 90\% range. To identify these values, \textbf{shorts} package comes with \texttt{find\_XXX()} family of functions:
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -431,10 +475,14 @@ Another valuable addition for sport scientists and coaches is the ability to det
 \end{Highlighting}
 \end{Shaded}
 
+\normalsize
+
 \hypertarget{mixed-effects-model}{%
 \subsubsection{Mixed-effects model}\label{mixed-effects-model}}
 
 Sprint performance is often evaluated with a group of athletes (e.g., soccer club) representing a single strata of interest. Sports scientists can estimate individual profiles, or utilize mixed-effects models. To perform mixed-effects models in \textbf{shorts} for split times, one can use \texttt{mixed\_model\_using\_splits()} function. To demonstrate this functionality, we load the \texttt{split\_times} dataset provided in the \textbf{shorts} package:
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -478,13 +526,19 @@ Sprint performance is often evaluated with a group of athletes (e.g., soccer clu
 \CommentTok{\#\textgreater{} Model fit estimators}
 \CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \CommentTok{\#\textgreater{}       RSE R\_squared    minErr    maxErr maxAbsErr      RMSE }
-\CommentTok{\#\textgreater{}    0.0260    0.9998   {-}0.0293    0.0496    0.0496    0.0214 }
+\CommentTok{\#\textgreater{}    0.0260    0.9998   {-}0.0496    0.0293    0.0496    0.0214 }
 \CommentTok{\#\textgreater{}       MAE      MAPE }
 \CommentTok{\#\textgreater{}    0.0172    0.9019}
 \end{Highlighting}
 \end{Shaded}
 
-Additional information about mixed-effects model performed using the \texttt{nlme} package (\protect\hyperlink{ref-R-nlme}{Pinheiro, Bates, and R-core 2020}) can be obtained using \texttt{summary()} function. S3 method \texttt{coef()} when applied on mixed-model result will return both the fixed and random effects. To create a simple plot of the model, use S3 \texttt{plot()} method.
+\normalsize
+
+Additional information about mixed-effects model performed using the \texttt{nlme} package (\protect\hyperlink{ref-R-nlme}{Pinheiro, Bates, and R-core 2021}) can be obtained using \texttt{summary()} function. S3 method \texttt{coef()} when applied on mixed-model result will return both the fixed and random effects.
+
+To create a simple plot of the model, use S3 \texttt{plot()} method.
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -494,7 +548,11 @@ Additional information about mixed-effects model performed using the \texttt{nlm
 
 \begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
+\normalsize
+
 The following figure contains kinematics for all athletes in \texttt{split\_times} dataset. Please note that power calculation takes default parameters for each individual:
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -523,12 +581,16 @@ The following figure contains kinematics for all athletes in \texttt{split\_time
 
 \begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
+\normalsize
+
 \hypertarget{estimating-short-sprint-parameters-using-radar-gun}{%
 \subsection{Estimating short sprint parameters using radar gun}\label{estimating-short-sprint-parameters-using-radar-gun}}
 
 Estimation of the short sprint profile using radar gun data takes time as predictor and velocity as the outcome variable. Thus equation \eqref{eq:velocity-time} is used to estimate MSS and TAU.
 
 Let's consider the same example of an athlete with MSS equal to 9 \(ms^{-1}\), TAU equal to 1.3, and MAC equal to 6.92 \(ms^{-2}\) performing 40m sprint with velocity estimated using radar run (in this case with 1 Hz sampling rate).
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -543,7 +605,11 @@ Let's consider the same example of an athlete with MSS equal to 9 \(ms^{-1}\), T
 \end{Highlighting}
 \end{Shaded}
 
+\normalsize
+
 Both split and radar gun models allow the use of \emph{weighted} non-linear regression. For example, we can give more weight to shorter distance or faster velocities. Weighted non-linear regression is performed by setting \texttt{weights} parameter:
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -555,10 +621,14 @@ Both split and radar gun models allow the use of \emph{weighted} non-linear regr
 \end{Highlighting}
 \end{Shaded}
 
+\normalsize
+
 \hypertarget{mixed-effects-model-1}{%
 \subsubsection{Mixed-effects model}\label{mixed-effects-model-1}}
 
 Mixed-effects model using radar data is done using \texttt{mixed\_model\_using\_radar()} function. To perform mixed model, let's load data that comes with \textbf{shorts} package.
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -573,10 +643,14 @@ Mixed-effects model using radar data is done using \texttt{mixed\_model\_using\_
 \end{Highlighting}
 \end{Shaded}
 
+\normalsize
+
 \hypertarget{force-velocity-profile}{%
 \subsection{Force-Velocity profile}\label{force-velocity-profile}}
 
 To create \emph{Force-Velocity Profile} (FVP) using single athlete estimated sprint model parameters (i.e., TAU and MSS), you can use \texttt{get\_FV\_profile()} function. When estimating FVP, athlete body mass (kg) can be set using \texttt{bodymass} parameter, while the air resistance parameters can be set using \texttt{"..."}, which are forwarded to the \texttt{get\_air\_resistance()} function. Details of the FVP method implemented in the \textbf{shorts} package, as well as the interpretation from a sprint training perspective, are covered elsewhere (\protect\hyperlink{ref-haugenPowerForceVelocityProfilingSprinting2020}{Thomas A. Haugen, Breitschädel, and Samozino 2020}; \protect\hyperlink{ref-morinInterpretingPowerForceVelocityProfiles2016}{Jean-Benoit Morin and Samozino 2016}; \protect\hyperlink{ref-morinSimpleMethodComputing2019}{Jean-Benoit Morin et al. 2019}; \protect\hyperlink{ref-samozinoSimpleMethodMeasuring2016}{Samozino et al. 2016}).
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -605,7 +679,11 @@ To create \emph{Force-Velocity Profile} (FVP) using single athlete estimated spr
 \end{Highlighting}
 \end{Shaded}
 
+\normalsize
+
 To plot FVP kinematics and kinetics (which are exactly the same as generated by the \texttt{predict\_kinematics()} function), use S3 \texttt{plot()} function. By default, FVP estimated kinetics are plotted against velocity (on x-axis).
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -615,13 +693,19 @@ To plot FVP kinematics and kinetics (which are exactly the same as generated by 
 
 \begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
+\normalsize
+
 To plot FVP estimated kinetics against time, use \texttt{type\ =\ "time"} parameter:
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{plot}\NormalTok{(fvp, }\StringTok{"time"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\normalsize
 
 \hypertarget{problems-with-estimation}{%
 \section{Problems with estimation}\label{problems-with-estimation}}
@@ -632,6 +716,8 @@ There is a challenge when collecting sprint data that could have a substantial i
 \subsection{Problems with time sync with radar gun}\label{problems-with-time-sync-with-radar-gun}}
 
 One source of error in the modeled estimation using a radar gun is the time synchronization. In theory, synchronization is ideal when a sprint is initiated at \(t=0\) (i.e., \(v(t=0) = 0\)). In practice, this is often not the case. Let's use our athlete and add and deduct 0.5 s to simulate an error in synchronization and its effect on estimated MSS and TAU.
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -661,7 +747,11 @@ One source of error in the modeled estimation using a radar gun is the time sync
 
 \begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
-The following three models estimate MSS and TAU from the three datasets. Tables are created using the \texttt{kable()} function from the \textbf{knitr} package (\protect\hyperlink{ref-knitr2014}{Xie 2014}, \protect\hyperlink{ref-knitr2015}{2015}, \protect\hyperlink{ref-R-knitr}{2020}) and \texttt{kable\_styling()} function from the \textbf{kableExtra} package (\protect\hyperlink{ref-R-kableExtra}{Zhu 2021}).
+\normalsize
+
+The following three models estimate MSS and TAU from the three datasets. Tables are created using the \texttt{kable()} function from the \textbf{knitr} package (\protect\hyperlink{ref-knitr2014}{Xie 2014}, \protect\hyperlink{ref-knitr2015}{2015}, \protect\hyperlink{ref-R-knitr}{2021b}) and \texttt{kable\_styling()} function from the \textbf{kableExtra} package (\protect\hyperlink{ref-R-kableExtra}{Zhu 2021}).
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -715,6 +805,8 @@ Deducted 0.5s time & 10.08 & 1.86 & 5.43 & 13.7 & 0 & 0\\
 \bottomrule
 \end{tabular}
 
+\normalsize
+
 As can be seen from the example, all estimated parameters are affected by an error in synchronization of time with velocity (with MSS being the least affected in this example). The potential solution incorporated into the \textbf{shorts} package involves estimation of the \emph{time correction} parameter using the following equation:
 
 \begin{equation}
@@ -722,6 +814,8 @@ As can be seen from the example, all estimated parameters are affected by an err
 \end{equation}
 
 This model is incorporated in the \texttt{model\_using\_radar\_with\_time\_correction()} function:
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -749,7 +843,11 @@ This model is incorporated in the \texttt{model\_using\_radar\_with\_time\_corre
 \end{Highlighting}
 \end{Shaded}
 
+\normalsize
+
 When using \texttt{predict\_XXX()} family of functions, one can provide estimated time correction to get predictions at original time scale.
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -773,10 +871,14 @@ When using \texttt{predict\_XXX()} family of functions, one can provide estimate
 \end{Highlighting}
 \end{Shaded}
 
+\normalsize
+
 \hypertarget{mixed-model-approach}{%
 \subsubsection{Mixed-model approach}\label{mixed-model-approach}}
 
 When it comes to mixed-model approach, time correction can be modeled as a fixed effect or random effect using the \texttt{mixed\_model\_using\_radar\_with\_time\_correction()} function.
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -803,12 +905,17 @@ When it comes to mixed-model approach, time correction can be modeled as a fixed
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{problems-at-the-start-when-using-split-times}{%
-\subsection{Problems at the start when using split times}\label{problems-at-the-start-when-using-split-times}}
+\normalsize
+
+\hypertarget{problems-at-the-start-when-using-timing-gates}{%
+\subsection{Problems at the start when using timing gates}\label{problems-at-the-start-when-using-timing-gates}}
 
 Let's imagine we have two twin brothers with same short sprint characteristics: MSS equal to 9 \(ms^{-1}\), TAU equal to 1.3, and MAC equal to 6.92 \(ms^{-2}\). Let's call them John and Jack. They both perform 40m sprint using timing gates set at 5, 10, 20, 30, and 40 m. The initial timing gate at the start (i.e., \(d=0\) m) serves to activate the timing system (i.e., when they cross the beam).
 
-John represents the \emph{theoretical model}, in which we assume that the initial force production and the timing initiation are perfectly synchronized. Jack, on the other hand, represents a \emph{practical model}, and decides to move slightly behind the initial timing gate (i.e.~for 0.5 m) and use body rocking to initiate the sprint start. In other words, Jack is using a \emph{flying start}, a common scenario when testing field sports athletes.
+John represents the \emph{theoretical model}, in which we assume that the initial force production and the timing initiation are perfectly synchronized. Jack, on the other hand, represents a \emph{practical model}, and decides to move slightly behind the initial timing gate (i.e.~for 0.5 m) and use body rocking to initiate the sprint start. In other words, Jack is using a \emph{flying start}, a common scenario when testing field sports athletes. Flying start distance is often recommended to avoid premature triggering of the timing system by lifted knees or swinging
+arms (\protect\hyperlink{ref-altmannAccuracySingleBeam2018}{Altmann et al. 2018}, \protect\hyperlink{ref-altmannDifferentStartingDistances2015}{2015}, \protect\hyperlink{ref-altmannValiditySingleBeamTiming2017}{2017}; \protect\hyperlink{ref-haugenPowerForceVelocityProfilingSprinting2020}{Thomas A. Haugen, Breitschädel, and Samozino 2020}; \protect\hyperlink{ref-haugenSprintRunningPerformance2016}{T. Haugen and Buchheit 2016}).
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -829,11 +936,19 @@ John represents the \emph{theoretical model}, in which we assume that the initia
 \end{Highlighting}
 \end{Shaded}
 
-Here is a graphical representation of the sprint splits (please refer to the Supplemental files for the R code):
+\normalsize
+
+Here is a graphical representation of the sprint splits (please refer to the \protect\hyperlink{supplemental-material}{Supplemental material} for the R code):
+
+\small
 
 \begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
+\normalsize
+
 Using the following code, we can see the differences in estimated MSS and TAU parameters:
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -874,33 +989,35 @@ Jack & 8.49 & 0.7 & 12.06 & 25.6 & 0 & 0\\
 \bottomrule
 \end{tabular}
 
+\normalsize
+
 As can be seen from the results, a flying start yields biased estimates, particularly for the TAU, MAC and PMAX.
 
-To explore this further, we have run a simple simulation with 5, 10, 20, 30, 40, and 50 m splits, with MSS and MAC varying from 6 to 9 (\(ms^{-1}\) and \(ms^{-2}\) respectively), and flying start distance varying from 0 to 1 m (please refer to the Supplemental files for the R code). With a simulation dataset, we can check the model estimates and predictions, given the flying start distance.
+To explore this further, we have run a simple simulation by increasing Jack's flying start distance from 0 to 1 m and depicting the estimated MSS, TAU, MAC, and PMAX parameters (please refer to the \protect\hyperlink{supplemental-material}{Supplemental material} for the R code).
 
-The following figure demonstrates the effect of flying start distance on estimated MSS:
+\small
 
 \begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
-As can be seen from the figure, MSS is underestimated as flying start distance increases. The following image demonstrates the effect of flying start distance on estimated MAC:
+\normalsize
+
+As can be seen from the figure, MSS is underestimated as flying start distance increases. MAC (and also TAU) are highly affected by the flying start distance, and from the figure we can notice that MAC is overestimated as flying start distance increases. Estimated PMAX is also overestimated as flying start distance increases.
+
+Model residuals are also affected by the flying start distance. The shape of residuals distribution depends on number and splits utilized (e.g., 10, 20, 30, 40 m versus 5, 15, 30 m), but here we can see the effect of the flying start distance on the model residuals per split distance utilized in our simple simulation:
+
+\small
 
 \begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
-MAC (and also TAU) are highly affected by the flying start distance, and from the figure we can notice that MAC is overestimated as flying start distance increases.
+\normalsize
 
-And finally, the following image demonstrates the effect of flying start distance on estimated PMAX:
+Another way to visualize the effect of the flying start distance on split distance residuals can be found on the next figure:
+
+\small
 
 \begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-31-1} \end{center}
 
-Estimated PMAX is also overestimated as flying start distance increases.
-
-Model residuals are also affected by flying start distance. The shape of residuals distribution depends on number and splits utilized (e.g., 10, 20, 30, 40 m versus 5, 15, 30 m), but here we can see the effect of the flying start distance on the model residuals per split distance utilized in our simulation:
-
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-32-1} \end{center}
-
-If we merge individual facets (i.e., combinations of MSS and MAC), we can get simpler figure conveying issues with residuals when there is a flying start:
-
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-33-1} \end{center}
+\normalsize
 
 Clearly, any type of flying start where there is a difference between initial force production and start time can result in biased parameters and predictions. Since maximal sprint speed is difficult to improve, the effects of start inconsistencies can mask effects of the training intervention. It is thus crucial to standardize the start when testing and implementing the following techniques when using the \textbf{shorts} package.
 
@@ -918,6 +1035,8 @@ When implementing time correction, equation \eqref{eq:time-distance} becomes:
 \end{equation}
 
 To estimate time correction parameter, we use \texttt{model\_using\_splits\_with\_time\_correction()} function. Here is how we can estimate Jack parameters using either provided time correction (e.g., +0.3 and +0.5 s) or estimated time correction:
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -975,40 +1094,39 @@ Jack - Estimated time correction & 8.96 & 1.22 & 7.37 & 16.5 & 0.28 & 0\\
 \end{tabular}}
 \end{table}
 
-In Jack's case, both +0.3 s fixed time correction and time correction estimation yield parameters closer to John's (i.e.~true parameters).
+\normalsize
 
-Another model definition, which is a novel approach implemented in the \textbf{shorts} package, is to utilize \emph{distance correction}, besides time correction. Thus, equation \eqref{eq:time-distance} becomes:
+In Jack's case, both +0.3 s fixed time correction and time correction estimation yield parameters closer to John's (i.e.~true parameters). We have used these two model definitions in retrospective pilot study (\protect\hyperlink{ref-vescoviSprintMechanicalCharacteristics2021}{Vescovi and Jovanovi'c 2021}), demonstrating statistically significant differences in estimated FVP parameters.
+
+Instead of using time correction as simple intercept in the equation \eqref{eq:time-correction}, we can estimate the \emph{distance correction} (i.e., the flying start distance) using the following equation:
 
 \begin{equation}
-  t(d) = TAU \times W(-e^{\frac{-d + distance \; correction}{MSS \times TAU}} - 1) + \frac{d + distance \; correction}{MSS} + TAU - time \; correction \label{eq:distance-correction}
+  \begin{split}
+   t(d) &= (TAU \times W(-e^{\frac{-d + distance \; correction}{MSS \times TAU}} - 1) + \frac{d + distance \; correction}{MSS} + TAU) \\ 
+   &\quad-(TAU \times W(-e^{\frac{distance \; correction}{MSS \times TAU}} - 1) + \frac{distance \; correction}{MSS} + TAU) 
+   \end{split}
+   \label{eq:distance-correction}
 \end{equation}
 
-This model is implemented in \texttt{model\_using\_splits\_with\_corrections()} function. Below are the model estimates:
+Equation \eqref{eq:distance-correction} was used to generate the data for John and Jack (please refer to the provided R code), as well as for the simple simulation, and can be used as model definition to control for the flying start distance.
+
+To estimate distance correction parameter, we use \texttt{model\_using\_splits\_with\_distance\_correction()} function. Here is how we can estimate Jack parameters using distance correction:
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{jack\_profile\_distance\_correction }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits\_with\_corrections}\NormalTok{(}
+\NormalTok{jack\_profile\_distance\_correction }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits\_with\_distance\_correction}\NormalTok{(}
   \AttributeTok{distance =}\NormalTok{ split\_times}\SpecialCharTok{$}\NormalTok{distance,}
   \AttributeTok{time =}\NormalTok{ split\_times}\SpecialCharTok{$}\NormalTok{jack\_time}
 \NormalTok{)}
 
 \NormalTok{jack\_parameters }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(}
-  \FunctionTok{coef}\NormalTok{(john\_profile),}
-  \FunctionTok{coef}\NormalTok{(jack\_profile),}
-  \FunctionTok{coef}\NormalTok{(jack\_profile\_fixed\_time\_short),}
-  \FunctionTok{coef}\NormalTok{(jack\_profile\_fixed\_time\_long),}
-  \FunctionTok{coef}\NormalTok{(jack\_profile\_time\_estimated),}
+\NormalTok{  jack\_parameters,}
   \FunctionTok{coef}\NormalTok{(jack\_profile\_distance\_correction)}
 \NormalTok{)}
 
-\FunctionTok{rownames}\NormalTok{(jack\_parameters) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
-  \StringTok{"John"}\NormalTok{,}
-  \StringTok{"Jack {-} No corrections"}\NormalTok{,}
-  \StringTok{"Jack {-} Fixed time correction (+0.3s)"}\NormalTok{,}
-  \StringTok{"Jack {-} Fixed time correction (+0.5s)"}\NormalTok{,}
-  \StringTok{"Jack {-} Estimated time correction"}\NormalTok{,}
-  \StringTok{"Jack {-} Estimated distance correction"}
-\NormalTok{)}
+\FunctionTok{rownames}\NormalTok{(jack\_parameters) [}\DecValTok{6}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Jack {-} Estimated distance correction"}
 
 \FunctionTok{kable}\NormalTok{(jack\_parameters, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{, }\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \FunctionTok{c}\NormalTok{(}\StringTok{"scale\_down"}\NormalTok{, }\StringTok{"hold\_position"}\NormalTok{))}
@@ -1028,139 +1146,39 @@ Jack - Fixed time correction (+0.3s) & 9.00 & 1.25 & 7.19 & 16.2 & 0.30 & 0.0\\
 Jack - Fixed time correction (+0.5s) & 9.62 & 1.77 & 5.43 & 13.1 & 0.50 & 0.0\\
 Jack - Estimated time correction & 8.96 & 1.22 & 7.37 & 16.5 & 0.28 & 0.0\\
 \addlinespace
-Jack - Estimated distance correction & 9.00 & 1.30 & 6.92 & 15.6 & 0.40 & 0.5\\
+Jack - Estimated distance correction & 9.00 & 1.30 & 6.92 & 15.6 & 0.00 & 0.5\\
 \bottomrule
 \end{tabular}}
 \end{table}
 
-As can be seen from the results, adding distance correction results in correctly estimating Jack's sprint parameters. There are a few issues with this model definition. Besides being novel and still not validated with actual data, distance correction model has four parameters to estimate, which implies that at least five sprint splits are needed. This imposes practical limitations, since acquiring six timing gate (one for the start and five for splits) might be practically troublesome. One strategy that is sometimes implemented is adding zeros to the sample (i.e., \(t=0\) and \(d=0\)), which increase the number of observations. Unfortunately, this strategy should not be implemented, as explained later in the \protect\hyperlink{should-we-add-zero-to-the-sample}{Should we add zero to the sample?} section of this paper.
+\normalsize
 
-We will get back to these issues later, but we can examine how these models (no correction, fixed time correction, estimated time correction, and estimated time and distance correction) perform using simulated data with varying flying start distance (please refer to the Supplemental files for the R code).
+Another model definition, which also represents a novel approach implemented in the \textbf{shorts} package, is to utilize both time and distance corrections. Thus, equation \eqref{eq:time-correction} becomes:
 
-As can be seen from the next figure, the estimated time correction model estimates MSS almost perfectly, while the estimated time and distance correction model estimates MSS perfectly.
+\begin{equation}
+  t(d) = TAU \times W(-e^{\frac{-d + distance \; correction}{MSS \times TAU}} - 1) + \frac{d + distance \; correction}{MSS} + TAU - time \; correction \label{eq:time-distance-correction}
+\end{equation}
 
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-37-1} \end{center}
+This model is implemented in \texttt{model\_using\_splits\_with\_corrections()} function. Below are the model estimates:
 
-Similar outcomes are observed for the MAC parameter. The time and distance corrections model performs perfectly, while the time correction model performs almost as good.
-
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-38-1} \end{center}
-
-PMAX demonstrates the same properties as MSS and MAC.
-
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-39-1} \end{center}
-
-The following figure depicts estimated time correction, and as can be seen, only the time and distance correction model estimated the time correction correctly (i.e., the \emph{stolen time}; indicated by the dashed line on the figure).
-
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-40-1} \end{center}
-
-The next figure depicts estimated distance correction, and same as with the time correction, only the time and distance correction model estimated the distance correction correctly (i.e., flying start distance; indicated by the dashed line on the figure, which represents \emph{identity line} since flying start distance is already on the x-axis).
-
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-41-1} \end{center}
-
-The following figure depicts model residuals against the distance, and as can be seen, time correction and time and distance correction models performs much better than no correction and fixed correction models:
-
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-42-1} \end{center}
-
-The outcomes from the simulation data clearly demonstrates that the time correction and time and distance correction models represent sound improvements in parameter estimation and model fit compared to no corrections model and fixed correction model when attempting to overcome the flying start issues. Since the time correction model is simpler and requires three parameters to be estimated, it might be practically more useful than the time and distance correction model, which requires four parameters estimation and thus more than five timing gates and sprint splits.
-
-Time correction and time and distance corrections are also implemented in the mixed-models using \texttt{mixed\_model\_using\_splits\_with\_time\_correction()} and \texttt{mixed\_model\_using\_splits\_with\_corrections()}. We will showcase their use at the end of this paper.
-
-\hypertarget{simulation-of-additional-starting-issues}{%
-\subsubsection{Simulation of additional starting issues}\label{simulation-of-additional-starting-issues}}
-
-Starting behind the initial timing gate represent only one issue (i.e., flying start). In this section, we simulate one more issue to check the sensitivity of the presented models to other (less common) perturbations when performing field testing.
-
-One issue that might happen with timing gates is triggering the timing system before the sprint is initiated (e.g., by cutting the beam with an arm swing prematurely). This is very similar to the situation when timing starts on a signal (i.e., gun during 100 m sprint race) and there is \emph{reaction time} (RT) involved. Both of these scenarios represent \emph{time lag} that is added to the split times. We have simulated the effect of this time lag on model estimates and predictions (please refer to the Supplemental files for the R code).
-
-From the figure below it can be seen that time lag affects estimated MSS for the the model without correction and fixed correction model. Time correction and time and distance corrections models correctly estimated MSS.
-
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-44-1} \end{center}
-
-From the next figure it can be seen that time lag affects estimated MAC for the the model without correction and fixed correction models. Time correction and time and distance corrections model correctly estimated MAC.
-
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-45-1} \end{center}
-
-The figure below depicts correctly identified time lag (i.e.~using time correction parameter) using time correction and time and distance corrections models.
-
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-46-1} \end{center}
-
-The next figure depicts estimated distance correction for the time and distance correction model. The estimated distance correction parameters looks jumpy due to random noise that we have to added to allow model fit, as well as the model estimation error.
-
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-47-1} \end{center}
-
-The following figure depicts residuals (i.e., predicted time minus observed time).
-
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-48-1} \end{center}
-
-There are few other starting issues worth mentioning. For example, if the initial timing gate has a time delay (i.e., once triggered, there is a time delay before the timing starts). In this case, time lag is a negative number since it reduces the split times. Another common issue with timing gates in the practical field settings is the bad measurement of the distance and thus bad positions of the timing gates.
-
-The number and distances of the timing gates can also affect the precision of the estimated sprint parameters (\protect\hyperlink{ref-haugenPowerForceVelocityProfilingSprinting2020}{Thomas A. Haugen, Breitschädel, and Samozino 2020}; \protect\hyperlink{ref-haugenDifferenceStartImpact2012}{Thomas A. Haugen, Tønnessen, and Seiler 2012}).
-
-In field testing, multiple starting issues can be present. For example, one might have a bad position of the initial gate, athlete might be moved back but also manage to trigger the gate before the start commence. More elaborate simulation is beyond the scope of the current paper.
-
-\hypertarget{should-we-add-zero-to-the-sample}{%
-\subsection{Should we add zero to the sample?}\label{should-we-add-zero-to-the-sample}}
-
-Fellow sports scientists are often considering adding \(t=0\) s at \(d=0\) m to the collected split times with the aim of increasing the number of observations. The question is whether this strategy is sound and if it should be employed. The short answer is no, it shouldn't, particularly if there are flying start issues. In the following example, we are demonstrating the issue when zeros are added to the sample when fitting multiple models with the known true parameters:
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Create split times from known MSS and TAU}
-\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
-  \AttributeTok{distance =} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{40}\NormalTok{),}
-  \AttributeTok{time =} \FunctionTok{predict\_time\_at\_distance}\NormalTok{(}
-\NormalTok{    distance,}
-    \AttributeTok{MSS =} \DecValTok{9}\NormalTok{,}
-    \AttributeTok{TAU =} \FloatTok{1.3}
-\NormalTok{  )}
-\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}
-    \CommentTok{\# Add random noise to time}
-    \AttributeTok{time =}\NormalTok{ time }\SpecialCharTok{+} \FunctionTok{rnorm}\NormalTok{(}\FunctionTok{n}\NormalTok{(), }\DecValTok{0}\NormalTok{, }\DecValTok{10}\SpecialCharTok{\^{}{-}}\DecValTok{5}\NormalTok{),}
-    \AttributeTok{gate\_time =}\NormalTok{ time }\SpecialCharTok{{-}} \FloatTok{0.1}
-\NormalTok{  )}
-
-\CommentTok{\# Model without time correction}
-\NormalTok{m\_no\_correction }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits}\NormalTok{(}
-  \AttributeTok{distance =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{distance,}
-  \AttributeTok{time =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{gate\_time}
+\NormalTok{jack\_profile\_time\_distance\_correction }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits\_with\_corrections}\NormalTok{(}
+  \AttributeTok{distance =}\NormalTok{ split\_times}\SpecialCharTok{$}\NormalTok{distance,}
+  \AttributeTok{time =}\NormalTok{ split\_times}\SpecialCharTok{$}\NormalTok{jack\_time}
 \NormalTok{)}
 
-\CommentTok{\# Model without time correction, but with zeros added}
-\NormalTok{m\_no\_correction\_zero }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits}\NormalTok{(}
-  \AttributeTok{distance =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, df}\SpecialCharTok{$}\NormalTok{distance),}
-  \AttributeTok{time =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, df}\SpecialCharTok{$}\NormalTok{gate\_time)}
+\NormalTok{jack\_parameters }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(}
+\NormalTok{  jack\_parameters,}
+  \FunctionTok{coef}\NormalTok{(jack\_profile\_time\_distance\_correction)}
 \NormalTok{)}
 
-\CommentTok{\# Model without adding zeros for the start}
-\NormalTok{m\_no\_zero }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits\_with\_time\_correction}\NormalTok{(}
-  \AttributeTok{distance =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{distance,}
-  \AttributeTok{time =}\NormalTok{ df}\SpecialCharTok{$}\NormalTok{gate\_time}
-\NormalTok{)}
+\FunctionTok{rownames}\NormalTok{(jack\_parameters) [}\DecValTok{7}\NormalTok{] }\OtherTok{\textless{}{-}} 
+  \StringTok{"Jack {-} Estimated time \& distance corrections"}
 
-\CommentTok{\# Model with added zeros for the start (d=0 and t=0)}
-\NormalTok{m\_with\_zero }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits\_with\_time\_correction}\NormalTok{(}
-  \AttributeTok{distance =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, df}\SpecialCharTok{$}\NormalTok{distance),}
-  \AttributeTok{time =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, df}\SpecialCharTok{$}\NormalTok{gate\_time)}
-\NormalTok{)}
-
-\CommentTok{\# Print results}
-\NormalTok{res\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
-  \AttributeTok{model =} \FunctionTok{c}\NormalTok{(}
-    \StringTok{"Without time correction"}\NormalTok{,}
-    \StringTok{"Without time correction with zeros added"}\NormalTok{,}
-    \StringTok{"With time correction"}\NormalTok{,}
-    \StringTok{"With time correction with zeros added"}
-\NormalTok{  ),}
-  \FunctionTok{rbind}\NormalTok{(}
-    \FunctionTok{coef}\NormalTok{(m\_no\_correction),}
-    \FunctionTok{coef}\NormalTok{(m\_no\_correction\_zero),}
-    \FunctionTok{coef}\NormalTok{(m\_no\_zero),}
-    \FunctionTok{coef}\NormalTok{(m\_with\_zero)}
-\NormalTok{  )}
-\NormalTok{)}
-
-\FunctionTok{kable}\NormalTok{(res\_df, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{, }\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{kable}\NormalTok{(jack\_parameters, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{, }\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \FunctionTok{c}\NormalTok{(}\StringTok{"scale\_down"}\NormalTok{, }\StringTok{"hold\_position"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
@@ -1170,17 +1188,178 @@ Fellow sports scientists are often considering adding \(t=0\) s at \(d=0\) m to 
 \resizebox{\linewidth}{!}{
 \begin{tabular}{lrrrrrr}
 \toprule
-model & MSS & TAU & MAC & PMAX & time\_correction & distance\_correction\\
+  & MSS & TAU & MAC & PMAX & time\_correction & distance\_correction\\
 \midrule
-Without time correction & 8.78 & 1.09 & 8.06 & 17.7 & 0.00 & 0\\
-Without time correction with zeros added & 8.78 & 1.09 & 8.06 & 17.7 & 0.00 & 0\\
-With time correction & 9.00 & 1.30 & 6.92 & 15.6 & 0.10 & 0\\
-With time correction with zeros added & 8.79 & 1.10 & 7.97 & 17.5 & 0.01 & 0\\
+John & 9.00 & 1.30 & 6.92 & 15.6 & 0.00 & 0.0\\
+Jack - No corrections & 8.49 & 0.70 & 12.06 & 25.6 & 0.00 & 0.0\\
+Jack - Fixed time correction (+0.3s) & 9.00 & 1.25 & 7.19 & 16.2 & 0.30 & 0.0\\
+Jack - Fixed time correction (+0.5s) & 9.62 & 1.77 & 5.43 & 13.1 & 0.50 & 0.0\\
+Jack - Estimated time correction & 8.96 & 1.22 & 7.37 & 16.5 & 0.28 & 0.0\\
+\addlinespace
+Jack - Estimated distance correction & 9.00 & 1.30 & 6.92 & 15.6 & 0.00 & 0.5\\
+Jack - Estimated time \& distance corrections & 9.00 & 1.30 & 6.92 & 15.6 & 0.40 & 0.5\\
 \bottomrule
 \end{tabular}}
 \end{table}
 
-As can be seen from the output, only the model with time correction is able to correctly recover true sprint parameters, but adding zeros to the sample in this case, results in MSS and TAU estimates very close to the estimates of the model without time corrections. Thus, adding zeros to the sample nullifies the potential benefits of using time correction model and should be avoided in practice.
+\normalsize
+
+As can be seen from the results, adding distance correction results in correctly estimating Jack's sprint parameters. There are a few issues with this model definition. Besides being novel and still not validated with actual data, distance correction model has four parameters to estimate, which implies that at least four sprint splits are needed. This imposes practical limitations, since acquiring five timing gates (one for the start and four for splits) might be practically troublesome. One strategy that is sometimes implemented is adding zeros to the sample (i.e., \(t=0\) and \(d=0\)), which increase the number of observations. Unfortunately, this strategy should not be implemented since it will bias the estimated parameters:
+
+\small
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{jack\_profile\_zero }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits}\NormalTok{(}
+  \AttributeTok{distance =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, split\_times}\SpecialCharTok{$}\NormalTok{distance),}
+  \AttributeTok{time =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, split\_times}\SpecialCharTok{$}\NormalTok{jack\_time)}
+\NormalTok{)}
+
+\NormalTok{jack\_profile\_time\_estimated\_zero }\OtherTok{\textless{}{-}} \FunctionTok{model\_using\_splits\_with\_time\_correction}\NormalTok{(}
+  \AttributeTok{distance =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, split\_times}\SpecialCharTok{$}\NormalTok{distance),}
+  \AttributeTok{time =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, split\_times}\SpecialCharTok{$}\NormalTok{jack\_time)}
+\NormalTok{)}
+
+\NormalTok{adding\_zero\_issue }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(}
+  \FunctionTok{coef}\NormalTok{(jack\_profile),}
+  \FunctionTok{coef}\NormalTok{(jack\_profile\_zero),}
+  \FunctionTok{coef}\NormalTok{(jack\_profile\_time\_estimated),}
+  \FunctionTok{coef}\NormalTok{(jack\_profile\_time\_estimated\_zero)}
+\NormalTok{)}
+
+\FunctionTok{rownames}\NormalTok{(adding\_zero\_issue) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"Jack {-} No corrections"}\NormalTok{,}
+  \StringTok{"Jack {-} No corrections with zeros added"}\NormalTok{,}
+  \StringTok{"Jack {-} Estimated time correction"}\NormalTok{,}
+  \StringTok{"Jack profile {-} Estimated time correction with added zeros"}\NormalTok{)}
+
+\FunctionTok{kable}\NormalTok{(adding\_zero\_issue, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{, }\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \FunctionTok{c}\NormalTok{(}\StringTok{"scale\_down"}\NormalTok{, }\StringTok{"hold\_position"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[!h]
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lrrrrrr}
+\toprule
+  & MSS & TAU & MAC & PMAX & time\_correction & distance\_correction\\
+\midrule
+Jack - No corrections & 8.49 & 0.70 & 12.06 & 25.6 & 0.00 & 0\\
+Jack - No corrections with zeros added & 8.49 & 0.70 & 12.06 & 25.6 & 0.00 & 0\\
+Jack - Estimated time correction & 8.96 & 1.22 & 7.37 & 16.5 & 0.28 & 0\\
+Jack profile - Estimated time correction with added zeros & 8.51 & 0.73 & 11.65 & 24.8 & 0.02 & 0\\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\normalsize
+
+Adding zeros to the sample nullifies the potential benefits of using time correction model and should be avoided in practice.
+
+It is important to note that using \texttt{predict\_XXX()} family of functions with distance correction model and using estimated distance correction parameter will yield wrong predictions on the original scale (but not on the \emph{theoretical} scale in which force production starts at d=0m and t=0s). This is because \texttt{predict\_XXX()} family of functions utilize equation \eqref{eq:time-distance-correction} and its derivates and integrals, which works for the uncorrected model (time and distance correction parameters are equal to zero), time correction models (distance correction parameter is equal to zero), and time and distance corrections model. You can notice that equations \eqref{eq:time-correction} and \eqref{eq:time-distance-correction} are equivalent to the \eqref{eq:time-distance} equation when time and distance correction parameters are equal to zero. Unfortunately, this doesn't work for the distance correction model when estimated distance correction parameter is used since model definition outlined in the equation \eqref{eq:distance-correction} is different that the equation \eqref{eq:time-distance-correction} when estimated distance correction parameter is different than zero. The solution is to use generic S3 \texttt{predict()} function, but this only predicts split times at split distances.
+
+\small
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Jack\textquotesingle{}s observed times}
+\NormalTok{split\_times}\SpecialCharTok{$}\NormalTok{jack\_time}
+\CommentTok{\#\textgreater{} [1] 1.10 1.83 3.09 4.25 5.39}
+
+\CommentTok{\# To predict at "theoretical" distance scale (where force application starts at d=0m)}
+\FunctionTok{predict\_time\_at\_distance}\NormalTok{(}
+  \AttributeTok{distance =}\NormalTok{ split\_times}\SpecialCharTok{$}\NormalTok{distance, }
+  \AttributeTok{MSS =}\NormalTok{ jack\_profile\_time\_estimated}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{MSS,}
+  \AttributeTok{TAU =}\NormalTok{ jack\_profile\_time\_estimated}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{TAU)}
+\CommentTok{\#\textgreater{} [1] 1.38 2.12 3.37 4.54 5.67}
+
+\FunctionTok{predict\_time\_at\_distance}\NormalTok{(}
+  \AttributeTok{distance =}\NormalTok{ split\_times}\SpecialCharTok{$}\NormalTok{distance, }
+  \AttributeTok{MSS =}\NormalTok{ jack\_profile\_distance\_correction}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{MSS,}
+  \AttributeTok{TAU =}\NormalTok{ jack\_profile\_distance\_correction}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{TAU)}
+\CommentTok{\#\textgreater{} [1] 1.42 2.17 3.43 4.60 5.73}
+
+\CommentTok{\# To predict at original distance scale, use all estimated parameters}
+\FunctionTok{predict\_time\_at\_distance}\NormalTok{(}
+  \AttributeTok{distance =}\NormalTok{ split\_times}\SpecialCharTok{$}\NormalTok{distance, }
+  \AttributeTok{MSS =}\NormalTok{ jack\_profile\_time\_estimated}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{MSS,}
+  \AttributeTok{TAU =}\NormalTok{ jack\_profile\_time\_estimated}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{TAU,}
+  \AttributeTok{time\_correction =}\NormalTok{ jack\_profile\_time\_estimated}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{time\_correction)}
+\CommentTok{\#\textgreater{} [1] 1.10 1.84 3.09 4.25 5.39}
+
+\CommentTok{\# Unfortunately, this doesn\textquotesingle{}t work for the distance correction model}
+\FunctionTok{predict\_time\_at\_distance}\NormalTok{(}
+  \AttributeTok{distance =}\NormalTok{ split\_times}\SpecialCharTok{$}\NormalTok{distance, }
+  \AttributeTok{MSS =}\NormalTok{ jack\_profile\_distance\_correction}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{MSS,}
+  \AttributeTok{TAU =}\NormalTok{ jack\_profile\_distance\_correction}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{TAU,}
+  \AttributeTok{distance\_correction =}\NormalTok{ jack\_profile\_distance\_correction}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{distance\_correction)}
+\CommentTok{\#\textgreater{} [1] 1.50 2.23 3.49 4.65 5.78}
+
+\CommentTok{\# Instead use generic S3 predict() function}
+\FunctionTok{predict}\NormalTok{(jack\_profile\_distance\_correction)}
+\CommentTok{\#\textgreater{} [1] 1.10 1.83 3.09 4.25 5.39}
+
+\FunctionTok{predict}\NormalTok{(}
+\NormalTok{  jack\_profile\_distance\_correction}\SpecialCharTok{$}\NormalTok{model,}
+  \AttributeTok{newdata =} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{distance =}\NormalTok{ split\_times}\SpecialCharTok{$}\NormalTok{distance))}
+\CommentTok{\#\textgreater{} [1] 1.10 1.83 3.09 4.25 5.39}
+\end{Highlighting}
+\end{Shaded}
+
+\normalsize
+
+In the next section we examine how these models (no correction, fixed time correction, estimated time correction, estimated distance correction, and estimated time and distance correction) perform using simulated data with varying flying start distance (please refer to the \protect\hyperlink{supplemental-material}{Supplemental material} for the R code).
+
+\small
+
+\normalsize
+
+As can be seen from the next figure, the estimated time correction model estimates MSS almost perfectly, while the estimated distance and estimate time and distance correction models estimates MSS perfectly.
+
+\small
+
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-38-1} \end{center}
+
+\normalsize
+
+Similar outcomes are observed for the MAC parameter. The distance correction model and time and distance corrections models performs perfectly, while the time correction model performs almost as good. PMAX demonstrates the same properties as MSS and MAC.
+
+The next figure depicts residuals across split distances for each simulated flying start distance. As can be seen, time correction, distance correction, and time and distance correction models perform much better than the other models.
+
+\small
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Residuals}
+\FunctionTok{ggplot}\NormalTok{(}
+\NormalTok{  model\_df,}
+  \FunctionTok{aes}\NormalTok{(}
+    \AttributeTok{y =}\NormalTok{ residuals,}
+    \AttributeTok{x =}\NormalTok{ distance,}
+    \AttributeTok{color =}\NormalTok{ flying\_start\_distance,}
+    \AttributeTok{group =}\NormalTok{ flying\_start\_distance}
+\NormalTok{  )}
+\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{(}\DecValTok{8}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_gradientn}\NormalTok{(}\AttributeTok{colours =} \FunctionTok{terrain.colors}\NormalTok{(}\DecValTok{5}\NormalTok{, }\AttributeTok{rev =} \ConstantTok{FALSE}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{model) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Distance (m)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Observed {-} predicted time (s)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{color =} \StringTok{"Flying start distance"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-39-1} \end{center}
+
+\normalsize
+
+The outcomes from this simple simulation data clearly demonstrates that the time correction, distance correction, and time and distance correction models represent sound improvements in parameter estimation and model fit compared to no corrections model and fixed correction model when attempting to overcome the flying start issues. Since the time correction and distance correction models are simpler and requires three parameters to be estimated, they might be practically more useful than the time and distance correction model, which requires four parameters estimation and thus more than four timing gates and sprint splits. More elaborate simulation study is currently ongoing and the results will be reported in another paper.
+
+Time correction, distance correction, and time and distance corrections are also implemented in the mixed-models using \texttt{mixed\_model\_using\_splits\_with\_time\_correction()}, \texttt{mixed\_model\_using\_splits\_with\_distance\_correction()}, and \texttt{mixed\_model\_using\_splits\_with\_corrections()} functions. We will showcase their use at the end of this paper.
 
 \hypertarget{leave-one-out-cross-validation}{%
 \section{Leave-one-out Cross-Validation}\label{leave-one-out-cross-validation}}
@@ -1188,6 +1367,8 @@ As can be seen from the output, only the model with time correction is able to c
 To estimate parameter stability, model over-fitting, and performance on the unseen data, \textbf{shorts} model function comes with implemented \emph{leave-one-out cross validation} (LOOCV) (\protect\hyperlink{ref-jamesIntroductionStatisticalLearning2017}{James et al. 2017}; \protect\hyperlink{ref-jovanovicBmbstatsBootstrapMagnitudebased2020}{Jovanović 2020}; \protect\hyperlink{ref-kuhnAppliedPredictiveModeling2018}{Kuhn and Johnson 2018}). LOOCV involves a simple, yet powerful procedure, of removing each observation, rebuilding the model, and making predictions for that removed observation. This process is repeated for each observation in the model dataset. LOOCV allows one to check estimated parameters stability, and model performance on the unseen data.
 
 Let's perform LOOCV using Jack's data and the time correction model:
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1199,17 +1380,27 @@ Let's perform LOOCV using Jack's data and the time correction model:
 \end{Highlighting}
 \end{Shaded}
 
+\normalsize
+
 The model print output provides training dataset estimates and model performance, as well as LOOCV estimates and model performance.
 
-Next we plot estimated parameters across LOOCV folds (please refer to the Supplemental files for the R code):
+Next we plot estimated parameters across LOOCV folds (please refer to the \protect\hyperlink{supplemental-material}{Supplemental material} for the R code):
 
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-51-1} \end{center}
+\small
+
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-41-1} \end{center}
+
+\normalsize
 
 Here is the plot of the training and LOOCV residuals:
 
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-52-1} \end{center}
+\small
 
-As expected, the model has more issues predicting unseen split times for both short or long distances. Please note, that since LOOCV removes one observation, if the model estimates three parameters, then at least five observations are needed, since we need to make sure the model can be estimated once a single observation is removed. LOOCV can also be implemented with the mixed-effects models in the \textbf{shorts} package.
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-42-1} \end{center}
+
+\normalsize
+
+As expected, the model has more issues predicting unseen split times for both short or long distances. Please note, that since LOOCV removes one observation, if the model estimates three parameters, then at least four observations are needed, since we need to make sure the model can be estimated once a single observation is removed. LOOCV can also be implemented with the mixed-effects models in the \textbf{shorts} package.
 
 \hypertarget{example-analysis}{%
 \section{Example analysis}\label{example-analysis}}
@@ -1222,6 +1413,8 @@ Let's utilize demonstrated functionalities of the \textbf{shorts} package using 
 The following dataset represents Usain Bolt's race in the finals at the IAAF World Championship held in London, 2017. Since reaction time enters the splits, we want to see how that will affect the model estimates, and particularly, if the estimated time correction model will pick-up reaction time.
 
 For the sake of this analysis, only 10 m splits over 60 m race distance are used.
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1318,7 +1511,11 @@ Distance correction - RT & 11.6 & 0.85 & 13.56 & 39.3 & -0.63 & -3.98\\
 \end{tabular}}
 \end{table}
 
-Here is the model estimate of the time and distance it takes for Bolt to reach 99\% of MSS. Please note that we are not using distance and time correction parameters, since we want these estimates to be on the time/distance scale aligned with the actual sprint start, not the measurement scale.
+\normalsize
+
+Here is the model estimate of the time and distance it takes for Bolt to reach 99\% of MSS. Please note that we are not using distance and time correction parameters, since we want these estimates to be on the time/distance scale aligned with the actual sprint start (i.e., theoretical scale), not the measurement scale.
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1356,14 +1553,18 @@ Distance correction - RT & 35.8 & 3.94\\
 \bottomrule
 \end{tabular}
 
+\normalsize
+
 \hypertarget{vescovi-data}{%
 \subsection{Vescovi data}\label{vescovi-data}}
 
-The data from Vescovi represents a sub-set of data from a total of 220 high-level female athletes (151 soccer players and 69 field hockey players). Using a random number generator, a total of 52 players (35 soccer and 17 field hockey) were selected for the sample dataset.
+The data from Vescovi represents a sub-set of data from a total of 220 high-level female athletes (151 soccer players and 69 field hockey players) (\protect\hyperlink{ref-vescoviSprintMechanicalCharacteristics2021}{Vescovi and Jovanovi'c 2021}). Using a random number generator, a total of 52 players (35 soccer and 17 field hockey) were selected for the sample dataset.
 
 The protocol for assessing linear sprint speed has been described previously (\protect\hyperlink{ref-vescoviImpactMaximumSpeed2014}{Vescovi 2014}, \protect\hyperlink{ref-vescoviLocomotorHeartRateMetabolic2016}{2016}, \protect\hyperlink{ref-vescoviSprintSpeedCharacteristics2012}{2012}) and was identical for each cohort. Briefly, all athletes performed a standardized warm-up that included general exercises such as jogging, shuffling, multi-directional movements, and dynamic stretching exercises. Infrared timing gates (Brower Timing, Utah) were positioned at the start line and at 5, 10, 20, 30, and 35 m at a height of approximately 1.0 m. Participants stood with their lead foot positioned approximately 5 cm behind the initial infrared beam (i.e., start line). Only forward movement was permitted (no leaning or rocking backwards) and timing started when the laser of the starting gate was triggered. The best 35 m time, and all associated split times were kept for analysis.
 
 Below is the mixed-effects models analysis of the dataset.
+
+\small
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1384,27 +1585,54 @@ Below is the mixed-effects models analysis of the dataset.
 \end{Highlighting}
 \end{Shaded}
 
-The following models were used: (1) no corrections model, (2) fixed time correction model (using 0.3s heuristic rule of thumb), (3) estimated time correction as a fixed effect model, (4) estimated time correction as a random effect model, (5) estimated distance correction as fixed effect model (and time correction as random effect), and (6) estimated distance correction as random effect model (please refer to the Supplemental files for the R code).
+\normalsize
+
+The following models were used: (1) no corrections model, (2) fixed time correction model (using 0.3s heuristic rule of thumb), (3) time correction model with time correction as fixed effect, (4) time correction model with time correction as random effect, (5) distance correction model with distance correction as fixed effect, (6) distance correction model with distance correction as random effect, (7) time and distance correction model, (8) time and distance correction model with distance correction as fixed effect (and time correction as random effect), and (9) time and distance correction model with distance and time correction as random effects (please refer to the \protect\hyperlink{supplemental-material}{Supplemental material} for the R code).
+
+\small
+
+\normalsize
 
 The following image represents model fit estimator RSE for each model. As can be seen, RSE is reduced the more flexible the model.
 
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-57-1} \end{center}
+\small
+
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-47-1} \end{center}
+
+\normalsize
 
 The following image depicts estimated parameters for each model:
 
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-58-1} \end{center}
+\small
+
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-48-1} \end{center}
+
+\normalsize
 
 The following image depicts model residuals across distance splits. To provide practical magnitude of the residuals, we have used between subject observed time SD multiplied with 0.2 and -0.2. This provides practical anchor for the residual magnitude, often referred to as \emph{smallest worthwhile change} (SWC) or \emph{smallest effect size of interest} (SESOI) (\protect\hyperlink{ref-jovanovicBmbstatsBootstrapMagnitudebased2020}{Jovanović 2020}). If the residuals are within this magnitude band, then the model is good in making practically useful predictions. Error bars represent residual bias \(\pm\) 1 SD.
 
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-59-1} \end{center}
+\small
+
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-49-1} \end{center}
+
+\normalsize
 
 The following figure depicts model residuals estimators (bias, or mean residual; variance, or SD of the residuals, and MAD, or mean absolute difference).
 
-\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-60-1} \end{center}
+\small
 
-Which model should should be used? Although providing a better fit (using RSE as an estimator of model fit), the time and distance correction models often estimate these parameters that are harder to interpret (e.g., negative distance correction). Although providing novel theoretical models in this paper, we acknowledge the need for validating them in practice, against gold-standard methods, assessing their agreement, as well as their power in detecting and adjusting for timing inconsistencies.
+\begin{center}\includegraphics[width=0.9\linewidth]{paper_files/figure-latex/unnamed-chunk-50-1} \end{center}
+
+\normalsize
+
+Which model should be used? Although providing a better fit (using RSE as an estimator of model fit), the time and distance correction models often estimate these parameters that are harder to interpret (e.g., negative distance correction). Although providing novel theoretical models in this paper, we acknowledge the need for validating them in practice, against gold-standard methods, assessing their agreement, as well as their power in detecting and adjusting for timing inconsistencies. More thorough theoretical simulation study is currently in development with the aim to explore the behavior of these models under different scenarios.
 
 We are hoping that the \textbf{shorts} package will help fellow sports scientists and coaches in exploring short sprint profiles and help in driving research, particularly in devising measuring protocols that are sensitive enough to capture training intervention changes, but also robust enough to take into account potential sprint initiation and timing inconsistencies.
+
+\hypertarget{supplemental-material}{%
+\section{Supplemental material}\label{supplemental-material}}
+
+The \emph{R Markdown} (\protect\hyperlink{ref-R-bookdown}{Xie 2021a}; \protect\hyperlink{ref-R-rmarkdown}{Allaire et al. 2021}; \protect\hyperlink{ref-rmarkdown2018}{Xie, Allaire, and Grolemund 2018}; \protect\hyperlink{ref-rmarkdown2020}{Xie, Dervieux, and Riederer 2020}) source code for the paper can be found on the GitHub repository: \url{https://github.com/mladenjovanovic/shorts-paper}.
 
 \hypertarget{references}{%
 \section*{References}\label{references}}
@@ -1412,8 +1640,26 @@ We are hoping that the \textbf{shorts} package will help fellow sports scientist
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
+\leavevmode\hypertarget{ref-R-rmarkdown}{}%
+Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2021. \emph{Rmarkdown: Dynamic Documents for r}. \url{https://CRAN.R-project.org/package=rmarkdown}.
+
+\leavevmode\hypertarget{ref-altmannDifferentStartingDistances2015}{}%
+Altmann, Stefan, Marian Hoffmann, Gunther Kurz, Rainer Neumann, Alexander Woll, and Sascha Haertel. 2015. {``Different {Starting Distances Affect} 5-m {Sprint Times}.''} \emph{Journal of Strength and Conditioning Research} 29 (8): 2361--66. \url{https://doi.org/10.1519/JSC.0000000000000865}.
+
+\leavevmode\hypertarget{ref-altmannValiditySingleBeamTiming2017}{}%
+Altmann, Stefan, Max Spielmann, Florian Azad Engel, Rainer Neumann, Steffen Ringhof, Doris Oriwol, and Sascha Haertel. 2017. {``Validity of {Single}-{Beam Timing Lights} at {Different Heights}.''} \emph{Journal of Strength and Conditioning Research} 31 (7): 1994--99. \url{https://doi.org/10.1519/JSC.0000000000001889}.
+
+\leavevmode\hypertarget{ref-altmannAccuracySingleBeam2018}{}%
+Altmann, Stefan, Max Spielmann, Florian Azad Engel, Steffen Ringhof, Doris Oriwol, Sascha Härtel, and Rainer Neumann. 2018. {``Accuracy of Single Beam Timing Lights for Determining Velocities in a Flying 20-m Sprint: {Does} Timing Light Height Matter?''} \emph{Journal of Human Sport and Exercise} 13 (3). \url{https://doi.org/10.14198/jhse.2018.133.10}.
+
 \leavevmode\hypertarget{ref-arsacModelingEnergetics100m2002}{}%
 Arsac, Laurent M., and Elio Locatelli. 2002. {``Modeling the Energetics of 100-m Running by Using Speed Curves of World Champions.''} \emph{Journal of Applied Physiology} 92 (5): 1781--88. \url{https://doi.org/10.1152/japplphysiol.00754.2001}.
+
+\leavevmode\hypertarget{ref-batesNonlinearModels1992}{}%
+Bates, D. M., and J. M. Chambers. 1992. {``Nonlinear Models.''} In \emph{Statistical {Models} in {S}}. {Wadsworth \& Brooks/Cole}.
+
+\leavevmode\hypertarget{ref-batesNonlinearRegressionAnalysis2007}{}%
+Bates, Douglas M., and Donald G. Watts. 2007. \emph{Nonlinear Regression Analysis and Its Applications}. Wiley Series in Probability and Mathematical Statistics. {New York, NY}: {Wiley}.
 
 \leavevmode\hypertarget{ref-brownAssessmentLinearSprinting2004}{}%
 Brown, Todd D., Jason D. Vescovi, and Jaci L. Vanheest. 2004. {``Assessment of Linear Sprinting Performance: A Theoretical Paradigm.''} \emph{Journal of Sports Science \& Medicine} 3 (4): 203--10.
@@ -1445,17 +1691,20 @@ Haugen, Thomas A., Felix Breitschädel, and Stephen Seiler. 2019. {``Sprint Mech
 \leavevmode\hypertarget{ref-haugenDifferenceStartImpact2012}{}%
 Haugen, Thomas A, Espen Tønnessen, and Stephen K Seiler. 2012. {``The {Difference Is} in the {Start}: {Impact} of {Timing} and {Start Procedure} on {Sprint Running Performance}:''} \emph{Journal of Strength and Conditioning Research} 26 (2): 473--79. \url{https://doi.org/10.1519/JSC.0b013e318226030b}.
 
+\leavevmode\hypertarget{ref-haugenSprintRunningPerformance2016}{}%
+Haugen, Thomas, and Martin Buchheit. 2016. {``Sprint {Running Performance Monitoring}: {Methodological} and {Practical Considerations}.''} \emph{Sports Medicine} 46 (5): 641--56. \url{https://doi.org/10.1007/s40279-015-0446-0}.
+
 \leavevmode\hypertarget{ref-jamesIntroductionStatisticalLearning2017}{}%
 James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2017. \emph{An {Introduction} to {Statistical Learning}: With {Applications} in {R}}. 1st ed. 2013, Corr. 7th printing 2017 edition. {New York}: {Springer}.
 
 \leavevmode\hypertarget{ref-jimenez-reyesRelationshipVerticalHorizontal2018}{}%
 Jiménez-Reyes, Pedro, Pierre Samozino, Amador García-Ramos, Víctor Cuadrado-Peñafiel, Matt Brughelli, and Jean-Benoît Morin. 2018. {``Relationship Between Vertical and Horizontal Force-Velocity-Power Profiles in Various Sports and Levels of Practice.''} \emph{PeerJ} 6 (November): e5937. \url{https://doi.org/10.7717/peerj.5937}.
 
-\leavevmode\hypertarget{ref-R-shorts}{}%
-Jovanovic, Mladen. 2020. \emph{Shorts: Short Sprints}. \url{https://CRAN.R-project.org/package=shorts}.
-
 \leavevmode\hypertarget{ref-jovanovicBmbstatsBootstrapMagnitudebased2020}{}%
 Jovanović, Mladen. 2020. \emph{Bmbstats: {Bootstrap Magnitude}-Based {Statistics} for {Sports Scientists}}. {Mladen Jovanović}.
+
+\leavevmode\hypertarget{ref-R-shorts}{}%
+---------. 2021. \emph{Shorts: Short Sprints}. \url{https://mladenjovanovic.github.io/shorts/}.
 
 \leavevmode\hypertarget{ref-kuhnAppliedPredictiveModeling2018}{}%
 Kuhn, Max, and Kjell Johnson. 2018. \emph{Applied {Predictive Modeling}}. 1st ed. 2013, Corr. 2nd printing 2016 edition. {New York}: {Springer}.
@@ -1478,8 +1727,11 @@ Morin, Jean-Benoit, and Pierre Samozino. 2016. {``Interpreting {Power}-{Force}-{
 \leavevmode\hypertarget{ref-morinSimpleMethodComputing2019}{}%
 Morin, Jean-Benoit, Pierre Samozino, Munenori Murata, Matt R Cross, and Ryu Nagahara. 2019. {``A Simple Method for Computing Sprint Acceleration Kinetics from Running Velocity Data: {Replication} Study with Improved Design.''} \emph{Journal of Biomechanics} 94 (September): 82--87. \url{https://doi.org/10.1016/j.jbiomech.2019.07.020}.
 
+\leavevmode\hypertarget{ref-motulskyIntuitiveBiostatisticsNonmathematical2018}{}%
+Motulsky, Harvey. 2018. \emph{Intuitive Biostatistics: A Nonmathematical Guide to Statistical Thinking}. Fourth edition. {New York}: {Oxford University Press}.
+
 \leavevmode\hypertarget{ref-R-nlme}{}%
-Pinheiro, José, Douglas Bates, and R-core. 2020. \emph{Nlme: Linear and Nonlinear Mixed Effects Models}. \url{https://svn.r-project.org/R-packages/trunk/nlme/}.
+Pinheiro, José, Douglas Bates, and R-core. 2021. \emph{Nlme: Linear and Nonlinear Mixed Effects Models}. \url{https://svn.r-project.org/R-packages/trunk/nlme/}.
 
 \leavevmode\hypertarget{ref-R-base}{}%
 R Core Team. 2020. \emph{R: A Language and Environment for Statistical Computing}. Vienna, Austria: R Foundation for Statistical Computing. \url{https://www.R-project.org/}.
@@ -1505,20 +1757,23 @@ Vescovi, Jason D. 2012. {``Sprint Speed Characteristics of High-Level {American}
 \leavevmode\hypertarget{ref-vescoviLocomotorHeartRateMetabolic2016}{}%
 ---------. 2016. {``Locomotor, {Heart}-{Rate}, and {Metabolic Power Characteristics} of {Youth Women}'s {Field Hockey}: {Female Athletes} in {Motion} ({FAiM}) {Study}.''} \emph{Research Quarterly for Exercise and Sport} 87 (1): 68--77. \url{https://doi.org/10.1080/02701367.2015.1124972}.
 
+\leavevmode\hypertarget{ref-vescoviSprintMechanicalCharacteristics2021}{}%
+Vescovi, Jason D., and Mladen Jovanovi'c. 2021. {``Sprint {Mechanical Characteristics} of {Female Soccer Players}: {A Retrospective Pilot Study} to {Examine} a {Novel Approach} for {Correction} of {Timing Gate Starts}.''} \emph{Frontiers in Sports and Active Living} 3 (May): 629694. \url{https://doi.org/10.3389/fspor.2021.629694}.
+
 \leavevmode\hypertarget{ref-ward-smithEnergyConversionStrategies2001}{}%
 Ward-Smith, A. J. 2001. {``Energy Conversion Strategies During 100 m Sprinting.''} \emph{Journal of Sports Sciences} 19 (9): 701--10. \url{https://doi.org/10.1080/02640410152475838}.
 
-\leavevmode\hypertarget{ref-R-tidyverse}{}%
-Wickham, Hadley. 2019. \emph{Tidyverse: Easily Install and Load the Tidyverse}. \url{https://CRAN.R-project.org/package=tidyverse}.
-
 \leavevmode\hypertarget{ref-R-tidyr}{}%
----------. 2020. \emph{Tidyr: Tidy Messy Data}. \url{https://CRAN.R-project.org/package=tidyr}.
+Wickham, Hadley. 2021a. \emph{Tidyr: Tidy Messy Data}. \url{https://CRAN.R-project.org/package=tidyr}.
+
+\leavevmode\hypertarget{ref-R-tidyverse}{}%
+---------. 2021b. \emph{Tidyverse: Easily Install and Load the Tidyverse}. \url{https://CRAN.R-project.org/package=tidyverse}.
 
 \leavevmode\hypertarget{ref-R-ggplot2}{}%
-Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, and Dewey Dunnington. 2020. \emph{Ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics}. \url{https://CRAN.R-project.org/package=ggplot2}.
+Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, and Dewey Dunnington. 2021. \emph{Ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics}. \url{https://CRAN.R-project.org/package=ggplot2}.
 
 \leavevmode\hypertarget{ref-R-dplyr}{}%
-Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2020. \emph{Dplyr: A Grammar of Data Manipulation}. \url{https://CRAN.R-project.org/package=dplyr}.
+Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2021. \emph{Dplyr: A Grammar of Data Manipulation}. \url{https://CRAN.R-project.org/package=dplyr}.
 
 \leavevmode\hypertarget{ref-knitr2014}{}%
 Xie, Yihui. 2014. {``Knitr: A Comprehensive Tool for Reproducible Research in {R}.''} In \emph{Implementing Reproducible Computational Research}, edited by Victoria Stodden, Friedrich Leisch, and Roger D. Peng. Chapman; Hall/CRC. \url{http://www.crcpress.com/product/isbn/9781466561595}.
@@ -1526,11 +1781,20 @@ Xie, Yihui. 2014. {``Knitr: A Comprehensive Tool for Reproducible Research in {R
 \leavevmode\hypertarget{ref-knitr2015}{}%
 ---------. 2015. \emph{Dynamic Documents with {R} and Knitr}. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. \url{https://yihui.org/knitr/}.
 
+\leavevmode\hypertarget{ref-R-bookdown}{}%
+---------. 2021a. \emph{Bookdown: Authoring Books and Technical Documents with r Markdown}. \url{https://CRAN.R-project.org/package=bookdown}.
+
 \leavevmode\hypertarget{ref-R-knitr}{}%
----------. 2020. \emph{Knitr: A General-Purpose Package for Dynamic Report Generation in r}. \url{https://yihui.org/knitr/}.
+---------. 2021b. \emph{Knitr: A General-Purpose Package for Dynamic Report Generation in r}. \url{https://yihui.org/knitr/}.
+
+\leavevmode\hypertarget{ref-rmarkdown2018}{}%
+Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2018. \emph{R Markdown: The Definitive Guide}. Boca Raton, Florida: Chapman; Hall/CRC. \url{https://bookdown.org/yihui/rmarkdown}.
+
+\leavevmode\hypertarget{ref-rmarkdown2020}{}%
+Xie, Yihui, Christophe Dervieux, and Emily Riederer. 2020. \emph{R Markdown Cookbook}. Boca Raton, Florida: Chapman; Hall/CRC. \url{https://bookdown.org/yihui/rmarkdown-cookbook}.
 
 \leavevmode\hypertarget{ref-R-kableExtra}{}%
-Zhu, Hao. 2021. \emph{kableExtra: Construct Complex Table with 'Kable' and Pipe Syntax}. \url{https://CRAN.R-project.org/package=kableExtra}.
+Zhu, Hao. 2021. \emph{kableExtra: Construct Complex Table with Kable and Pipe Syntax}.
 
 \end{CSLReferences}
 
