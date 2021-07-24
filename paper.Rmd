@@ -1030,7 +1030,8 @@ It is important to note that using `predict_XXX()` family of functions with dist
 # Jack's observed times
 split_times$jack_time
 
-# To predict at "theoretical" distance scale (where force application starts at d=0m)
+# To predict at "theoretical" distance scale
+#  (where force application starts at d=0m)
 predict_time_at_distance(
   distance = split_times$distance, 
   MSS = jack_profile_time_estimated$parameters$MSS,
@@ -1053,7 +1054,8 @@ predict_time_at_distance(
   distance = split_times$distance, 
   MSS = jack_profile_distance_correction$parameters$MSS,
   TAU = jack_profile_distance_correction$parameters$TAU,
-  distance_correction = jack_profile_distance_correction$parameters$distance_correction)
+  distance_correction = 
+    jack_profile_distance_correction$parameters$distance_correction)
 
 # Instead use generic S3 predict() function
 predict(jack_profile_distance_correction)

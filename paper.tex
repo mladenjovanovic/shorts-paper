@@ -1267,7 +1267,8 @@ It is important to note that using \texttt{predict\_XXX()} family of functions w
 \NormalTok{split\_times}\SpecialCharTok{$}\NormalTok{jack\_time}
 \CommentTok{\#\textgreater{} [1] 1.10 1.83 3.09 4.25 5.39}
 
-\CommentTok{\# To predict at "theoretical" distance scale (where force application starts at d=0m)}
+\CommentTok{\# To predict at "theoretical" distance scale}
+\CommentTok{\#  (where force application starts at d=0m)}
 \FunctionTok{predict\_time\_at\_distance}\NormalTok{(}
   \AttributeTok{distance =}\NormalTok{ split\_times}\SpecialCharTok{$}\NormalTok{distance, }
   \AttributeTok{MSS =}\NormalTok{ jack\_profile\_time\_estimated}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{MSS,}
@@ -1293,7 +1294,8 @@ It is important to note that using \texttt{predict\_XXX()} family of functions w
   \AttributeTok{distance =}\NormalTok{ split\_times}\SpecialCharTok{$}\NormalTok{distance, }
   \AttributeTok{MSS =}\NormalTok{ jack\_profile\_distance\_correction}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{MSS,}
   \AttributeTok{TAU =}\NormalTok{ jack\_profile\_distance\_correction}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{TAU,}
-  \AttributeTok{distance\_correction =}\NormalTok{ jack\_profile\_distance\_correction}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{distance\_correction)}
+  \AttributeTok{distance\_correction =} 
+\NormalTok{    jack\_profile\_distance\_correction}\SpecialCharTok{$}\NormalTok{parameters}\SpecialCharTok{$}\NormalTok{distance\_correction)}
 \CommentTok{\#\textgreater{} [1] 1.50 2.23 3.49 4.65 5.78}
 
 \CommentTok{\# Instead use generic S3 predict() function}
