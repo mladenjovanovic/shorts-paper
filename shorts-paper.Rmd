@@ -434,9 +434,9 @@ m3 <- model_using_radar(
 )
 ```
 
-Both split and radar gun models allow the use of *weighted* non-linear regression. Weighting in regression is utilized when the observations have unequal error variance [@gelmanRegressionOtherStories2020], which can happen due to instrumental error (e.g., multiplicative error instead of additive error) or due to biological variability (e.g., higher split time variance on shorter distances versus longer distances). In this case, observations with higher error variance get lower weight when fitting the model [@gelmanRegressionOtherStories2020]. According to @gelmanRegressionOtherStories2020, unequal variances are not typically a major issue for the goal of estimating regression parameters, but they can become more important when making predictions about individual observations. Further exploring the topic of unequal error variances is beyond the scope of this paper, but the **shorts** package provides weighting feature for the potential research of this topic in the future. 
+Both split and radar gun models allow the use of *weighted* non-linear regression. Weighting in regression is utilized when the observations have unequal error variance [@gelmanRegressionOtherStories2020], which can happen due to instrumental error (e.g., a multiplicative error instead of additive error) or due to biological variability (e.g., higher split time variance on shorter distances versus longer distances). In this case, observations with higher error variance get lower weight when fitting the model [@gelmanRegressionOtherStories2020]. According to @gelmanRegressionOtherStories2020, unequal variances are not typically a major issue for the goal of estimating regression parameters, but they can become more important when making predictions about individual observations. Further exploring the topic of unequal error variances is beyond the scope of this paper, but the **shorts** package provides a weighting feature for the potential research of this topic in the future. 
 
-Weighted non-linear regression is performed by setting `weights` parameter. For example, we can give more weight to shorter distance or faster velocities:
+Weighted non-linear regression is performed by setting `weights` parameter. For example, we can give more weight to shorter distances or faster velocities:
 
 ```{r}
 m3_weighted <- model_using_radar(
