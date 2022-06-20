@@ -689,13 +689,6 @@ ggplot(
 Using the following code, we can see the differences in estimated MSS and TAU parameters:
 
 ```{r}
-# Since this is a perfect simulation and stats::nls will complain
-# we need to add very small noise, or measurement error to the times
-set.seed(1667)
-rand_noise <- rnorm(nrow(split_times), 0, 10^-5)
-split_times$john_time <- split_times$john_time + rand_noise
-split_times$jack_time <- split_times$jack_time + rand_noise
-
 john_profile <- model_using_splits(
   distance = split_times$distance,
   time = split_times$john_time
@@ -739,11 +732,6 @@ sim_df <- sim_df %>%
     ),
     time = true_time - stolen_time
   )
-
-# Add small noise to allow model fit
-set.seed(1667)
-rand_noise <- rnorm(nrow(sim_df), 0, 10^-5)
-sim_df$time <- sim_df$time + rand_noise
 ```
 
 ```{r include=FALSE}
@@ -1079,20 +1067,17 @@ pred_wrapper <- function(data) {
 
   time_correction <- model_using_splits_with_time_correction(
     distance = data$distance,
-    time = data$time,
-    control = nls.control(warnOnly = TRUE)
+    time = data$time
   )
 
   distance_correction <- model_using_splits_with_distance_correction(
     distance = data$distance,
-    time = data$time,
-    control = nls.control(warnOnly = TRUE)
+    time = data$time
   )
   
   time_dist_correction <- model_using_splits_with_corrections(
     distance = data$distance,
-    time = data$time,
-    control = nls.control(warnOnly = TRUE)
+    time = data$time
   )
 
   rbind(
