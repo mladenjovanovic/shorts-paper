@@ -211,7 +211,7 @@ For timing gates split times, distance is a predictor, and time is the outcome v
 
 In equation \@ref(eq:time-distance), $W$ represents Lambert's W function [@R-LambertW]. Researchers often incorrectly use the equation \@ref(eq:distance-time) [@morinSpreadsheetSprintAcceleration2017; @morinSpreadsheetSprintAcceleration2019; @stenrothSpreadsheetSprintAcceleration2020], in which the time is the predictor and distance is the outcome variable, instead of the statistically correct equation \@ref(eq:time-distance). This practice should be avoided because switching the predictor and outcome variables in the regression model might produce biased estimated parameters [@motulskyIntuitiveBiostatisticsNonmathematical2018, p. 341]. These biases might not necessarily be significant with the short sprints profiling, but it is nevertheless a bad statistical practice.
 
-Here is an example using a built-in dataset. We are going to filter out one athlete (e.g., John) with the help of the **tidyverse** [@R-tidyverse] package and estimate MSS, TAU, and MAC parameters using the `model_timing_gates()` function:
+Here is an example using a built-in dataset. We are going to filter out one athlete (e.g., John) with the help of the **{tidyverse}** [@R-tidyverse] package and estimate MSS, TAU, and MAC parameters using the `model_timing_gates()` function:
 
 ```{r}
 require(shorts)
@@ -239,7 +239,7 @@ Maximal relative power (PMAX) from the output is estimated using $\frac{MSS \tim
 
 Besides providing *residual standard error* (RSE), **{shorts}** functions provide additional model fit estimators. Additional information can be gained by exploring the returned object, particularly the object returned from the `nlsLM()` function (i.e., by using the S3 `summary()` method). To extract estimated model parameters, use S3 `coef()` method. 
 
-To create a simple plot of the model, use the S3 `plot()` method, which returns **ggplot2** [@R-ggplot2] object:
+To create a simple plot of the model, use the S3 `plot()` method, which returns **{ggplot2}** [@R-ggplot2] object:
 
 ```{r}
 plot(m1) + theme_bw(8)
@@ -347,7 +347,7 @@ df <- predict_kinematics(
 )
 ```
 
-Plotting the model predictions can be done once we convert data from wide to long with the help of **ggplot2** [@R-ggplot2], **dplyr** [@R-dplyr], and **tidyr** [@R-tidyr] packages (loaded already using the **tidyverse** [@R-tidyverse] package):
+Plotting the model predictions can be done once we convert data from wide to long with the help of **{ggplot2}** [@R-ggplot2], **{dplyr}** [@R-dplyr], and **{tidyr}** [@R-tidyr] packages (loaded already using the **{tidyverse}** [@R-tidyverse] package):
 
 ```{r}
 variable_names <- colnames(df)
@@ -664,7 +664,7 @@ ggplot(
 
 Any flying start with a difference between initial force production and start time can result in biased parameters and predictions. Since maximal sprint speed is difficult to improve, the effects of start inconsistencies can mask the effects of the training intervention. It is thus crucial to standardize the start when testing and implementing the following techniques when using the **{shorts}** package. 
 
-### How to overcome missing the initial force production when using timing gates?
+## How to overcome missing the initial force production when using timing gates?
 
 A potential solution is to use a correction factor - the recommendation in the literature is +0.5 $s$ [@haugenSprintMechanicalProperties2020; @haugenSprintMechanicalVariables2019]. Interestingly, the average difference between timing gates and a block start for 40 $m$ sprint time was 0.27 $s$ [@haugenDifferenceStartImpact2012]. So, while a timing correction factor is warranted to avoid subsequent errors in estimates of kinetic variables (e.g., overestimate power), a correction factor that is too large will have the opposite effect (e.g., underestimate power).  
 
@@ -860,7 +860,7 @@ ggplot(plot_df, aes(x = flying_start_distance, y = value, group = model, color =
 
 The following figure depicts residuals across split distances for each simulated flying start distance. As can be seen, estimated TC and FD models perform much better than the no correction and fixed time correction models. 
 
-```{r}
+```{r echo=FALSE}
 # Residuals
 ggplot(
   model_df,
