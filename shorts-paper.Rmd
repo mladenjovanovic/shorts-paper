@@ -199,7 +199,7 @@ plot(gg)
 
 # Estimation using **{shorts}** package
 
-Short sprints profiling is usually performed by: (1) measuring split times using timing gates (i.e., positioned at various distances, e.g., 5, 10, 20, 30, 40 $m$), or (2) getting a velocity trace using a radar gun. Estimation of MSS and TAU parameters from equation \@ref(eq:velocity-time) is performed in **{shorts}** package for the **R language** [@R-base] using *non-linear least squares regression* implemented in the `nlsLM()` function from the **{minpack.lm}** package [@R-minpack.lm].
+Short sprints profiling is usually performed by: (1) measuring split times using timing gates (i.e., positioned at various distances, e.g., 5, 10, 20, 30, 40 $m$), or (2) getting a velocity trace using a radar gun. Estimation of MSS and TAU parameters from equation \@ref(eq:velocity-time) is performed in **{shorts}** package using *non-linear least squares regression* implemented in the `nlsLM()` function from the **{minpack.lm}** package [@R-minpack.lm].
 
 ## Estimating short sprint parameters using timing gates split times
 
@@ -281,7 +281,7 @@ m2 <- model_radar_gun(
 m2
 ```
 
-There is the additional parameter in the output, TC, that is estimated using the `model_radar_gun()` function. The function of this parameter is explained in the [Problems with time sync with the radar gun] section of this paper.
+There is the additional parameter in the output, TC, that is estimated using the `model_radar_gun()` function. The utility of this parameter is explained in the [Problems with time sync with the radar gun] section of this paper.
 
 Both timing gates and radar gun models allow *weighted* non-linear regression. Weighting in regression is utilized when the observations have unequal error variance [@gelmanRegressionOtherStories2020], which can happen due to instrumental error (e.g., a multiplicative error instead of additive error) or due to biological variability (e.g., higher split time variance on shorter distances versus longer distances). In this case, observations with higher error variance get lower weight when fitting the model [@gelmanRegressionOtherStories2020]. According to @gelmanRegressionOtherStories2020, unequal variances are not typically a significant issue for the goal of estimating regression parameters, but they can become more important when making predictions about individual observations. Further exploring the topic of unequal error variances is beyond the scope of this paper. However, the **{shorts}** package provides a weighting feature for potential research of this topic in the future. 
 
